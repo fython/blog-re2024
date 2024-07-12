@@ -1,4 +1,6 @@
 ---
+import { NavNameMap } from "./model/nav";
+
 // Remove current url path and remove trailing slash if exists
 const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 
@@ -28,13 +30,7 @@ if (breadcrumbList[0] === "tags") {
 }
 
 function localizeBreadcrumb(breadcrumb: string): string {
-  const localizedBreadcrumb: Record<string, string> = {
-    posts: "文章",
-    tags: "标签",
-    about: "关于",
-    search: "搜索",
-  };
-  return localizedBreadcrumb[breadcrumb] || breadcrumb;
+  return NavNameMap[breadcrumb] || breadcrumb;
 }
 ---
 
@@ -71,15 +67,19 @@ function localizeBreadcrumb(breadcrumb: string): string {
   .breadcrumb {
     @apply mx-auto mb-1 mt-8 w-full max-w-3xl px-4;
   }
+
   .breadcrumb ul li {
     @apply inline;
   }
+
   .breadcrumb ul li a {
     @apply capitalize opacity-70;
   }
+
   .breadcrumb ul li span {
     @apply opacity-70;
   }
+
   .breadcrumb ul li:not(:last-child) a {
     @apply hover:opacity-100;
   }

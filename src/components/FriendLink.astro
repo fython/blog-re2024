@@ -1,0 +1,17 @@
+---
+import LinkButton from "./LinkButton.astro";
+export interface Props {
+  name: string;
+  blog: {
+    title?: string;
+    url: string;
+  };
+}
+
+const { name, blog } = Astro.props;
+---
+
+<li>
+  {blog.title && <span>{name}：</span>}
+  <LinkButton href={blog.url} target="_blank">{blog.title ?? name}</LinkButton>
+</li>

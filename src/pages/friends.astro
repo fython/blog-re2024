@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import FriendLink from "@components/FriendLink.astro";
+
+const friends = await getCollection("friend");
+---
+
+<Layout title="友情链接">
+  <Header activeNav="friends" />
+  <Main pageTitle="友情链接">
+    <p>这里是一些熟悉的朋友们的博客站点，未完全收录，欢迎互相交换~</p>
+    <br />
+    <p>以下排名不分先后：</p>
+    <br />
+    <ul class="mx-6 list-disc">
+      {
+        friends.map(({ data }) => (
+          <FriendLink name={data.name} blog={data.blog} />
+        ))
+      }
+    </ul>
+  </Main>
+</Layout>

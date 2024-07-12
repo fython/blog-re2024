@@ -1,6 +1,7 @@
 import { SITE } from "@config";
 import { defineCollection, z } from "astro:content";
 
+// Blog articles
 const blog = defineCollection({
   type: "content",
   schema: ({ image }) =>
@@ -23,4 +24,17 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+// Friends
+const friend = defineCollection({
+  type: "data",
+  schema: () =>
+    z.object({
+      name: z.string(),
+      blog: z.object({
+        title: z.string().optional(),
+        url: z.string().url(),
+      }),
+    }),
+});
+
+export const collections = { blog, friend };

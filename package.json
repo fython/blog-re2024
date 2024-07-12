@@ -2,6 +2,7 @@
   "name": "astro-paper",
   "version": "4.2.0",
   "private": false,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
