@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ^0.4.1
-        version: 0.4.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.5.3)
+        version: 0.4.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.3.3)
       '@astrojs/rss':
         specifier: ^4.0.2
         version: 4.0.7
@@ -19,7 +19,7 @@ importers:
         version: 2.6.2
       astro:
         specifier: ^4.2.1
-        version: 4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.5.3)
+        version: 4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.3.3)
       fuse.js:
         specifier: ^7.0.0
         version: 7.0.0
@@ -39,8 +39,8 @@ importers:
         specifier: ^3.4.1
         version: 3.4.4
       typescript:
-        specifier: ^5.3.3
-        version: 5.5.3
+        specifier: ~5.3.3
+        version: 5.3.3
     devDependencies:
       '@astrojs/react':
         specifier: ^3.0.9
@@ -50,7 +50,7 @@ importers:
         version: 3.1.6
       '@astrojs/tailwind':
         specifier: ^5.1.0
-        version: 5.1.0(astro@4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.5.3))(tailwindcss@3.4.4)
+        version: 5.1.0(astro@4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.3.3))(tailwindcss@3.4.4)
       '@divriots/jampack':
         specifier: ^0.23.2
         version: 0.23.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -65,16 +65,16 @@ importers:
         version: 18.3.3
       '@typescript-eslint/parser':
         specifier: ^6.19.0
-        version: 6.21.0(eslint@8.57.0)(typescript@5.5.3)
+        version: 6.21.0(eslint@8.57.0)(typescript@5.3.3)
       astro-eslint-parser:
         specifier: ^0.16.2
         version: 0.16.3
       commitizen:
         specifier: ^4.3.0
-        version: 4.3.0(@types/node@20.14.10)(typescript@5.5.3)
+        version: 4.3.0(@types/node@20.14.10)(typescript@5.3.3)
       cz-conventional-changelog:
         specifier: ^3.3.0
-        version: 3.3.0(@types/node@20.14.10)(typescript@5.5.3)
+        version: 3.3.0(@types/node@20.14.10)(typescript@5.3.3)
       eslint:
         specifier: ^8.56.0
         version: 8.57.0
@@ -3481,8 +3481,8 @@ packages:
   typescript-auto-import-cache@0.3.3:
     resolution: {integrity: sha512-ojEC7+Ci1ij9eE6hp8Jl9VUNnsEKzztktP5gtYNRMrTmfXVwA1PITYYAkpxCvvupdSYa/Re51B6KMcv1CTZEUA==}
 
-  typescript@5.5.3:
-    resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
+  typescript@5.3.3:
+    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -3781,13 +3781,13 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@astrojs/check@0.4.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.5.3)':
+  '@astrojs/check@0.4.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.3.3)':
     dependencies:
-      '@astrojs/language-server': 2.11.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.5.3)
+      '@astrojs/language-server': 2.11.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.3.3)
       chokidar: 3.6.0
       fast-glob: 3.3.2
       kleur: 4.1.5
-      typescript: 5.5.3
+      typescript: 5.3.3
       yargs: 17.7.2
     transitivePeerDependencies:
       - prettier
@@ -3799,11 +3799,11 @@ snapshots:
 
   '@astrojs/internal-helpers@0.4.1': {}
 
-  '@astrojs/language-server@2.11.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.5.3)':
+  '@astrojs/language-server@2.11.1(prettier-plugin-astro@0.13.0)(prettier@3.3.2)(typescript@5.3.3)':
     dependencies:
       '@astrojs/compiler': 2.8.2
       '@jridgewell/sourcemap-codec': 1.5.0
-      '@volar/kit': 2.4.0-alpha.15(typescript@5.5.3)
+      '@volar/kit': 2.4.0-alpha.15(typescript@5.3.3)
       '@volar/language-core': 2.4.0-alpha.15
       '@volar/language-server': 2.4.0-alpha.15
       '@volar/language-service': 2.4.0-alpha.15
@@ -3874,9 +3874,9 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/tailwind@5.1.0(astro@4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.5.3))(tailwindcss@3.4.4)':
+  '@astrojs/tailwind@5.1.0(astro@4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.3.3))(tailwindcss@3.4.4)':
     dependencies:
-      astro: 4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.5.3)
+      astro: 4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.3.3)
       autoprefixer: 10.4.19(postcss@8.4.39)
       postcss: 8.4.39
       postcss-load-config: 4.0.2(postcss@8.4.39)
@@ -4070,15 +4070,15 @@ snapshots:
   '@commitlint/execute-rule@19.0.0':
     optional: true
 
-  '@commitlint/load@19.2.0(@types/node@20.14.10)(typescript@5.5.3)':
+  '@commitlint/load@19.2.0(@types/node@20.14.10)(typescript@5.3.3)':
     dependencies:
       '@commitlint/config-validator': 19.0.3
       '@commitlint/execute-rule': 19.0.0
       '@commitlint/resolve-extends': 19.1.0
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
-      cosmiconfig: 9.0.0(typescript@5.5.3)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.14.10)(cosmiconfig@9.0.0(typescript@5.5.3))(typescript@5.5.3)
+      cosmiconfig: 9.0.0(typescript@5.3.3)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.14.10)(cosmiconfig@9.0.0(typescript@5.3.3))(typescript@5.3.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -4726,16 +4726,16 @@ snapshots:
 
   '@types/unist@3.0.2': {}
 
-  '@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.3)':
+  '@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3)':
     dependencies:
       '@typescript-eslint/scope-manager': 6.21.0
       '@typescript-eslint/types': 6.21.0
-      '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.5.3)
+      '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.3.3)
       '@typescript-eslint/visitor-keys': 6.21.0
       debug: 4.3.5
       eslint: 8.57.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
 
@@ -4753,7 +4753,7 @@ snapshots:
 
   '@typescript-eslint/types@6.21.0': {}
 
-  '@typescript-eslint/typescript-estree@6.21.0(typescript@5.5.3)':
+  '@typescript-eslint/typescript-estree@6.21.0(typescript@5.3.3)':
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
@@ -4762,9 +4762,9 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.3
       semver: 7.6.2
-      ts-api-utils: 1.3.0(typescript@5.5.3)
+      ts-api-utils: 1.3.0(typescript@5.3.3)
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
 
@@ -4791,12 +4791,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@volar/kit@2.4.0-alpha.15(typescript@5.5.3)':
+  '@volar/kit@2.4.0-alpha.15(typescript@5.3.3)':
     dependencies:
       '@volar/language-service': 2.4.0-alpha.15
       '@volar/typescript': 2.4.0-alpha.15
       typesafe-path: 0.2.2
-      typescript: 5.5.3
+      typescript: 5.3.3
       vscode-languageserver-textdocument: 1.0.11
       vscode-uri: 3.0.8
 
@@ -4932,7 +4932,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  astro@4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.5.3):
+  astro@4.11.5(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)(typescript@5.3.3):
     dependencies:
       '@astrojs/compiler': 2.8.2
       '@astrojs/internal-helpers': 0.4.1
@@ -4987,7 +4987,7 @@ snapshots:
       shiki: 1.10.3
       string-width: 7.2.0
       strip-ansi: 7.1.0
-      tsconfck: 3.1.1(typescript@5.5.3)
+      tsconfck: 3.1.1(typescript@5.3.3)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
       vite: 5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
@@ -5231,10 +5231,10 @@ snapshots:
 
   commander@7.2.0: {}
 
-  commitizen@4.3.0(@types/node@20.14.10)(typescript@5.5.3):
+  commitizen@4.3.0(@types/node@20.14.10)(typescript@5.3.3):
     dependencies:
       cachedir: 2.3.0
-      cz-conventional-changelog: 3.3.0(@types/node@20.14.10)(typescript@5.5.3)
+      cz-conventional-changelog: 3.3.0(@types/node@20.14.10)(typescript@5.3.3)
       dedent: 0.7.0
       detect-indent: 6.1.0
       find-node-modules: 2.1.3
@@ -5261,22 +5261,22 @@ snapshots:
 
   cookie@0.6.0: {}
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@20.14.10)(cosmiconfig@9.0.0(typescript@5.5.3))(typescript@5.5.3):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@20.14.10)(cosmiconfig@9.0.0(typescript@5.3.3))(typescript@5.3.3):
     dependencies:
       '@types/node': 20.14.10
-      cosmiconfig: 9.0.0(typescript@5.5.3)
+      cosmiconfig: 9.0.0(typescript@5.3.3)
       jiti: 1.21.6
-      typescript: 5.5.3
+      typescript: 5.3.3
     optional: true
 
-  cosmiconfig@9.0.0(typescript@5.5.3):
+  cosmiconfig@9.0.0(typescript@5.3.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.3.3
     optional: true
 
   critters@0.0.20:
@@ -5335,16 +5335,16 @@ snapshots:
 
   csstype@3.1.3: {}
 
-  cz-conventional-changelog@3.3.0(@types/node@20.14.10)(typescript@5.5.3):
+  cz-conventional-changelog@3.3.0(@types/node@20.14.10)(typescript@5.3.3):
     dependencies:
       chalk: 2.4.2
-      commitizen: 4.3.0(@types/node@20.14.10)(typescript@5.5.3)
+      commitizen: 4.3.0(@types/node@20.14.10)(typescript@5.3.3)
       conventional-commit-types: 3.0.0
       lodash.map: 4.6.0
       longest: 2.0.1
       word-wrap: 1.2.5
     optionalDependencies:
-      '@commitlint/load': 19.2.0(@types/node@20.14.10)(typescript@5.5.3)
+      '@commitlint/load': 19.2.0(@types/node@20.14.10)(typescript@5.3.3)
     transitivePeerDependencies:
       - '@types/node'
       - typescript
@@ -7504,15 +7504,15 @@ snapshots:
 
   trough@2.2.0: {}
 
-  ts-api-utils@1.3.0(typescript@5.5.3):
+  ts-api-utils@1.3.0(typescript@5.3.3):
     dependencies:
-      typescript: 5.5.3
+      typescript: 5.3.3
 
   ts-interface-checker@0.1.13: {}
 
-  tsconfck@3.1.1(typescript@5.5.3):
+  tsconfck@3.1.1(typescript@5.3.3):
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.3.3
 
   tslib@2.6.3: {}
 
@@ -7534,7 +7534,7 @@ snapshots:
     dependencies:
       semver: 7.6.2
 
-  typescript@5.5.3: {}
+  typescript@5.3.3: {}
 
   ultrahtml@1.5.3: {}
 
