@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import FriendLink from "@components/FriendLink.astro";
+import Footer from "../components/Footer.astro";
 
 const friends = await getCollection("friend");
 ---
@@ -23,4 +24,5 @@ const friends = await getCollection("friend");
       }
     </ul>
   </Main>
+  <Footer />
 </Layout>
