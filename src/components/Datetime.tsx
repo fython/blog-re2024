@@ -54,11 +54,13 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: "Asia/Shanghai",
   });
 
   const time = myDatetime.toLocaleTimeString(LOCALE.langTag, {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Asia/Shanghai",
   });
 
   return (
@@ -66,7 +68,7 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
       <time dateTime={myDatetime.toISOString()}>{date}</time>
       <span aria-hidden="true"> | </span>
       <span className="sr-only">&nbsp;at&nbsp;</span>
-      <span className="text-nowrap">{time}</span>
+      <span className="text-nowrap">{time} @ UTC +8</span>
     </>
   );
 };
