@@ -9,6 +9,7 @@ tags:
   - 游戏
 description: Deck 是啥好吃的？对比过去的 x86 掌机有什么不同之处，有什么亮点？亲自体验上手后发现还是在预期之上的
 ogImage: /assets/202306-steam-deck-experience/gaming-csgo-0.png
+featured: true
 ---
 
 # 前生
