@@ -1,7 +1,7 @@
 ---
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
-import LinkButton from "./LinkButton.astro";
+import CCLicenses from "./CCLicenses.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -20,26 +20,8 @@ const { noMarginTop = false } = Astro.props;
       <span
         >Copyright &#169; {currentYear}
         <span property="cc:attributionName">烧饼</span></span
-      >&nbsp;|&nbsp;内容以&thinsp;
-      <LinkButton
-        href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1"
-        target="_blank"
-        rel="license noopener noreferrer"
-        className="inline-flex items-center"
-        >CC BY-NC 4.0<img
-          style="height:14px!important;margin-left:3px"
-          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"
-          alt=""
-        /><img
-          style="height:14px!important;margin-left:3px"
-          src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"
-          alt=""
-        /><img
-          style="height:14px!important;margin-left:3px"
-          src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"
-          alt=""
-        /></LinkButton
-      >&thinsp;协议发布
+      >
+      &nbsp;|&nbsp;内容以&thinsp;<CCLicenses />&thinsp;协议发布
     </div>
   </div>
 </footer>

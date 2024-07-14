@@ -1,0 +1,33 @@
+---
+import LinkButton from "./LinkButton.astro";
+
+interface Props {
+  href?: string;
+  name?: string;
+  iconsShown?: string[];
+}
+
+const {
+  href = "https://creativecommons.org/licenses/by-nc/4.0/",
+  name = "CC BY-NC 4.0",
+  iconsShown = ["cc", "by", "nc"],
+} = Astro.props;
+---
+
+<LinkButton
+  href={href}
+  target="_blank"
+  rel="license noopener noreferrer"
+  className="inline-flex items-center gap-0.5"
+>
+  {name}
+  {
+    iconsShown.map(icon => (
+      <img
+        style="height:14px!important"
+        src={`https://mirrors.creativecommons.org/presskit/icons/${icon}.svg`}
+        alt=""
+      />
+    ))
+  }
+</LinkButton>
