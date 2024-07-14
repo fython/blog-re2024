@@ -6,11 +6,13 @@ export interface Props {
   title?: string;
   disabled?: boolean;
   target?: string;
+  rel?: string;
 }
 
 const {
   href,
   target,
+  rel,
   className,
   ariaLabel,
   title,
@@ -32,6 +34,7 @@ const {
     <a
       {href}
       {target}
+      {rel}
       class={`group inline-block hover:text-skin-accent ${className}`}
       aria-label={ariaLabel}
       title={title}
