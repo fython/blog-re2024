@@ -16,7 +16,7 @@ ogImage: ../assets/201905-oneplus-7-pro/cover.webp
 
 ![我的 OnePlus 一加全家福](../assets/201905-oneplus-7-pro/p1.webp)
 
-# 总览
+## 总览
 
 **外观：**★★★★
 
@@ -32,7 +32,7 @@ ogImage: ../assets/201905-oneplus-7-pro/cover.webp
 
 **外放：**听个响
 
-# 外观
+## 外观
 
 我买到的是星雾蓝版本，对，就是那个最热门的版本。
 
@@ -46,7 +46,7 @@ Essential Phone。
 
 也许是因为大家都看到了磨砂的优点，星雾蓝才会被一抢而空，这导致一加员工现在被迫在微博不停地宣传黑色版本，但相信我，星雾蓝是你最值得种草的配色。
 
-# 性能
+## 性能
 
 OnePlus 7 Pro 已不局限于每年换 SoC 带来的性能提升。
 
@@ -54,7 +54,7 @@ SD855 + LPDDR4X RAM + UFS 3.0，这些诚意满满的堆料，让 OnePlus 7 Pro 
 
 一句话，这就是目前最快的 Android 旗舰。
 
-# 屏幕
+## 屏幕
 
 其实屏幕已经成了 OnePlus 7 Pro 卓越性能的一部分，这块三星定制的 2K 90Hz 流体屏令我流连忘返。
 
@@ -71,13 +71,13 @@ LCD 手机早睡至少半小时（迫真）
 
 专业的“客观”数据测试和 HDR10+ 效果，各位可以参考 DisplayMate 或 Notebook Check 的介绍
 
-http://www.displaymate.com/OnePlus_7Pro_ShootOut_1P.htm
+<http://www.displaymate.com/OnePlus_7Pro_ShootOut_1P.htm>
 
-https://www.notebookcheck.net/OnePlus-7-Pro-Smartphone-Review.420598.0.html
+<https://www.notebookcheck.net/OnePlus-7-Pro-Smartphone-Review.420598.0.html>
 
 ![93% 屏占比 3120 x 1440 分辨率 516 ppi](../assets/201905-oneplus-7-pro/p2.webp)
 
-# 续航
+## 续航
 
 虽有 4000mAh，但受这块屏幕的影响，中度使用只能坚持 10 - 12 小时，但因为有 Warp 30W，如果不是长时间外出问题不大。
 
@@ -86,7 +86,7 @@ https://www.notebookcheck.net/OnePlus-7-Pro-Smartphone-Review.420598.0.html
 这一代最令人惊喜的是，不仅是 Warp，OnePlus 7 系列新增了 5V/3A PD 兼容，但这并不是张老板大发慈悲，OPPO Reno 也即将 OTA
 支持这一特性。
 
-# 触控
+## 触控
 
 很少有测评提及触控，但曲面屏的 OnePlus 7 Pro 让我不得不提。
 
@@ -98,16 +98,16 @@ Gboard :(。
 
 震感也在这里说吧：不错，但还未超越 iPhone，有待继续提升。
 
-# 相机
+## 相机
 
 唔，其实挺想跳过这一部分的，先留个坑吧。
 
 值得一提的是，前置摄像头是升降结构，但人脸解锁速度比想象中要快，就是动作有点鬼畜（弹出来一下又马上收回），
 我还是继续只用屏下指纹吧。
 
-![](../assets/201905-oneplus-7-pro/p3.webp)
+![草](../assets/201905-oneplus-7-pro/p3.webp)
 
-# 系统
+## 系统
 
 轻快无负担的 H2OS，还是那么惹人喜爱。
 
@@ -125,11 +125,11 @@ H2OS 结合 OnePlus 7 Pro 的硬件特性，提供了 “添加屏幕刷新率�
 
 考虑到可能 90Hz 屏需要系统支持，短期内暂不打算刷其它 ROM（官方 Android Q Beta 在 5月 21 日发售当天就提供了下载，但我不想刷qwq）。
 
-# 玄学（音响）
+## 玄学（音响）
 
 立体声效果真的很一般，毕竟还是借用了听筒，但有总比没有强。
 
-# 尾巴
+## 尾巴
 
 OnePlus 7 Pro 最大的卖点无非是它的屏幕，因为时至 2019 年中，各家 855
 旗舰已悉数亮相，只有足够差异化的卖点才能赢得钞票，产品力不足的手机自不必说，但没有亮点的水桶机也会一同被网友的口水淹没。
@@ -150,9 +150,9 @@ OnePlus 7 Pro 最大的卖点无非是它的屏幕，因为时至 2019 年中，
 
 但苦涩之后，往往会回甘。
 
-# 附录
+## 附录
 
-## A
+### A
 
 各类音乐游戏判定偏移参考（基于 Android 9.0 H2OS 9.5.2、耳机状态）
 
@@ -164,12 +164,12 @@ OnePlus 7 Pro 最大的卖点无非是它的屏幕，因为时至 2019 年中，
 
 **Arcaea:** 120-150
 
-## B
+### B
 
 这次一加据说存在小部分溢胶、镜头进灰的现象，某风姓男子和一些群友没有翻车的 7 Pro 是 5.20 产+官网渠道，发现出问题较多的是京东第一批，我的
 5.17 产+官网渠道表示暂时没有遇到问题。目前尚未确认哪一批次出现质量问题较多，希望后续批次尽快解决品控问题。
 
-## C
+### C
 
 一加 7 Pro 的 Bootloader 不支持通过 fastboot 不刷入分区直接 boot image（`fastboot boot`），目前要安装 TWRP Recovery
 需要先切换到另一个闲置的 Slot 使用 TWRP Image 覆盖 Boot 分区启动，再在进入 TWRP 后切换到原来使用的 Slot 刷入 TWRP
