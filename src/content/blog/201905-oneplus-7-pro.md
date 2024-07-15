@@ -10,6 +10,8 @@ description: 本文最初发表于 Telegram 上的体验测评频道 @tsuBench
 ogImage: ../assets/201905-oneplus-7-pro/cover.webp
 ---
 
+> 本文最初发表于 Telegram 上的体验测评频道 [@tsuBench](https://t.me/tsuBench)
+
 ![封面](../assets/201905-oneplus-7-pro/cover.webp)
 
 > 之所以称 OnePlus 7 Pro 为冻奶茶，是因为它顺滑而又苦涩着。
