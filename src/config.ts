@@ -7,7 +7,7 @@ export const SITE: Site = {
   title: "烧饼吹水铺",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
-  postPerPage: 3,
+  postPerPage: 5,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 };
 
