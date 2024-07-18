@@ -47,7 +47,7 @@ importers:
     devDependencies:
       '@astrojs/react':
         specifier: ^3.0.9
-        version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))
+        version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))
       '@astrojs/sitemap':
         specifier: ^3.0.5
         version: 3.1.6
@@ -111,6 +111,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
+      vite:
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
 
 packages:
 
@@ -3934,8 +3937,8 @@ packages:
   vfile@6.0.1:
     resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
 
-  vite@5.3.3:
-    resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
+  vite@5.3.4:
+    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -4243,11 +4246,11 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/react@3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))':
+  '@astrojs/react@3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))':
     dependencies:
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
-      '@vitejs/plugin-react': 4.3.1(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))
+      '@vitejs/plugin-react': 4.3.1(vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       ultrahtml: 1.5.3
@@ -5186,14 +5189,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.3.1(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))':
+  '@vitejs/plugin-react@4.3.1(vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.7)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
+      vite: 5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -5459,8 +5462,8 @@ snapshots:
       tsconfck: 3.1.1(typescript@5.3.3)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
-      vitefu: 0.2.5(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))
+      vite: 5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
+      vitefu: 0.2.5(vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2))
       which-pm: 2.2.0
       yargs-parser: 21.1.1
       zod: 3.23.8
@@ -8612,7 +8615,7 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2):
+  vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
@@ -8623,9 +8626,9 @@ snapshots:
       lightningcss: 1.25.1
       terser: 5.31.2
 
-  vitefu@0.2.5(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)):
+  vitefu@0.2.5(vite@5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)):
     optionalDependencies:
-      vite: 5.3.3(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
+      vite: 5.3.4(@types/node@20.14.10)(lightningcss@1.25.1)(terser@5.31.2)
 
   volar-service-css@0.0.59(@volar/language-service@2.4.0-alpha.15):
     dependencies:
