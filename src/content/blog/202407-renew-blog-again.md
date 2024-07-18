@@ -7,17 +7,17 @@ description: 烧饼的博客经历了一次又一次翻新，终于在 2024 年�
 featured: true
 ---
 
-# 又开张了
+## 又开张了
 
 开业大酬宾，新老顾客凭与 `https://feng.moe/` 博客交换友情链接的截图记录，可来广州找烧饼请吃一顿饭😋
 
-# 这一次用了什么博客框架？
+## 这一次用了什么博客框架？
 
 这次我调研了一些可玩性比较高的博客框架，旨在想在满足“内容第一”的前提下，二次开发更加简单上手，最终选择了这样一套技术栈：
 
 **Astro + Cloudflare Pages + React**
 
-## Astro
+### Astro
 
 Astro 类似于 VitePress/Next.js/Nuxt.js 一类静态网站构建框架，特别的地方在于：
 
@@ -38,13 +38,13 @@ Astro 类似于 VitePress/Next.js/Nuxt.js 一类静态网站构建框架，特�
   在我常用的 Jetbrains IDE 和 Visual Studio Code 都有官方插件支持；
   除此以外，在 Vercel、Cloudflare Pages 等 PaaS 页面平台都有配套支持，可以快速接入 CI/CD 流程发布到互联网中
 
-## Cloudflare Pages
+### Cloudflare Pages
 
 我的多个域名目前都是托管在 Cloudflare DNS 上，最近搭建 Homelab 想内网穿透出去使用了 ZeroTrust 和 Access 产品，
 体验非常不错。以前静态博客构建都是自己在 GitHub 上搭建 Actions 再单独发布到 `gh-pages` 分支，中间有一定的调试工作，
 有经验后不是什么难题，但是 Cloudflare 产品体验确实是很用心在做，于是打算以此为契机开始尝试 Cloudflare Pages。
 
-## React
+### React
 
 事实上我还没有开始学习 React 框架，之前一直都是首选 Vue.js，毕竟 Vue.js 还没玩透，要学的东西还有很多。
 
@@ -53,16 +53,16 @@ Astro 类似于 VitePress/Next.js/Nuxt.js 一类静态网站构建框架，特�
 
 后续博客还需要补充评论交流功能，也许我会继续使用 React 进行开发完善，也可能会重写到 Vue.js。
 
-# 问题来了
+## 问题来了
 
-## 大家都在不停地折腾框架，文章都没写多少？
+### 大家都在不停地折腾框架，文章都没写多少？
 
 很遗憾，我也是其中一员。我最早用过 WordPress、Typecho 博客框架，部署过新浪云、Hostker 还有自建虚拟机上，
 因为这些框架在业界比较流行，更新不够及时又疏于管理，被人攻击把数据库搞挂了之后，有一段时间都没有写文章。
 后来基本都在使用 Hexo 静态博客框架，借助于强大的 GitHub Pages 和 Cloudflare CDN，不用担心被 DDoS 或利用漏洞导致瘫痪，
 但是也没有解决自己不常写文章的问题😅
 
-## 那为什么又重新开坑？
+### 那为什么又重新开坑？
 
 毕业入职鹅厂后，很多时间都在学习公司内基础设施和工作流程，很多东西都落后于业界，且由于大人的原因，
 大家没有时间精力去优化完善，而我所在的岗位没有什么机会去挑战一些有难度的项目，经常都是被业务催着交付，
