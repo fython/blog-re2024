@@ -72,6 +72,9 @@ importers:
       astro-eslint-parser:
         specifier: ^0.16.2
         version: 0.16.3
+      braces:
+        specifier: ^3.0.3
+        version: 3.0.3
       commitizen:
         specifier: ^4.3.0
         version: 4.3.0(@types/node@20.14.10)(typescript@5.3.3)
