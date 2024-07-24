@@ -5,7 +5,7 @@ tags:
   - 博客
   - Cloudflare
   - 重定向
-description: Cloudflare Bulk Redirects 和 Pages Redirect 使用心得
+description: Cloudflare Redirects 和 Pages Redirect 使用心得
 ---
 
 ## 背景
