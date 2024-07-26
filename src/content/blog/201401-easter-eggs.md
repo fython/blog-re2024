@@ -16,7 +16,8 @@ WordPress 换到 Typecho 的时候，我还曾经备份过一次文章数据，�
 - 随手记：Win 10 SMB 文件共享帐户登入问题 & 体验 Google 的 Samba Documents Provider（2018-06-30）
 - 【新手向】在 Ubuntu Linux 上配置自己的水表助手 FCM 推送服务端（2017-09-06）
 - ~~Kotlin + Node.js = Node.kt？（2017-08-20）~~ 已找回，[链接](/posts/201708-kotlin-mix-nodejs/)
-- 在 Windows 10 Creators Update (1703) 上使用 MacType + 思源宋体（2017-05-18）
+- ~~在 Windows 10 Creators Update (1703) 上使用 MacType + 思源宋体（2017-05-18）~~
+  已找回，[链接](/posts/201705-win10-fonts-with-mactype/)
 - AlipayZeroSdk – 轻量的支付宝转账工具类（2016-08-29）
 - Air for Steam – 一款为 Steam 玩家打造的 Materialized 界面主题（2016-07-29）
 - 「一加」手机 X 上手体验：一个精致的缺陷品（2016-02-10）
