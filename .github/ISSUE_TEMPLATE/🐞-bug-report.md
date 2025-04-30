@@ -1,15 +1,15 @@
 ---
-name: "\U0001F41E Bug report"
-about: Report a bug or unexpected behavior in AstroPaper
-title: "[BUG]: "
+name: "\U0001F41E 报告问题"
+about: 报告问题或
+title: "[BUG] "
 labels: bug
 assignees: ""
 ---
 
-**Describe the bug**
+**描述问题**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+**复现步骤**
 Steps to reproduce the behavior:
 
 1. Go to '...'
@@ -17,11 +17,11 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
-**Expected behavior**
+**预期表现**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+**截图**
 If applicable, add screenshots to help explain your problem.
 
-**Additional context**
+**附加信息**
 Add any other context about the problem here.
