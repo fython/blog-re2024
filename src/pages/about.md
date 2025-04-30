@@ -10,18 +10,19 @@ title: "关于我"
 ## 装备/Equipment
 
 - **桌面操作系统：** Windows 11 Pro & macOS Sonoma
-- **游戏机：** Steam Deck LCD & AMD Zen3 PC with RTX3080Ti
+- **游戏机：** AMD Zen3 PC with RTX3080Ti
+- **显示器：** [REDMI 显示器 G Pro 27U](https://www.mi.com/redmi-monitors/g-pro-27u)
 - **键鼠：**
   [ROG 魔导士 RX Low Profile](https://rog.asus.com.cn/keyboards/keyboards/aura-rgb/rog-falchion-rx-low-profile/) &
   [Logitech G Pro X Superlight](https://www.logitechg.com/zh-cn/products/gaming-mice/pro-x-superlight-wireless-mouse.910-005946.html)
-- **主力手机：** [OPPO Find N3 国行](https://www.oppo.com/cn/smartphones/series-find-n/find-n3/)
-  & [Google Pixel 8 日版](https://store.google.com/product/pixel_8)
+- **主力手机：** [小米 15 Ultra](https://www.mi.com/prod/xiaomi-15-ultra)
+  & [iPhone 15](https://www.apple.com/hk/iphone-15/specs/)
 - **平板电脑：** [iPad Pro (2nd gen. with A12Z)](https://support.apple.com/en-us/118452)
-- **耳机：** [Google Pixel Buds Pro](https://store.google.com/product/pixel_buds_pro) &
+- **耳机：** [Google Pixel Buds Pro 2](https://store.google.com/tw/product/pixel_buds_pro_2) &
   [Sony WH-1000XM5](https://electronics.sony.com/audio/headphones/headband/p/wh1000xm5-b)
-- **开发机/Homelab：** Minisfourm UM780 Pro
-- **浏览器：** [Arc Browser](https://arc.net/) & Google Chrome
-- **笔记软件：** Notion & Google Keep
+- **开发机/Homelab：** Mac mini M4 丐版
+- **浏览器：** Google Chrome
+- **笔记软件：** Notion
 - **IDE：** Jetbrains 全家桶 & Visual Studio Code & Vim
 
 ## 兴趣/Hobbies
