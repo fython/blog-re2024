@@ -1,6 +1,7 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import Comments from "@/components/Comments.tsx";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
@@ -160,6 +161,8 @@ const nextPost =
         )
       }
     </div>
+
+    <Comments client:load />
   </main>
   <Footer />
 </Layout>
