@@ -1,14 +1,17 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import LinkButton from "@components/LinkButton.astro";
-import Hr from "@components/Hr.astro";
-import Card from "@components/Card";
-import Socials from "@components/Socials.astro";
-import getSortedPosts from "@utils/getSortedPosts";
-import { SOCIALS } from "@config";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Socials from "@/components/Socials.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Card from "@/components/Card.astro";
+import Hr from "@/components/Hr.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import IconRss from "@/assets/icons/IconRss.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+import { SOCIALS } from "@/constants";
 
 const posts = await getCollection("blog");
 
@@ -21,19 +24,34 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
 <Layout>
   <Header />
-  <main id="main-content">
-    <section id="hero">
-      <h1>今日例牌</h1>
+  <main id="main-content" data-layout="index">
+    <section id="hero" class="pt-8 pb-6">
+      <h1 class="my-4 inline-block text-2xl font-semibold sm:my-8 sm:text-3xl">今日例牌</h1>
+      <a
+        target="_blank"
+        href="/rss.xml"
+        class="inline-block"
+        aria-label="rss feed"
+        title="RSS Feed"
+      >
+        <IconRss
+          width={20}
+          height={20}
+          class="stroke-accent scale-125 stroke-3"
+        />
+        <span class="sr-only">RSS Feed</span>
+      </a>
 
-      <ul>
+      <ul class="mx-6 mb-4" style="list-style: disc">
         <li>西洋菜杏仁排骨汤</li>
         <li>厚街烧鹅濑粉</li>
         <li>支竹火腩饭</li>
       </ul>
-      <p>
+
+      <p class="mt-2">
         如果你正在寻找广州美食可翻阅
         <LinkButton
-          className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+          class="hover:text-skin-accent underline decoration-dashed underline-offset-4"
           href="https://siubeng.notion.site/e85a1dc7261043c3957445882345e11d?v=368de00071b948c7b54191e98660fc98"
         >
           我的笔记
@@ -42,8 +60,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       {
         // only display if at least one social link is enabled
         socialCount > 0 && (
-          <div class="social-wrapper">
-            <div class="social-links">社交网络：</div>
+          <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
+            <div class="mr-2 mb-1 whitespace-nowrap sm:mb-0">社交网络：</div>
             <Socials />
           </div>
         )
@@ -55,15 +73,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     {
       featuredPosts.length > 0 && (
         <>
-          <section id="featured">
-            <h2>精选</h2>
+          <section id="featured" class="pt-12 pb-6">
+            <h2 class="text-2xl font-semibold tracking-wide">精选</h2>
             <ul>
-              {featuredPosts.map(({ data, slug }) => (
-                <Card
-                  href={`/posts/${slug}/`}
-                  frontmatter={data}
-                  secHeading={false}
-                />
+              {featuredPosts.map(data => (
+                <Card variant="h3" {...data} />
               ))}
             </ul>
           </section>
@@ -74,95 +88,34 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts">
-          <h2>
-            最近填坑
-            <a
-              target="_blank"
-              href="/rss.xml"
-              class="rss-link"
-              aria-label="rss feed"
-              title="RSS Feed"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon">
-                <>
-                  <path d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z" />
-                  <path d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z" />
-                  <circle cx="6" cy="18" r="2" />
-                </>
-              </svg>
-              <span class="sr-only">RSS Feed</span>
-            </a>
-          </h2>
+        <section id="recent-posts" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">最近填坑</h2>
           <ul>
             {recentPosts.map(
-              ({ data, slug }, index) =>
-                index < 4 && (
-                  <Card
-                    href={`/posts/${slug}/`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
-                )
+              (data, index) =>
+                index < SITE.postPerIndex && <Card variant="h3" {...data} />
             )}
           </ul>
         </section>
       )
     }
 
-    <div class="all-posts-btn-wrapper">
+    <div class="my-8 text-center">
       <LinkButton href="/posts/">
         所有文章
-        <svg xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-          ></path>
-        </svg>
+        <IconArrowRight class="inline-block" />
       </LinkButton>
     </div>
   </main>
-
   <Footer />
 </Layout>
 
-<style>
-  /* ===== Hero Section ===== */
-  #hero {
-    @apply pb-6 pt-8;
-  }
-  #hero h1 {
-    @apply my-4 inline-block text-3xl font-semibold sm:my-8 sm:text-5xl;
-  }
-  #hero p {
-    @apply my-2;
-  }
-  #hero ul {
-    list-style: disc;
-    @apply mx-6 mb-4;
-  }
-  .social-wrapper {
-    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
-  }
-  .social-links {
-    @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
-  }
-
-  /* ===== Featured & Recent Posts Sections ===== */
-  #featured,
-  #recent-posts {
-    @apply pb-6 pt-12;
-  }
-  #featured h2,
-  #recent-posts h2 {
-    @apply text-2xl font-semibold tracking-wide align-bottom;
-  }
-  .all-posts-btn-wrapper {
-    @apply my-8 text-center;
-  }
-  .rss-link {
-    @apply mb-6;
-  }
-  .rss-icon {
-    @apply h-6 w-6 scale-110 fill-skin-accent sm:scale-125;
-  }
-</style>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+  });
+</script>
