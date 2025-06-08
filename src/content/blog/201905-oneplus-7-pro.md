@@ -7,16 +7,16 @@ tags:
   - 数码
   - 测评
 description: 本文最初发表于 Telegram 上的体验测评频道 @tsuBench
-ogImage: ../assets/201905-oneplus-7-pro/cover.webp
+ogImage: https://blogfiles.feng.moe/images/201905-oneplus-7-pro/cover.webp
 ---
 
 > 本文最初发表于 Telegram 上的体验测评频道 [@tsuBench](https://t.me/tsuBench)
 
-![封面](../assets/201905-oneplus-7-pro/cover.webp)
+![封面](https://blogfiles.feng.moe/images/201905-oneplus-7-pro/cover.webp)
 
 > 之所以称 OnePlus 7 Pro 为冻奶茶，是因为它顺滑而又苦涩着。
 
-![我的 OnePlus 一加全家福](../assets/201905-oneplus-7-pro/p1.webp)
+![我的 OnePlus 一加全家福](https://blogfiles.feng.moe/images/201905-oneplus-7-pro/p1.webp)
 
 ## 总览
 
@@ -77,7 +77,7 @@ LCD 手机早睡至少半小时（迫真）
 
 <https://www.notebookcheck.net/OnePlus-7-Pro-Smartphone-Review.420598.0.html>
 
-![93% 屏占比 3120 x 1440 分辨率 516 ppi](../assets/201905-oneplus-7-pro/p2.webp)
+![93% 屏占比 3120 x 1440 分辨率 516 ppi](https://blogfiles.feng.moe/images/201905-oneplus-7-pro/p2.webp)
 
 ## 续航
 
@@ -107,7 +107,7 @@ Gboard :(。
 值得一提的是，前置摄像头是升降结构，但人脸解锁速度比想象中要快，就是动作有点鬼畜（弹出来一下又马上收回），
 我还是继续只用屏下指纹吧。
 
-![草](../assets/201905-oneplus-7-pro/p3.webp)
+![草](https://blogfiles.feng.moe/images/201905-oneplus-7-pro/p3.webp)
 
 ## 系统
 

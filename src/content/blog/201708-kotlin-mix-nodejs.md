@@ -12,7 +12,7 @@ description: Kotlin 不止是一门基于 JVM 的高级语言
 > Kotlin 是一个基于 JVM 的新的编程语言，由 JetBrains 爸爸开发，我们都知道它可以编译为 Java 字节码，有完善的 IDE 支持，还可以作为
 > Android 开发语言。除此以外，还可以编译为 JavaScript，在 JVM 虚拟机外运行。
 
-![Kotlin Logo](../assets/201708-kotlin-mix-nodejs/p1.jpg)
+![Kotlin Logo](https://blogfiles.feng.moe/images/201708-kotlin-mix-nodejs/p1.jpg)
 
 今天准备使用 Node.js 偶然想起 Kotlin 可以编译为 JavaScript，忽然脑洞大开想试试用 Kotlin 写 Node
 程序，查找相关资料时发现已经有人尝试过，但目前还没有中文的相关文章，便打算在自己尝试后写这篇非常简单的介绍。
@@ -21,7 +21,7 @@ description: Kotlin 不止是一门基于 JVM 的高级语言
 
 Node.js 配置起来比较方便，我们可以先在 IntelliJ IDEA 中建立好 Gradle + Kotlin (JavaScript) 项目：
 
-![创建项目](../assets/201708-kotlin-mix-nodejs/p2.jpg)
+![创建项目](https://blogfiles.feng.moe/images/201708-kotlin-mix-nodejs/p2.jpg)
 
 创建好后，我们修改一下 build.gradle，让 Kotlin 编译为 Node.js 适用的 JavaScript 并输出到指定位置便于寻找：
 
@@ -133,13 +133,13 @@ fun main(args: Array<String>) {
 
 首先，我们需要将 Kotlin 编译为 JavaScript。在这里我们通过 Gradle 执行 `gradle build`。（或像下图）
 
-![Gradle Tasks](../assets/201708-kotlin-mix-nodejs/p3.jpg)
+![Gradle Tasks](https://blogfiles.feng.moe/images/201708-kotlin-mix-nodejs/p3.jpg)
 
 我们的成品就会在之前定义好的 out 目录下生成为一个 `launch.js` 文件。
 
 在项目根目录下执行 `npm start` 命令，就可以看到 Node.kt 程序已经开始运行。访问 `localhost:3001` 得到了图中的结果：
 
-![Demo](../assets/201708-kotlin-mix-nodejs/p4.jpg)
+![Demo](https://blogfiles.feng.moe/images/201708-kotlin-mix-nodejs/p4.jpg)
 
 本文使用的代码均已存放在 Github：https://github.com/fython/NodeKt-Playground
 

@@ -15,7 +15,7 @@ description: 偶然在网上看到很多吐槽新版本 VSCode 不能连到稍�
 因为常常接触用 Node.js 和 Golang 写的项目，相比之下 Node.js 对 glibc 运行版本要求是比较高的，果不其然这次 Node 升级导致使用
 Remote SSH 远程开发的用户[哀嚎一片](https://github.com/microsoft/vscode/issues?q=glibc)：
 
-![过滤后的 VSCode 项目 Issues 列表](../assets/202402-fix-vscode-ssh-on-my-server/vscode-glibc-issues.png)
+![过滤后的 VSCode 项目 Issues 列表](https://blogfiles.feng.moe/images/202402-fix-vscode-ssh-on-my-server/vscode-glibc-issues.png)
 
 其中跟帖比较多的一个 Issue（[microsoft/vscode#203967](https://github.com/microsoft/vscode/issues/203967)）提到报错信息：
 
@@ -110,7 +110,7 @@ strings ./usr/lib64/libstdc++.so.6 | grep GLIBCXX
 由于 VSCode Remote Server 是基于 Node.js 开发的，实际上我们需要进行修改的是一个 node 程序，具体位置可以通过 VSCode Remote
 SSH 链接时的日志捕捉到：
 
-![VSCode Remote SSH 日志截图](../assets/202402-fix-vscode-ssh-on-my-server/vscode-ssh-server-log-0.png)
+![VSCode Remote SSH 日志截图](https://blogfiles.feng.moe/images/202402-fix-vscode-ssh-on-my-server/vscode-ssh-server-log-0.png)
 
 通常情况下，node 二进制都是从系统环境（LD_LIBRARY_PATH）去寻找加载 glibc so 库，但直接修改 LD_LIBRARY_PATH
 可能会破坏其他程序的正常运行，我们只通过 patchelf 去修改 node 二进制。

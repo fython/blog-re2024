@@ -42,14 +42,14 @@ Issue：<https://github.com/fython/blog-re2024/issues/6>
 
 从 Cloudflare 域名面板中找到 规则 - 重定向规则：
 
-![面板首页](../assets/202407-cf-pages-redirects/single-redirects-home.jpg)
+![面板首页](https://blogfiles.feng.moe/images/202407-cf-pages-redirects/single-redirects-home.jpg)
 
 创建新规则，根据需求设置请求匹配规则：
 
 - 主机名 等于 `www.feng.moe`
 - 主机名 等于 `blog.feng.moe`
 
-![规则展示图](../assets/202407-cf-pages-redirects/single-redirects-rule-details.jpg)
+![规则展示图](https://blogfiles.feng.moe/images/202407-cf-pages-redirects/single-redirects-rule-details.jpg)
 
 由于我希望保留 URL 中的路径，选择了 **动态** 类型来使用表达式函数作为 **URL 重定向结果**，
 表达式如下：
@@ -63,11 +63,11 @@ concat("https://feng.moe", http.request.uri.path);
 你可能以为到这里就完了，尽管我们把域名托管给了 Cloudflare DNS，但是如果域名没有解析记录，
 这里设置的重定向记录也是会失败的。
 
-![DNS 解析展示](../assets/202407-cf-pages-redirects/dns-query.jpg)
+![DNS 解析展示](https://blogfiles.feng.moe/images/202407-cf-pages-redirects/dns-query.jpg)
 
 在域名 DNS 面板中确认 `blog.feng.moe` 和 `www.feng.moe` 是否 **存在 A/AAAA/CNAME 解析记录**，并且代理状态为 **“已代理”**
 
-![DNS 解析记录设置](../assets/202407-cf-pages-redirects/dns-records.jpg)
+![DNS 解析记录设置](https://blogfiles.feng.moe/images/202407-cf-pages-redirects/dns-records.jpg)
 
 由于我们并不打算在被跳转的域名上部署实际的内容，通常希望解析记录没有实际意义，但参考了网上很多关于 Cloudflare
 空解析的问答，一些回答声称可以填写 `192.0.2.1` 类似的非公网保留 IP 地址作为 A 记录，实测并不能正常工作。

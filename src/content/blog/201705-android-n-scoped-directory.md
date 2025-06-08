@@ -11,7 +11,7 @@ description: 基于自己使用的体验和过程简述一下 Scoped Directory A
 
 Android 7.0 引进了许多新特性和 API，其中有一点被很多人都忽略了，或许是没有注意到，或许是感觉使用起来比较麻烦，在这里我就基于自己使用的体验和过程简述一下这个叫做 “作用域目录访问（Scoped Directory Access）” 的新 API。
 
-![Cuto 1.0 实践](../assets/201705-android-n-scoped-directory/p1.png)
+![Cuto 1.0 实践](https://blogfiles.feng.moe/images/201705-android-n-scoped-directory/p1.png)
 
 如图所示，作用域目录访问和 Android 6.0 访问内部储存空间一样，需要应用程序主动向用户请求读写权限。不同的是，作用域目录访问不再要求应用声明 `android.permission.WRITE_EXTERNAL_STORAGE` 权限，也限制了应用程序访问内部储存空间行为，只能在请求的作用域内进行读写操作（包括文件、子文件夹）。
 

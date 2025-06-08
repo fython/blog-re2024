@@ -76,11 +76,11 @@ biometricPrompt.authenticate(cancellationSignal, myCallback);
 
 Android 8.1
 
-![](../assets/201806-android-biometric-prompt-compat/p1.png)
+![](https://blogfiles.feng.moe/images/201806-android-biometric-prompt-compat/p1.png)
 
 Android P Preview
 
-![](../assets/201806-android-biometric-prompt-compat/p2.png)
+![](https://blogfiles.feng.moe/images/201806-android-biometric-prompt-compat/p2.png)
 
 ## 还有……
 

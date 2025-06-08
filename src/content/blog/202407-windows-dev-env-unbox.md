@@ -56,7 +56,7 @@ add_newline = true
 
 重启终端即可生效，若遇到提示安全提示不能执行脚本的问题，可以去 设置 - 系统 - 开发者选项，打开此开关：
 
-![](../assets/202407-windows-dev-env-unbox/p1.png)
+![](https://blogfiles.feng.moe/images/202407-windows-dev-env-unbox/p1.png)
 
 ### Node.js with `fnm`
 
@@ -109,16 +109,16 @@ Docker 现已支持使用 WSL2 作为后端（取代 Hyper-V 虚拟机），根�
 Windows 11 默认不会像 Linux 一样提供 sshd/OpenSSH Server，但系统自带设置可以快速安装。在 设置 - 系统 - 可选功能
 中，添加可选功能，找到【OpenSSH 服务器】并安装
 
-![](../assets/202407-windows-dev-env-unbox/ssh-p1.png)
+![](https://blogfiles.feng.moe/images/202407-windows-dev-env-unbox/ssh-p1.png)
 
 安装完成后无需重启，打开任务管理器 - 服务 Tab，找到 sshd，右键启动，就可以在 SSH Client 使用你的 Windows 用户账号和密码远程连接到这台
 PC 了。
 
-![](../assets/202407-windows-dev-env-unbox/ssh-p2.png)
+![](https://blogfiles.feng.moe/images/202407-windows-dev-env-unbox/ssh-p2.png)
 
 最后，在 `services.msc` 打开服务管理，将 sshd 服务设置为自动，这样每次开机都不用手动启动：
 
-![](../assets/202407-windows-dev-env-unbox/ssh-p3.png)
+![](https://blogfiles.feng.moe/images/202407-windows-dev-env-unbox/ssh-p3.png)
 
 ## 字体
 

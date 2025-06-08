@@ -13,7 +13,7 @@ description: Cuto 1.0 开发时期探索的一个新 Android API
 
 到了 Android 7.1，Google 重新重视快捷方式这一项功能，专门添加了一个新的模式。在已适配过特性的 Launcher 上（如 Pixel Launcher、Google Now Launcher 和 Nova Launcher），用户长按桌面上的 App 图标即可显示出开发者准备好的快捷方式。
 
-![截图展示](../assets/201611-android-n-shortcuts/p1.png)
+![截图展示](https://blogfiles.feng.moe/images/201611-android-n-shortcuts/p1.png)
 
 对快捷方式的作用理解有很多，我们尽可能只把最需要或是最便捷的动作放上来，就如 [Google 官方文档](https://www.open-open.com/misc/goto?guid=4959723247417751040) 说的：
 
@@ -74,7 +74,7 @@ description: Cuto 1.0 开发时期探索的一个新 Android API
 
 5. 到这里就完成了静态快捷方式的定义了，效果如图（此处用了第三方的 Launcher 显示，会额外显示一个 Icon options ，暂且不管）：
 
-![Cuto 演示](../assets/201611-android-n-shortcuts/p2.png)
+![Cuto 演示](https://blogfiles.feng.moe/images/201611-android-n-shortcuts/p2.png)
 
 ## 动态快捷方式
 
@@ -116,7 +116,7 @@ shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));
 
 在此我提供 Cuto 中的一个样例和 PSD 模版供大家参考：
 
-![随机按钮](../assets/201611-android-n-shortcuts/p3.png)
+![随机按钮](https://blogfiles.feng.moe/images/201611-android-n-shortcuts/p3.png)
 
 PSD 和 PNG：<https://pan.baidu.com/s/1nuOlcpz>
 

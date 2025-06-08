@@ -15,15 +15,15 @@ featured: true
 
 试试把 [https://ogp.me](https://ogp.me) 贴到 Twitter、Telegram 的输入框，会发生什么？
 
-![Twitter Demo](../assets/202407-pages-share-and-open-graph/p1.png)
+![Twitter Demo](https://blogfiles.feng.moe/images/202407-pages-share-and-open-graph/p1.png)
 
-![Telegram Demo](../assets/202407-pages-share-and-open-graph/p2.png)
+![Telegram Demo](https://blogfiles.feng.moe/images/202407-pages-share-and-open-graph/p2.png)
 
 原本单调的网页 URL 下面，多了一张包含标题、信息以及图标的卡片（有时候还会更多）。
 
 包括“烧饼吹水铺”博客，也做了类似表现的内容适配，例如了 https://feng.moe/posts/202407-renew-blog-again/ ：
 
-![我的博客 Demo](../assets/202407-pages-share-and-open-graph/p3.png)
+![我的博客 Demo](https://blogfiles.feng.moe/images/202407-pages-share-and-open-graph/p3.png)
 
 这是怎么做到的呢？
 
@@ -175,7 +175,7 @@ Dublin Core 的基本标签。
 我在 W3Techs 上找到一个实时更新的调研数据：https://w3techs.com/technologies/comparison/da-dublincore,da-opengraph ，即便是
 Top 1000 排名的网站也仅有其 2.6% 的网站使用
 
-![调研数据](../assets/202407-pages-share-and-open-graph/p4.png)
+![调研数据](https://blogfiles.feng.moe/images/202407-pages-share-and-open-graph/p4.png)
 
 从多个地方搜集的信息来看，Dublin Core 对网站 SEO 和分享体验优化已经几乎没有帮助，现代的 OG 显然是更好的接班人。
 
@@ -183,7 +183,7 @@ Top 1000 排名的网站也仅有其 2.6% 的网站使用
 
 Telegram 也对聊天流中网页 URL 做了一个很有趣的分享能力叫 [Instant View](https://instantview.telegram.org/)
 
-![Instant View](../assets/202407-pages-share-and-open-graph/p5.png)
+![Instant View](https://blogfiles.feng.moe/images/202407-pages-share-and-open-graph/p5.png)
 
 除了和 OG 一样统一提供标题、描述和封面，还提供了快速加载的阅读界面，比起前面提到的那些元数据规范，它更接近 Google
 主导的 [AMP](https://en.wikipedia.org/wiki/Accelerated_Mobile_Pages) 的能力。

@@ -12,7 +12,7 @@ description: 远古文章之一
 设计语言中关于 Card 卡片概念的实现 —— CardView。经历了相当长的一段时间相信许多 Android
 开发者都已经应用了这个控件，现在才写这篇文章可能有点晚，但对于刚刚开始使用的开发者以及其他已经使用了一段时间但做出来效果不好的同学应该能帮上点小忙。
 
-![](../assets/201510-android-cardview-experience/p1.png)
+![](https://blogfiles.feng.moe/images/201510-android-cardview-experience/p1.png)
 
 正题开始~
 
@@ -47,7 +47,7 @@ Ripple 效果，在旧版本则是一个变深/变亮的效果。
 如果你没使用这个支持库或者觉得这个效果在旧版本显得有点僵硬：
 你可以尝试自定义一个 Drawable，和上一条一样根据不同 SDK 版本分别编写不同的效果，在此就不多介绍自定义 Drawable 的方法。
 
-![](../assets/201510-android-cardview-experience/p2.gif)
+![](https://blogfiles.feng.moe/images/201510-android-cardview-experience/p2.gif)
 
 ## 让点击效果更加贴近 Material Design
 
@@ -88,11 +88,11 @@ CardView 中加入属性 `android:stateListAnimator="@anim/touch_raise"`。
 除了横向滚动列表和类似 Google Play 音乐中的带封面图片卡片 Item，其他地方应该尽量避免做固定高度的卡片。
 举一个错误例子，我之前写的快递查询应用「水表助手」，快递卡片就是用了固定宽度（误人子弟系列）
 
-![](../assets/201510-android-cardview-experience/p4.png)
+![](https://blogfiles.feng.moe/images/201510-android-cardview-experience/p4.png)
 
 不需要用卡片的地方也不应该使用，滥用只会让用户更快地厌倦你的界面设计。
 
-![](../assets/201510-android-cardview-experience/p5.png)
+![](https://blogfiles.feng.moe/images/201510-android-cardview-experience/p5.png)
 
 （这个是复制自官方的错误范例）
 

@@ -15,15 +15,15 @@ description: 自适应图标（Adaptive Icons）官方文档博客中文翻译
 
 ## 说明
 
-![](../assets/201703-android-o-adaptive-icons/p1.webp)
+![](https://blogfiles.feng.moe/images/201703-android-o-adaptive-icons/p1.webp)
 
-![](../assets/201703-android-o-adaptive-icons/p2.webp)
+![](https://blogfiles.feng.moe/images/201703-android-o-adaptive-icons/p2.webp)
 
 自适应图标可提供多种形状
 
 通过定义两张图层（前景与背景）你可以制定你的桌面图标外观，你必须提供**没有形状、阴影的 PNG 格式图象**作为图层 Drawable。
 
-![](../assets/201703-android-o-adaptive-icons/p3.webp)
+![](https://blogfiles.feng.moe/images/201703-android-o-adaptive-icons/p3.webp)
 
 自适应图标由两张图层和一个形状定义
 
@@ -33,9 +33,9 @@ description: 自适应图标（Adaptive Icons）官方文档博客中文翻译
 - **图层中心 72 x 72 dp 范围为可视范围。**
 - 系统会**保留**四周外的 36dp 范围用于生成有趣的视觉效果（如视差效果和跳动）。
 
-![](../assets/201703-android-o-adaptive-icons/p4.webp)
+![](https://blogfiles.feng.moe/images/201703-android-o-adaptive-icons/p4.webp)
 
-![](../assets/201703-android-o-adaptive-icons/p5.webp)
+![](https://blogfiles.feng.moe/images/201703-android-o-adaptive-icons/p5.webp)
 
 自适应图标支持各种动效
 

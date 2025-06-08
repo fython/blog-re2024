@@ -28,7 +28,7 @@ description: 技术改造过程用 APISIX 替换 NGINX 后出现了乱码问题�
 在 yaml 配置中它位于 nginx 配置节，说明这个能力是复用了 NGINX 自带的 charset 模块（<http://nginx.org/en/docs/http/ngx_http_charset_module.html#charset>），
 当 http 配置节中的 `charset` 值不为 `off` 时，就会在 `Content-Type` 头补充 `charset=xxx`，行为符合我们发现的问题表现。
 
-![NGINX charset 文档](../assets/202210-nginx-charset-gbk-problem/nginx-charset-directives.png)
+![NGINX charset 文档](https://blogfiles.feng.moe/images/202210-nginx-charset-gbk-problem/nginx-charset-directives.png)
 
 我们尝试将 charset 改为 `off`，重启 APISIX 服务，重新请求有问题的 GBK 页面源码，问题解决！
 
@@ -48,7 +48,7 @@ description: 技术改造过程用 APISIX 替换 NGINX 后出现了乱码问题�
 
 当然还有一种情况，就是上述属性均未提供时，Blink 渲染引擎会进行检测：<https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/text/text_encoding_detector.cc;l=50;drc=27e39fa1dd71076618c358639ed8a327bc3873c4>
 
-![Chromium 部分源码展截图](../assets/202210-nginx-charset-gbk-problem/chromium-src-p1.png)
+![Chromium 部分源码展截图](https://blogfiles.feng.moe/images/202210-nginx-charset-gbk-problem/chromium-src-p1.png)
 
 最终引用 Google 自己开源的 `compact_enc_det` 库（[GitHub](https://github.com/google/compact_enc_det)，可以单独在其他项目中使用），
 调用 `CompactEncDet::DetectEncoding` 去检测内容计算最近似的编码方式：<https://source.chromium.org/chromium/chromium/src/+/main:third_party/ced/src/compact_enc_det/compact_enc_det.cc;l=5537;drc=27e39fa1dd71076618c358639ed8a327bc3873c4>

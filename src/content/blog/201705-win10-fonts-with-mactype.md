@@ -29,7 +29,7 @@ MacType 可能会遇到一些问题。我们需要借助第三方制作的 MacTy
 
 将包内的 DLL 全部拷贝到 MacType 根目录下，覆盖原有的文件（要记得关闭程序）。
 
-![Unzip](../assets/201705-win10-fonts-with-mactype/p1.jpg)
+![Unzip](https://blogfiles.feng.moe/images/201705-win10-fonts-with-mactype/p1.jpg)
 
 然后把 `EasyHK32.dll` 和 `EasyHK64.dll` 都复制到系统盘的 `\Windows\System32` 文件夹下，64位系统则需要再复制一次到
 `\Windows\SysWOW64` 的文件夹下。
@@ -60,6 +60,6 @@ MacType 可能会遇到一些问题。我们需要借助第三方制作的 MacTy
 
 效果：
 
-![网易云音乐 UWP Demo](../assets/201705-win10-fonts-with-mactype/p2.jpg)
+![网易云音乐 UWP Demo](https://blogfiles.feng.moe/images/201705-win10-fonts-with-mactype/p2.jpg)
 
-![新闻 UWP Demo](../assets/201705-win10-fonts-with-mactype/p3.jpg)
+![新闻 UWP Demo](https://blogfiles.feng.moe/images/201705-win10-fonts-with-mactype/p3.jpg)
