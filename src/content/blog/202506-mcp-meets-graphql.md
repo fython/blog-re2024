@@ -1,6 +1,6 @@
 ---
-title: MCP meets GrpahQL
-pubDatetime: 2025-06-09T21:00:00.000+08:00
+title: MCP meets GraphQL
+pubDatetime: 2025-06-09T20:30:00.000+08:00
 tags:
   - AI
   - LLM
