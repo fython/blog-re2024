@@ -8,7 +8,6 @@ tags:
   - 技术
   - HTML
 description: 讲讲社交平台们都做了哪些工作来优化网页 URL 的分享体验
-featured: true
 ---
 
 ## 前言

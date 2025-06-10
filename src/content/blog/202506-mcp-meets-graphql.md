@@ -7,6 +7,7 @@ tags:
   - MCP
   - GraphQL
 description: 快一年没水文章了，来讲讲今年大热的语言大模型通过 MCP 怎么和 GraphQL 碰撞出火花
+featured: true
 ---
 
 # 前提
