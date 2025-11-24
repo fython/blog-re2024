@@ -9,11 +9,10 @@ title: "关于我"
 
 ## 装备/Equipment
 
-- **桌面操作系统：** Windows 11 Pro & macOS Sonoma
-- **游戏机：** AMD Zen3 PC with RTX3080Ti
+- **游戏机：** AMD 9800X3D + RTX3080Ti WinPC
 - **显示器：** [REDMI 显示器 G Pro 27U](https://www.mi.com/redmi-monitors/g-pro-27u)
 - **键鼠：**
-  [ROG 魔导士 RX Low Profile](https://rog.asus.com.cn/keyboards/keyboards/aura-rgb/rog-falchion-rx-low-profile/) &
+  [NuPhy Air75 HE](https://nuphy.com.tw/products/nuphy-air75-he-magnetic-switch-low-profile-gaming-keyboard) &
   [Logitech G Pro X Superlight](https://www.logitechg.com/zh-cn/products/gaming-mice/pro-x-superlight-wireless-mouse.910-005946.html)
 - **主力手机：** [小米 15 Ultra](https://www.mi.com/prod/xiaomi-15-ultra)
   & [iPhone 15](https://www.apple.com/hk/iphone-15/specs/)
@@ -34,7 +33,7 @@ title: "关于我"
 - 🎮 **游戏：** 音游（osu! 入坑，大学玩 CGSS/BEMANI 系）/FPS/MOBA(LOL)/Roguelike，各种独立游戏/沙盒工厂/RPG 都有玩，
   手游肝不动很少玩，玩过 CGSS/弹射世界/碧蓝档案；
 - 📱 **数码：** 被世人遗忘的小屏党，Google 十年（不止）老粉，入过很多一加/Nexus/Pixel 设备，
-  目前主力是 Pixel 8 & OPPO Find N3。PC 硬件略有所知，能满足自己的基本维护但不太折腾；
+  目前主力是小米 15 Ultra & Pixel 10 Pro。PC 硬件略有所知，能满足自己的基本维护但不太折腾；
 - 🍘 **美食：** 到每一个地方旅游都会先研究有哪些不容错过的美食，常驻广州每个月都会打卡一些店，
   大部分东西都会不太在乎他人负面评价去亲身体验，自己平时不怎么下厨，可以当作纸上谈兵的理论党
 
