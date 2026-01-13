@@ -3,7 +3,7 @@ layout: ../layouts/AboutLayout.astro
 title: "关于我"
 ---
 
-我是 `烧饼`，惯用网名：Siubeng（“烧饼”的粤语拼音写法）/ Gwo Fung，各平台英文 ID 常见为 `fython` 。
+我是 `烧饼`，惯用网名：Siubeng（“烧饼”的粤语拼音写法），各平台英文 ID 常见为 `fython` 。
 
 是一个喜欢 ACG、折腾手机数码、对互联网产品/UI/UX 很感兴趣的全干开发。
 
@@ -14,11 +14,11 @@ title: "关于我"
 - **键鼠：**
   [NuPhy Air75 HE](https://nuphy.com.tw/products/nuphy-air75-he-magnetic-switch-low-profile-gaming-keyboard) &
   [Logitech G Pro X Superlight](https://www.logitechg.com/zh-cn/products/gaming-mice/pro-x-superlight-wireless-mouse.910-005946.html)
-- **主力手机：** [小米 15 Ultra](https://www.mi.com/prod/xiaomi-15-ultra)
+- **主力手机：** Google Pixel 10 Pro
   & [iPhone 15](https://www.apple.com/hk/iphone-15/specs/)
+- **摄影手机：** [小米 15 Ultra](https://www.mi.com/prod/xiaomi-15-ultra)
 - **平板电脑：** [iPad Pro (2nd gen. with A12Z)](https://support.apple.com/en-us/118452)
-- **耳机：** [Google Pixel Buds Pro 2](https://store.google.com/tw/product/pixel_buds_pro_2) &
-  [Sony WH-1000XM5](https://electronics.sony.com/audio/headphones/headband/p/wh1000xm5-b)
+- **耳机：** [Google Pixel Buds Pro 2](https://store.google.com/tw/product/pixel_buds_pro_2)
 - **开发机/Homelab：** Mac mini M4 丐版
 - **浏览器：** Google Chrome
 - **笔记软件：** Notion
@@ -41,6 +41,7 @@ title: "关于我"
 
 ### 当前技能点/Skills
 
+- AI Vibe Coding :P
 - 语言/框架 (Languages/Frameworks)：
   - **后端/运维：** Go/Python/Rust/Node.js/Bash
   - **Android：** Java/Kotlin

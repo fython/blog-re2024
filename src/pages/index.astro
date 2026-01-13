@@ -27,7 +27,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">
       <h1 class="my-4 inline-block text-2xl font-semibold sm:my-8 sm:text-3xl">
-        今日例牌
+        你可能找到的内容
       </h1>
       <a
         target="_blank"
@@ -45,18 +45,27 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       </a>
 
       <ul class="mx-6 mb-4" style="list-style: disc">
-        <li>西洋菜杏仁排骨汤</li>
-        <li>厚街烧鹅濑粉</li>
-        <li>支竹火腩饭</li>
+        <li>开发知识</li>
+        <li>闲聊</li>
+        <li>美食</li>
       </ul>
 
       <p class="mt-2">
-        如果你正在寻找广州美食可翻阅
+        如果你正在寻找大湾区美食可翻阅
+        <LinkButton
+          class="hover:text-skin-accent underline decoration-dashed underline-offset-4"
+          href="https://t.me/s/siubeng_tabelog"
+          target="_blank"
+        >
+          「食嘢」探店频道
+        </LinkButton>
+        /
         <LinkButton
           class="hover:text-skin-accent underline decoration-dashed underline-offset-4"
           href="https://siubeng.notion.site/e85a1dc7261043c3957445882345e11d?v=368de00071b948c7b54191e98660fc98"
+          target="_blank"
         >
-          我的笔记
+          Notion 表格
         </LinkButton>
       </p>
       {
