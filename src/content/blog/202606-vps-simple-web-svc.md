@@ -1,7 +1,16 @@
 ---
 title: 在 VPS 用「声明式」快速搭建个人多服务平台
 pubDatetime: 2026-06-02T00:00:00.000+08:00
+tags:
+  - VPS
+  - 运维
+  - Traefik
+  - Docker
+  - Nginx
+  - 微服务
+  - 网关
 description: 当我造了很多轮子发现需要一个轮子把他们管理起来时
+featured: true
 ---
 
 > 主要技术栈：Traefik + Docker + 自建认证网关（Python3）
