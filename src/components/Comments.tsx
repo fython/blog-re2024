@@ -4,16 +4,9 @@ import Giscus from "@giscus/react";
 
 const id = "inject-comments";
 
-// 获取 localStorage 中 theme 的值
+// Read the resolved document theme, including the system preference.
 function getSavedTheme(): string {
-  return window.localStorage.getItem("theme") || "light";
-}
-
-// 获取系统主题
-function getSystemTheme() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return document.documentElement.dataset.theme || "light";
 }
 
 const Comments = () => {
@@ -21,7 +14,7 @@ const Comments = () => {
   const [theme, setTheme] = React.useState("light");
 
   React.useEffect(() => {
-    const theme = getSavedTheme() || getSystemTheme();
+    const theme = getSavedTheme();
     setTheme(theme);
     // 监听主题变化
     const observer = new MutationObserver(() => {

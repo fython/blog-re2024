@@ -7,8 +7,19 @@
 !/.github
 !tsconfig.json
 !astro.config.ts
-!.prettierrc.mjs
 !package.json
 !.prettierrc
 !eslint.config.js
 !README.md
+!.vscode
+
+# Ignore MDX files
+*.mdx
+# Preserve authored content verbatim during theme maintenance.
+/src/content/blog/**
+/src/content/friend/**
+/src/pages/about.md
+/src/pages/projects.md
+/public/pagefind/**
+!/astro-paper.config.ts
+!/scripts

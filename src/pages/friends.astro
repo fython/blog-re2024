@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Main from "@/layouts/Main.astro";
+import Main from "@/components/Main.astro";
 import Header from "@/components/Header.astro";
 import FriendLink from "@/components/FriendLink.astro";
 import Footer from "../components/Footer.astro";
@@ -10,7 +10,7 @@ const friends = await getCollection("friend");
 ---
 
 <Layout title="友情链接">
-  <Header activeNav="friends" />
+  <Header />
   <Main pageTitle="友情链接">
     <p>这里是一些熟悉的朋友们的博客站点，未完全收录，欢迎互相交换~</p>
     <br />

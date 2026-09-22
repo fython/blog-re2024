@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     types:
@@ -13,11 +16,11 @@ jobs:
   build:
     name: Code standards & build
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 10
 
     strategy:
       matrix:
-        node-version: [20.19.0]
+        node-version: [24]
 
     steps:
       - name: "☁️ Checkout repository"
@@ -35,7 +38,7 @@ jobs:
           cache: "pnpm"
 
       - name: "📦 Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: "🔎 Lint code"
         run: pnpm run lint

@@ -7,24 +7,23 @@ import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
+import { getSortedPosts } from "@/utils/getSortedPosts";
 import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
-import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
+import config from "@/config";
 
-const posts = await getCollection("blog");
+const posts = await getCollection("posts");
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
-const socialCount = SOCIALS.filter(social => social.active).length;
+const socialCount = config.socials.length;
 ---
 
 <Layout>
   <Header />
-  <main id="main-content" data-layout="index">
+  <main id="main-content" data-layout="index" class="app-layout">
     <section id="hero" class="pt-8 pb-6">
       <h1 class="my-4 inline-block text-2xl font-semibold sm:my-8 sm:text-3xl">
         你可能找到的内容
@@ -39,7 +38,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         <IconRss
           width={20}
           height={20}
-          class="scale-125 stroke-accent stroke-3"
+          class="stroke-accent scale-125 stroke-3"
         />
         <span class="sr-only">RSS Feed</span>
       </a>
@@ -104,7 +103,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <ul>
             {recentPosts.map(
               (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+                index < config.posts.perIndex && <Card variant="h3" {...data} />
             )}
           </ul>
         </section>
