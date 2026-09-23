@@ -38,9 +38,11 @@ Siubeng's Blog project based on [astro-paper](https://github.com/satnaing/astro-
 - 像素字体使用 `@fontsource/fusion-pixel-12px-proportional-sc` npm 包。
 - 定制菜单、样式、像素米饼和禁用持久化的逻辑保存在 `integrations/jspaint/`。
 
-运行 `pnpm install --frozen-lockfile` 后，`pnpm dev` 和 `pnpm build` 会自动组装
-`public/vendor/jspaint/`。该目录是被 Git 忽略的生成文件，请勿直接修改。
-也可以运行 `pnpm prepare:paint` 单独生成；直接使用 `pnpm astro ...` 时需先执行此命令。
+运行 `pnpm install --frozen-lockfile` 后，Vite 插件 `scripts/prepare-paint.mjs` 会在
+开发和构建时自动组装 `public/vendor/jspaint/`，直接运行 `pnpm astro dev/build` 也适用。
+插件按源码内容和生成文件状态缓存结果，只复制变化或缺失的文件；开发时修改
+`integrations/jspaint/` 会自动同步并刷新页面，无需重启。
+生成目录由 Git 忽略，请勿直接修改；缓存位于 Vite 的 cacheDir，删除缓存会重新生成。
 生成过程只读取已安装的依赖，不需要再次联网，部署仍使用站点自己的静态资源。
 版本和授权说明见 [integrations/jspaint/UPSTREAM.md](integrations/jspaint/UPSTREAM.md)。
 

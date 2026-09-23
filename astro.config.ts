@@ -15,6 +15,7 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import config from "./astro-paper.config";
+import paintAssets from "./scripts/prepare-paint.mjs";
 
 export default defineConfig({
   site: config.site.url,
@@ -55,7 +56,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [paintAssets(), tailwindcss()],
   },
   env: {
     schema: {

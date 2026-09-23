@@ -8,11 +8,15 @@ an official source tarball pinned to the full commit above, installed by pnpm.
 The font comes from `@fontsource/fusion-pixel-12px-proportional-sc@5.3.0` (SIL OFL).
 `pnpm-lock.yaml` records both dependencies. No download happens in the asset build script.
 
-`pnpm prepare:paint` copies the required runtime assets from node_modules and overlays
-this directory into `public/vendor/jspaint/`. `pnpm dev` and `pnpm build` run it automatically.
-The generated directory is ignored by Git and replaced on each run; edit files here instead.
-If invoking Astro directly, run `pnpm prepare:paint` first. Dependency installation must
-include devDependencies, as with the rest of this project's build toolchain.
+The Vite plugin `scripts/prepare-paint.mjs` assembles node_modules assets plus this
+custom directory into `public/vendor/jspaint/` during config resolution, before Vite
+scans public files. It works for both package scripts and direct Astro commands.
+Content hashes and output size/mtime are cached in Vite cacheDir/paint-assets.json.
+Unchanged files are not rewritten; changed/missing files are copied atomically,
+and obsolete generated files are removed. Deleting the cache triggers a full regeneration.
+In dev mode this directory is watched, changes are batched, and the page reloads after
+synchronization. Edit files here, not the Git-ignored generated directory.
+Dependency installation must include devDependencies, like the rest of the build toolchain.
 Runtime source, classic theme, tool/cursor icons and dialog sound and bundled library licenses are retained.
 This embed omits desktop/PDF/head-tracking integrations, standalone menus and persistent sessions.
 The compact menu uses the bundled MenuBar with canvas reset, undo/redo and an attribution dialog.

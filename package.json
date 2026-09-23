@@ -6,15 +6,15 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "node scripts/prepare-paint.mjs && astro dev",
-    "build": "node scripts/prepare-paint.mjs && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
+    "dev": "astro dev",
+    "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "prepare:paint": "node scripts/prepare-paint.mjs"
+    "test:paint": "node --test scripts/tests/prepare-paint.test.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.0",
