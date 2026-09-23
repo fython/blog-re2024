@@ -6,14 +6,15 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
+    "dev": "node scripts/prepare-paint.mjs && astro dev",
+    "build": "node scripts/prepare-paint.mjs && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare:paint": "node scripts/prepare-paint.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.0",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@fontsource/fusion-pixel-12px-proportional-sc": "5.3.0",
     "@pagefind/default-ui": "^1.5.2",
     "@shikijs/transformers": "^4.3.0",
     "@tailwindcss/typography": "^0.5.20",
@@ -48,6 +50,7 @@
     "@typescript-eslint/parser": "^8.62.0",
     "eslint": "^10.6.0",
     "eslint-plugin-astro": "^2.1.1",
+    "jspaint": "https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa",
     "pagefind": "^1.5.2",
     "prettier": "3.9.3",
     "prettier-plugin-astro": "0.14.1",

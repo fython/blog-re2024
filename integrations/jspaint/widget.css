@@ -1,0 +1,96 @@
+@font-face {
+  font-family: "Widget Pixel";
+  src: url("fonts/fusion-pixel.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --widget-font: "Widget Pixel", "SimSun", sans-serif;
+}
+/* Keep UI text on the font's native 12px grid, including dynamically created menus/dialogs.
+   Do not override the editable text tool's user-selected canvas font. */
+body,
+body .window-titlebar,
+body .window-title,
+body .menus,
+body .menus *,
+body .menu-popup,
+body .menu-popup *,
+body .os-window,
+body .os-window button,
+body .os-window label,
+body .os-window input,
+body .os-window select,
+body #widget-about,
+body #widget-about * {
+  font-family: var(--widget-font) !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+body {
+  background: #c0c0c0;
+}
+/* Title bar colors come from the bundled os-gui Windows 98 theme. */
+body > .widget-titlebar {
+  height: 22px;
+  margin: 2px 2px 0;
+  padding: 0 3px;
+  gap: 4px;
+  box-sizing: border-box;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.widget-titlebar img {
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+.widget-titlebar .window-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jspaint {
+  height: calc(100% - 46px);
+}
+.jspaint .menus,
+.status-area,
+.component-area.top,
+.news-indicator {
+  display: none !important;
+}
+.canvas-area {
+  touch-action: none;
+}
+.component .component-grab-area {
+  pointer-events: none;
+}
+.colors-component.wide .palette {
+  max-width: 238px;
+  flex-wrap: wrap;
+}
+#widget-menu {
+  height: 22px;
+}
+#widget-menu .menus {
+  height: 100%;
+}
+#widget-about {
+  box-sizing: border-box;
+  max-width: calc(100% - 16px);
+  max-height: calc(100% - 16px);
+  padding: 12px;
+  background: #c0c0c0;
+  color: #000;
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+  border: 2px outset white;
+}
+#widget-about h2 {
+  font-size: 14px;
+  margin: 0;
+}
+#widget-about .about-actions {
+  text-align: right;
+}

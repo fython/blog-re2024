@@ -30,6 +30,20 @@ Siubeng's Blog project based on [astro-paper](https://github.com/satnaing/astro-
 `node scripts/verify-content.mjs <同步前的提交>`，核对原有内容、资源和链接。
 文章及页面 Markdown 不参与主题代码格式化，避免无关改动。
 
+## 首页画板依赖
+
+首页 JS Paint 的第三方源码和字体通过 pnpm 安装，不提交到 Git：
+
+- `jspaint` 使用官方 v1.1.0 对应的固定提交源码包（上游没有同名 npm 发布包）。
+- 像素字体使用 `@fontsource/fusion-pixel-12px-proportional-sc` npm 包。
+- 定制菜单、样式、像素米饼和禁用持久化的逻辑保存在 `integrations/jspaint/`。
+
+运行 `pnpm install --frozen-lockfile` 后，`pnpm dev` 和 `pnpm build` 会自动组装
+`public/vendor/jspaint/`。该目录是被 Git 忽略的生成文件，请勿直接修改。
+也可以运行 `pnpm prepare:paint` 单独生成；直接使用 `pnpm astro ...` 时需先执行此命令。
+生成过程只读取已安装的依赖，不需要再次联网，部署仍使用站点自己的静态资源。
+版本和授权说明见 [integrations/jspaint/UPSTREAM.md](integrations/jspaint/UPSTREAM.md)。
+
 ## Licenses
 
 MIT Licenses

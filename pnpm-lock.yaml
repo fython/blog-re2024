@@ -72,6 +72,9 @@ importers:
       '@astrojs/check':
         specifier: ^0.9.9
         version: 0.9.9(prettier-plugin-astro@0.14.1)(prettier@3.9.3)(typescript@6.0.3)
+      '@fontsource/fusion-pixel-12px-proportional-sc':
+        specifier: 5.3.0
+        version: 5.3.0
       '@pagefind/default-ui':
         specifier: ^1.5.2
         version: 1.5.2
@@ -99,6 +102,9 @@ importers:
       eslint-plugin-astro:
         specifier: ^2.1.1
         version: 2.1.1(@typescript-eslint/parser@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.6.0(jiti@2.7.0))
+      jspaint:
+        specifier: https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa
+        version: https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa
       pagefind:
         specifier: ^1.5.2
         version: 1.5.2
@@ -622,6 +628,9 @@ packages:
   '@eslint/plugin-kit@0.7.2':
     resolution: {integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+
+  '@fontsource/fusion-pixel-12px-proportional-sc@5.3.0':
+    resolution: {integrity: sha512-PDgfCunZbVgPM5/HSaP29KjQaxLUsVAng6urpSQXww87e9AOfA7j/PDzWYO/Q8yhPyaw6oUGh5s2eGln1HSgPw==}
 
   '@giscus/react@3.1.0':
     resolution: {integrity: sha512-0TCO2TvL43+oOdyVVGHDItwxD1UMKP2ZYpT6gXmhFOqfAJtZxTzJ9hkn34iAF/b6YzyJ4Um89QIt9z/ajmAEeg==}
@@ -1781,6 +1790,14 @@ packages:
   dayjs@1.11.21:
     resolution: {integrity: sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA==}
 
+  debug@2.6.9:
+    resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
     engines: {node: '>=6.0'}
@@ -1840,6 +1857,9 @@ packages:
   dset@3.1.4:
     resolution: {integrity: sha512-2QF/g9/zTaPDc3BjNcVTGoBbXBgYfMTTceLaYcFJ/W9kggFUkhxD/hMEeuLKbugyef9SqAx8cpgwlIP/jinUTA==}
     engines: {node: '>=4'}
+
+  electron-squirrel-startup@1.0.1:
+    resolution: {integrity: sha512-sTfFIHGku+7PsHLJ7v0dRcZNkALrV+YEozINTW8X1nM//e5O3L+rfYuvSW00lmGHnYmUjARZulD8F2V8ISI9RA==}
 
   electron-to-chromium@1.5.434:
     resolution: {integrity: sha512-7EeFW9OLf1NN9NKQP9xdOE/XKqjxv7JDPP6AEAkHli11+Fae1OaLoNuAf13hQv1PPNtuES0pLQSPk2+fS3s8ww==}
@@ -2246,6 +2266,11 @@ packages:
   jsonc-parser@3.3.1:
     resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
+  jspaint@https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa:
+    resolution: {tarball: https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa}
+    version: 1.1.0
+    hasBin: true
+
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -2348,6 +2373,11 @@ packages:
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
+
+  lookpath@1.2.3:
+    resolution: {integrity: sha512-kthRVhf4kH4+HW3anM4UBHxsw/XFESf13euCEldhXr6GpBdmBoa7rDd7WO5G0Mhd4G5XtKTcEy8OR0iRZXpS3Q==}
+    engines: {npm: '>=6.13.4'}
+    hasBin: true
 
   lru-cache@11.5.1:
     resolution: {integrity: sha512-RPimw/7aMdv2oqRrxKwvZXcPfwBrn/JZ2xYcY9Hus/6LaS3VOAKVWKWgNLCFSiOm1ESXinjsDlidVU7JlnCN2A==}
@@ -2547,6 +2577,9 @@ packages:
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
     engines: {node: '>=10'}
+
+  ms@2.0.0:
+    resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -3364,6 +3397,10 @@ packages:
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
 
+  wallpaper@4.4.2:
+    resolution: {integrity: sha512-u6Od6NU5UJ5zMalcV4RNKaG9DarZDdKEOMap556NhOal1vE7T7DrAJVXyLqqXDlINTTUqWbdRL/zs2VgCdRjjg==}
+    engines: {node: '>=8'}
+
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
 
@@ -3989,6 +4026,8 @@ snapshots:
     dependencies:
       '@eslint/core': 1.2.1
       levn: 0.4.1
+
+  '@fontsource/fusion-pixel-12px-proportional-sc@5.3.0': {}
 
   '@giscus/react@3.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
@@ -5090,6 +5129,10 @@ snapshots:
 
   dayjs@1.11.21: {}
 
+  debug@2.6.9:
+    dependencies:
+      ms: 2.0.0
+
   debug@4.4.3:
     dependencies:
       ms: 2.1.3
@@ -5137,6 +5180,12 @@ snapshots:
   dotenv@16.6.1: {}
 
   dset@3.1.4: {}
+
+  electron-squirrel-startup@1.0.1:
+    dependencies:
+      debug: 2.6.9
+    transitivePeerDependencies:
+      - supports-color
 
   electron-to-chromium@1.5.434: {}
 
@@ -5645,6 +5694,15 @@ snapshots:
 
   jsonc-parser@3.3.1: {}
 
+  jspaint@https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa:
+    dependencies:
+      argparse: 2.0.1
+      electron-squirrel-startup: 1.0.1
+      lookpath: 1.2.3
+      wallpaper: 4.4.2
+    transitivePeerDependencies:
+      - supports-color
+
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
@@ -5733,6 +5791,8 @@ snapshots:
   lodash.kebabcase@4.1.1: {}
 
   longest-streak@3.1.0: {}
+
+  lookpath@1.2.3: {}
 
   lru-cache@11.5.1: {}
 
@@ -6212,6 +6272,8 @@ snapshots:
       brace-expansion: 5.0.5
 
   mrmime@2.0.1: {}
+
+  ms@2.0.0: {}
 
   ms@2.1.3: {}
 
@@ -7099,6 +7161,8 @@ snapshots:
   vscode-nls@5.2.0: {}
 
   vscode-uri@3.1.0: {}
+
+  wallpaper@4.4.2: {}
 
   web-namespaces@2.0.1: {}
 

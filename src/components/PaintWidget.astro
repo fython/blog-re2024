@@ -1,0 +1,27 @@
+---
+import { getAssetPath } from "@/utils/withBase";
+---
+
+<section class="paint-widget" aria-label="随手画画">
+  <iframe
+    src={getAssetPath("vendor/jspaint/index.html")}
+    title="JS Paint：可编辑的米饼画布"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+    referrerpolicy="no-referrer"></iframe>
+</section>
+
+<style>
+  .paint-widget {
+    width: 100%;
+    max-width: 22rem;
+    margin-inline: auto;
+  }
+  iframe {
+    display: block;
+    width: 100%;
+    height: 22rem;
+    border: 1px solid var(--border);
+    background: #c0c0c0;
+  }
+</style>

@@ -3,12 +3,11 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
+import PaintWidget from "@/components/PaintWidget.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import config from "@/config";
 
@@ -17,71 +16,18 @@ const posts = await getCollection("posts");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-
-const socialCount = config.socials.length;
 ---
 
 <Layout>
   <div class="home-layout">
     <aside class="home-sidebar" aria-label="站点介绍与导航">
       <Header sidebar />
-      <section id="hero" class="app-layout pt-8 pb-6">
-        <h1
-          class="my-4 inline-block text-2xl font-semibold sm:my-8 sm:text-3xl"
-        >
-          你可能找到的内容
-        </h1>
-        <a
-          target="_blank"
-          href="/rss.xml"
-          class="inline-block"
-          aria-label="rss feed"
-          title="RSS Feed"
-        >
-          <IconRss
-            width={20}
-            height={20}
-            class="stroke-accent scale-125 stroke-3"
-          />
-          <span class="sr-only">RSS Feed</span>
-        </a>
-
-        <ul class="mx-6 mb-4" style="list-style: disc">
-          <li>开发知识</li>
-          <li>闲聊</li>
-          <li>美食</li>
-        </ul>
-
-        <p class="mt-2">
-          如果你正在寻找大湾区美食可翻阅
-          <LinkButton
-            class="hover:text-skin-accent underline decoration-dashed underline-offset-4"
-            href="https://t.me/s/siubeng_tabelog"
-            target="_blank"
-          >
-            「食嘢」探店频道
-          </LinkButton>
-          /
-          <LinkButton
-            class="hover:text-skin-accent underline decoration-dashed underline-offset-4"
-            href="https://siubeng.notion.site/e85a1dc7261043c3957445882345e11d?v=368de00071b948c7b54191e98660fc98"
-            target="_blank"
-          >
-            Notion 表格
-          </LinkButton>
-        </p>
-        {
-          // only display if at least one social link is enabled
-          socialCount > 0 && (
-            <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
-              <div class="mr-2 mb-1 whitespace-nowrap sm:mb-0">社交网络：</div>
-              <Socials />
-            </div>
-          )
-        }
-      </section>
+      <div id="paint-area" class="app-layout pt-8 pb-6">
+        <PaintWidget />
+      </div>
     </aside>
     <main id="main-content" data-layout="index" class="app-layout home-posts">
+      <h1 class="sr-only">{config.site.title}</h1>
       <div class="home-intro-divider"><Hr /></div>
 
       {
@@ -157,21 +103,9 @@ const socialCount = config.socials.length;
       min-width: 0;
     }
 
-    #hero {
+    #paint-area {
       padding: 2rem 0 0;
       border-top: 1px solid var(--border);
-    }
-
-    #hero h1 {
-      margin: 0 0 1.5rem;
-      max-width: 8em;
-      font-size: 2.5rem;
-      line-height: 1.4;
-      text-wrap: balance;
-    }
-
-    #hero p {
-      line-height: 1.85;
     }
 
     .home-posts {
