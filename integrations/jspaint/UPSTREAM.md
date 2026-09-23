@@ -17,6 +17,10 @@ Runtime source, classic theme, tool/cursor icons and dialog sound and bundled li
 This embed omits desktop/PDF/head-tracking integrations, standalone menus and persistent sessions.
 The compact menu uses the bundled MenuBar with canvas reset, undo/redo and an attribution dialog.
 The widget title bar reuses the bundled os-gui Windows 98 theme and JS Paint icon.
+The parent PaintWidget shows a locally hosted retro hourglass until the iframe sets data-ready.
+Startup waits for the classic styles, pixel font, image decoding (including CSS sprites),
+the seeded canvas and two animation frames. Initialization errors keep the iframe hidden
+and expose a retry button; loading does not change the widget height.
 Our integration files are index.html, ephemeral.js, widget.js and widget.css.
 Do not replace this with the upstream index.html: it enables automatic saving.
 
@@ -30,3 +34,8 @@ provided by Fontsource 5.3.0 (font upstream version v2024.05.12).
 Despite `latin` in the package filename, this file contains the Chinese glyphs too.
 The unmodified WOFF2 and its OFL license are copied to fonts/ in the generated runtime.
 https://github.com/fontsource/font-files/tree/main/fonts/other/fusion-pixel-12px-proportional-sc
+
+Loading indicator: unmodified HOURGLAS.GIF from retrores, saved as
+public/images/paint-hourglass.gif (32×32, 1995 bytes).
+Source: https://github.com/1j01/retrores/blob/master/static/resources/cursors/gif/HOURGLAS.GIF
+SHA-256: 0bba74c7f29eeb3022e4a6de06fd706bcede42cbcafab83a2de83ca35ae7d0ff

@@ -10,6 +10,8 @@ import {
 const image = new Image();
 image.src = new URL("./rice-cracker.svg", import.meta.url).href;
 const imageReady = image.decode();
+// Startup awaits this below; attach a handler immediately for early network failures.
+imageReady.catch(() => {});
 
 async function reset() {
   await imageReady;
@@ -127,40 +129,89 @@ async function reset() {
   ctx.putImageData(shaded, 0, 0);
   // This disposable canvas has no file to save. Reset its metadata before loading.
   reset_file();
-  open_from_image_info(
-    { image: seed, file_format: "image/png" },
-    () => {
-      select_tool(get_tool_by_id("TOOL_PENCIL"));
-      document.documentElement.dataset.ready = "true";
-    },
-    undefined,
-    true,
-    true
+  await new Promise(resolve => {
+    open_from_image_info(
+      { image: seed, file_format: "image/png" },
+      () => {
+        select_tool(get_tool_by_id("TOOL_PENCIL"));
+        resolve();
+      },
+      undefined,
+      true,
+      true
+    );
+  });
+}
+
+async function waitForAppearance() {
+  // Window load covers stylesheets; reject a missing stylesheet instead of revealing raw UI.
+  for (const link of document.querySelectorAll('link[rel="stylesheet"]')) {
+    if (!link.sheet) throw new Error("Paint stylesheet failed to load");
+  }
+  if (
+    !getComputedStyle(document.documentElement)
+      .getPropertyValue("--theme-loaded")
+      .includes("classic.css")
+  ) {
+    throw new Error("Paint theme is not ready");
+  }
+  await document.fonts.load('12px "Widget Pixel"', "饼.bmp 画布编辑帮助");
+  await document.fonts.ready;
+
+  // CSS background sprites are not DOM images. Decode them too, including pseudo-elements.
+  const sources = new Set();
+  for (const element of document.body.querySelectorAll("*")) {
+    if (!element.getClientRects().length) continue;
+    for (const pseudo of [null, "::before", "::after"]) {
+      const style = getComputedStyle(element, pseudo);
+      for (const value of [
+        style.backgroundImage,
+        style.maskImage,
+        style.content,
+      ]) {
+        for (const match of value.matchAll(/url\("([^"\n]+)"\)/g))
+          sources.add(match[1]);
+      }
+    }
+  }
+  await Promise.all([
+    ...Array.from(document.images, image => image.decode()),
+    ...Array.from(sources, async src => {
+      const asset = new Image();
+      asset.src = src;
+      await asset.decode();
+    }),
+  ]);
+  await new Promise(resolve =>
+    requestAnimationFrame(() => requestAnimationFrame(resolve))
   );
 }
 
-window.addEventListener("load", () => {
-  document
-    .getElementById("widget-about-close")
-    .addEventListener("click", () =>
-      document.getElementById("widget-about").close()
-    );
-  const menu = window.MenuBar({
-    画布: [{ label: "重画", action: reset }],
-    编辑: [
-      { label: "撤销", action: undo, enabled: () => undos.length > 0 },
-      { label: "重做", action: redo, enabled: () => redos.length > 0 },
-    ],
-    帮助: [
-      {
-        label: "关于与署名",
-        action: () => document.getElementById("widget-about").showModal(),
-      },
-    ],
-  });
-  document.getElementById("widget-menu").append(menu.element);
-  reset().catch(() => {
-    document.querySelector(".widget-titlebar .window-title").textContent =
-      "图案加载失败，请刷新";
-  });
+window.addEventListener("load", async () => {
+  try {
+    document
+      .getElementById("widget-about-close")
+      .addEventListener("click", () =>
+        document.getElementById("widget-about").close()
+      );
+    const menu = window.MenuBar({
+      画布: [{ label: "重画", action: reset }],
+      编辑: [
+        { label: "撤销", action: undo, enabled: () => undos.length > 0 },
+        { label: "重做", action: redo, enabled: () => redos.length > 0 },
+      ],
+      帮助: [
+        {
+          label: "关于与署名",
+          action: () => document.getElementById("widget-about").showModal(),
+        },
+      ],
+    });
+    document.getElementById("widget-menu").append(menu.element);
+    await reset();
+    await waitForAppearance();
+    document.documentElement.dataset.ready = "true";
+  } catch {
+    document.documentElement.dataset.paintError = "true";
+  }
 });

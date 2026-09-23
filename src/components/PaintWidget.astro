@@ -2,17 +2,118 @@
 import { getAssetPath } from "@/utils/withBase";
 ---
 
-<section class="paint-widget" aria-label="随手画画">
+<paint-widget
+  class="paint-widget"
+  role="region"
+  aria-label="随手画画"
+  aria-busy="true"
+  data-state="loading"
+>
   <iframe
     src={getAssetPath("vendor/jspaint/index.html")}
     title="JS Paint：可编辑的米饼画布"
     loading="lazy"
+    inert
+    aria-hidden="true"
     sandbox="allow-scripts allow-same-origin"
     referrerpolicy="no-referrer"></iframe>
-</section>
+  <div class="paint-loading" role="status" aria-live="polite">
+    <img
+      class="hourglass"
+      src={getAssetPath("images/paint-hourglass.gif")}
+      width="32"
+      height="32"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+    />
+    <span class="loading-label sr-only">画板加载中</span>
+    <button type="button" class="paint-retry">重新加载</button>
+  </div>
+</paint-widget>
+
+<script>
+  class PaintWidget extends HTMLElement {
+    private cleanup?: () => void;
+
+    connectedCallback() {
+      const frame = this.querySelector("iframe")!;
+      const label = this.querySelector(".loading-label")!;
+      const retry = this.querySelector("button")!;
+      const events = new AbortController();
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      let observer: MutationObserver | undefined;
+      const setState = (state: "loading" | "ready" | "error") => {
+        this.dataset.state = state;
+        this.setAttribute("aria-busy", String(state === "loading"));
+        frame.inert = state !== "ready";
+        frame.setAttribute("aria-hidden", String(state !== "ready"));
+        label.textContent = state === "error" ? "画板加载失败" : "画板加载中";
+        label.classList.toggle("sr-only", state !== "error");
+        if (state !== "loading") clearTimeout(timeout);
+      };
+      const startTimeout = () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => setState("error"), 45000);
+      };
+      const inspectFrame = () => {
+        observer?.disconnect();
+        const root = frame.contentDocument?.documentElement;
+        if (!root) return;
+        const check = () => {
+          if (root.dataset.ready === "true") setState("ready");
+          else if (root.dataset.paintError) setState("error");
+        };
+        observer = new MutationObserver(check);
+        observer.observe(root, {
+          attributes: true,
+          attributeFilter: ["data-ready", "data-paint-error"],
+        });
+        check();
+      };
+      frame.addEventListener("load", inspectFrame, { signal: events.signal });
+      retry.addEventListener(
+        "click",
+        () => {
+          observer?.disconnect();
+          setState("loading");
+          startTimeout();
+          frame.src = frame.src;
+        },
+        { signal: events.signal }
+      );
+      // Lazy frames can remain offscreen indefinitely; time out only once near the viewport.
+      const visibility = new IntersectionObserver(
+        entries => {
+          if (entries.some(entry => entry.isIntersecting)) {
+            if (this.dataset.state === "loading") startTimeout();
+            visibility.disconnect();
+          }
+        },
+        { rootMargin: "300px" }
+      );
+      visibility.observe(this);
+      inspectFrame();
+      this.cleanup = () => {
+        events.abort();
+        observer?.disconnect();
+        visibility.disconnect();
+        clearTimeout(timeout);
+      };
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.();
+    }
+  }
+  if (!customElements.get("paint-widget"))
+    customElements.define("paint-widget", PaintWidget);
+</script>
 
 <style>
   .paint-widget {
+    display: block;
+    position: relative;
     width: 100%;
     max-width: 22rem;
     margin-inline: auto;
@@ -23,5 +124,50 @@ import { getAssetPath } from "@/utils/withBase";
     height: 22rem;
     border: 1px solid var(--border);
     background: #c0c0c0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .paint-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #c0c0c0;
+    color: #000;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    box-shadow:
+      inset 1px 1px #dfdfdf,
+      inset -1px -1px #000;
+    font:
+      12px/1.5 "SimSun",
+      serif;
+    cursor: wait;
+  }
+  .hourglass {
+    image-rendering: pixelated;
+  }
+  .paint-retry {
+    display: none;
+    padding: 2px 12px;
+    background: #c0c0c0;
+    border: 2px outset #fff;
+    cursor: pointer;
+  }
+  [data-state="error"] .paint-loading {
+    cursor: default;
+  }
+  [data-state="error"] .paint-retry {
+    display: block;
+  }
+  [data-state="ready"] iframe {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  [data-state="ready"] .paint-loading {
+    display: none;
   }
 </style>
