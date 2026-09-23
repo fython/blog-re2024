@@ -38,7 +38,7 @@ export default {
     postsTitle: "文章",
     postsDesc: "所有发布过的文章。",
     archivesTitle: "归档",
-    archivesDesc: "按时间查看所有文章。",
+    archivesDesc: "按标签或时间查看所有文章。",
     searchTitle: "搜索",
     searchDesc: "搜索文章……",
   },

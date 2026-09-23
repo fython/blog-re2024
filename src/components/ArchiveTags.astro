@@ -1,0 +1,52 @@
+---
+import Tag from "./Tag.astro";
+
+interface Props {
+  tags: { tag: string; tagName: string }[];
+  title: string;
+}
+const { tags, title } = Astro.props;
+const limit = 20;
+---
+
+{
+  tags.length > 0 && (
+    <section
+      id="tags"
+      aria-labelledby="archive-tags-title"
+      class="border-border mb-8 scroll-mt-6 border-b pb-8"
+    >
+      <h2 id="archive-tags-title" class="mb-4 text-xl font-semibold">
+        {title}
+      </h2>
+      <ul class="flex flex-wrap gap-x-6 gap-y-4">
+        {tags.slice(0, limit).map(({ tag, tagName }) => (
+          <Tag {tag} {tagName} />
+        ))}
+      </ul>
+      {tags.length > limit && (
+        <details class="mt-5">
+          <summary class="focus-outline text-accent w-fit cursor-pointer rounded-sm px-1 py-1 underline decoration-dashed underline-offset-4">
+            <span class="expand-label">展示全部标签（{tags.length}）</span>
+            <span class="collapse-label">收起标签</span>
+          </summary>
+          <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-4">
+            {tags.slice(limit).map(({ tag, tagName }) => (
+              <Tag {tag} {tagName} />
+            ))}
+          </ul>
+        </details>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .collapse-label,
+  details[open] .expand-label {
+    display: none;
+  }
+  details[open] .collapse-label {
+    display: inline;
+  }
+</style>
