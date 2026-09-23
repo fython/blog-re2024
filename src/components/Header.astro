@@ -87,7 +87,7 @@ const isActive = (path: string) => {
             href={getRelativeLocaleUrl(locale, "posts")}
             class:list={{ "active-nav": isActive("/posts") }}
           >
-            {t.nav.posts}
+            <span class="nav-label">posts</span>
           </a>
         </li>
         <li class="col-span-2">
@@ -95,19 +95,21 @@ const isActive = (path: string) => {
             href={getRelativeLocaleUrl(locale, "about")}
             class:list={{ "active-nav": isActive("/about") }}
           >
-            {t.nav.about}
+            <span class="nav-label">about</span>
           </a>
         </li>
         <li class="col-span-2">
           <a
             href={getRelativeLocaleUrl(locale, "projects")}
-            class:list={{ "active-nav": isActive("/projects") }}>项目</a
+            class:list={{ "active-nav": isActive("/projects") }}
+            ><span class="nav-label">works</span></a
           >
         </li>
         <li class="col-span-2">
           <a
             href={getRelativeLocaleUrl(locale, "friends")}
-            class:list={{ "active-nav": isActive("/friends") }}>友链</a
+            class:list={{ "active-nav": isActive("/friends") }}
+            ><span class="nav-label">friends</span></a
           >
         </li>
         {
@@ -238,6 +240,41 @@ const isActive = (path: string) => {
 </script>
 
 <style>
+  .nav-label {
+    position: relative;
+    display: inline-block;
+  }
+
+  .nav-label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 220ms ease-out;
+    pointer-events: none;
+  }
+
+  #menu-items > li:not(.nav-icon-item) > a.active-nav {
+    text-decoration: none;
+  }
+
+  a.active-nav > .nav-label::after,
+  a:hover > .nav-label::after,
+  a:focus-visible > .nav-label::after {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-label::after {
+      transition: none;
+    }
+  }
+
   @media (min-width: 66rem) {
     .home-sidebar-header {
       padding: 0;

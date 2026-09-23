@@ -3,7 +3,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://feng.moe/",
-    title: "烧饼吹水铺",
+    title: "燒餅士多",
     description: "随手写写生活见闻与技术笔记",
     author: "烧饼 aka. Siubeng",
     profile: "https://feng.moe/about",

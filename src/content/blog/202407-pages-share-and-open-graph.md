@@ -20,7 +20,7 @@ description: 讲讲社交平台们都做了哪些工作来优化网页 URL 的�
 
 原本单调的网页 URL 下面，多了一张包含标题、信息以及图标的卡片（有时候还会更多）。
 
-包括“烧饼吹水铺”博客，也做了类似表现的内容适配，例如了 https://feng.moe/posts/202407-renew-blog-again/ ：
+包括“烧饼吹水铺”（现：燒餅士多）博客，也做了类似表现的内容适配，例如了 https://feng.moe/posts/202407-renew-blog-again/ ：
 
 ![我的博客 Demo](https://blogfiles.feng.moe/images/202407-pages-share-and-open-graph/p3.png)
 

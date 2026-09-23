@@ -1,6 +1,6 @@
 ---
 name: "✨ 特性请求"
-about: 为烧饼吹水铺提出建议
+about: 为燒餅士多提出建议
 title: "[Feature] "
 labels: enhancement
 assignees: ""
