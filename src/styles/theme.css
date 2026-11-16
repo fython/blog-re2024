@@ -7,7 +7,12 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: "Noto Serif SC", "IBM Plex Mono", serif;
+  --font-app: "LXGW WenKai TC", serif;
+  --font-mono: "LXGW WenKai Mono TC", monospace;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
 }
 
 /* Light theme values */
