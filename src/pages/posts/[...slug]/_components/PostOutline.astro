@@ -1,0 +1,280 @@
+---
+import type { MarkdownHeading } from "astro";
+import config from "@/config";
+
+interface Props {
+  headings: MarkdownHeading[];
+  title: string;
+}
+
+const { headings, title } = Astro.props;
+const levels: number[] = [];
+---
+
+<post-outline data-pagefind-ignore>
+  <span class="reading-title" aria-hidden="true"><span class="text-muted-foreground">{config.site.title}</span> · {title}</span>
+  {
+    headings.length > 0 && (
+      <details>
+        <summary class="cursor-pointer py-2 font-bold">
+          文章目录
+          <span class="current-title" aria-hidden="true" />
+        </summary>
+        <nav aria-label="文章目录">
+          <ul class="border-border border-s ps-3">
+            {headings.map(({ depth, slug, text }) => {
+              while (levels.length && levels[levels.length - 1] >= depth)
+                levels.pop();
+              const indent = levels.length;
+              levels.push(depth);
+              return (
+                <li style={{ paddingInlineStart: `${indent * 0.75}rem` }}>
+                  <a
+                    class="hover:text-accent block py-1 text-sm leading-6 wrap-anywhere hover:underline"
+                    href={`#${encodeURIComponent(slug)}`}
+                  >
+                    {text}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </details>
+    )
+  }
+</post-outline>
+
+<style>
+  post-outline {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .reading-title,
+  post-outline:not(:has(details)),
+  .current-title {
+    display: none;
+  }
+
+  nav {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  a[aria-current="location"] {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (width < 80rem) {
+    post-outline {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--background);
+      border-bottom: 1px solid var(--border);
+    }
+
+    post-outline[data-reading] {
+      display: block;
+    }
+
+    post-outline[data-reading] .reading-title {
+      display: block;
+      padding-block: 0.5rem;
+      line-height: 1.5;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    post-outline[data-reading] summary {
+      min-height: 2rem;
+      padding-block: 0.25rem;
+    }
+
+    summary {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 2.75rem;
+      white-space: nowrap;
+    }
+
+    summary::before {
+      content: "▸" / "";
+    }
+    details[open] summary::before {
+      content: "▾" / "";
+    }
+
+    .current-title {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.875em;
+      font-weight: 400;
+    }
+
+    nav {
+      position: absolute;
+      inset: 100% 0 auto;
+      max-height: 55dvh;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--background);
+    }
+  }
+
+  summary:focus-visible {
+    outline: 2px dashed var(--accent);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 80rem) {
+    post-outline {
+      grid-area: 1 / 2;
+      position: sticky;
+      top: 1rem;
+      align-self: start;
+
+      padding: 0.25rem;
+    }
+
+    nav {
+      max-height: calc(100dvh - 5rem);
+    }
+  }
+</style>
+
+<script>
+  class PostOutline extends HTMLElement {
+    private wide = matchMedia("(min-width: 80rem)");
+    private events?: AbortController;
+    private observer?: ResizeObserver;
+    private frame = 0;
+    private titleObserver?: IntersectionObserver;
+
+    connectedCallback() {
+      const title = document.getElementById("post-title");
+      if (title) {
+        this.titleObserver = new IntersectionObserver(([entry]) => {
+          this.toggleAttribute(
+            "data-reading",
+            entry.boundingClientRect.bottom <= 0
+          );
+        });
+        this.titleObserver.observe(title);
+      }
+
+      const details = this.querySelector("details");
+      if (!details) return;
+      const nav = this.querySelector("nav")!;
+      const label = this.querySelector(".current-title")!;
+      const sections = Array.from(nav.querySelectorAll("a")).flatMap(link => {
+        const heading = document.getElementById(
+          decodeURIComponent(link.hash.slice(1))
+        );
+        return heading ? [{ link, heading }] : [];
+      });
+      if (!sections.length) return;
+
+      let active = -1;
+      const revealCurrent = () => {
+        if (!details.open || active < 0) return;
+        const item = sections[active].link.getBoundingClientRect();
+        const panel = nav.getBoundingClientRect();
+        if (item.top < panel.top) nav.scrollTop += item.top - panel.top;
+        else if (item.bottom > panel.bottom)
+          nav.scrollTop += item.bottom - panel.bottom;
+      };
+
+      const update = () => {
+        this.frame = 0;
+        // Use the same reading line as a native fragment jump, allowing for rounding.
+        const line =
+          parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 2;
+        let start = 0;
+        let end = sections.length;
+        while (start < end) {
+          const mid = Math.floor((start + end) / 2);
+          if (sections[mid].heading.getBoundingClientRect().top <= line)
+            start = mid + 1;
+          else end = mid;
+        }
+        const next = start - 1;
+        if (next === active) return;
+        if (active >= 0) sections[active].link.removeAttribute("aria-current");
+        active = next;
+        label.textContent = sections[active]?.link.textContent?.trim() ?? "";
+        if (active >= 0)
+          sections[active].link.setAttribute("aria-current", "location");
+        revealCurrent();
+      };
+      const schedule = () => {
+        if (!this.frame) this.frame = requestAnimationFrame(update);
+      };
+      const setLayout = () => {
+        details.open = this.wide.matches;
+        schedule();
+      };
+
+      this.events = new AbortController();
+      const { signal } = this.events;
+      setLayout();
+      this.wide.addEventListener("change", setLayout, { signal });
+      window.addEventListener("scroll", schedule, { passive: true, signal });
+      window.addEventListener("resize", schedule, { signal });
+      details.addEventListener("toggle", revealCurrent, { signal });
+      this.addEventListener(
+        "keydown",
+        event => {
+          if (event.key === "Escape" && details.open && !this.wide.matches) {
+            details.open = false;
+            this.querySelector("summary")!.focus();
+          }
+        },
+        { signal }
+      );
+      nav.addEventListener(
+        "click",
+        event => {
+          if (
+            this.wide.matches ||
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+          )
+            return;
+          const link =
+            event.target instanceof Element && event.target.closest("a");
+          if (!link) return;
+          details.open = false;
+          const target = document.getElementById(
+            decodeURIComponent(link.hash.slice(1))
+          );
+          target?.setAttribute("tabindex", "-1");
+          target?.focus({ preventScroll: true });
+        },
+        { signal }
+      );
+      this.observer = new ResizeObserver(schedule);
+      this.observer.observe(document.getElementById("article")!);
+    }
+
+    disconnectedCallback() {
+      this.titleObserver?.disconnect();
+      this.events?.abort();
+      this.observer?.disconnect();
+      cancelAnimationFrame(this.frame);
+      this.frame = 0;
+    }
+  }
+
+  customElements.define("post-outline", PostOutline);
+</script>

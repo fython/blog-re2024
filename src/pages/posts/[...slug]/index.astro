@@ -11,6 +11,7 @@ import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
 import { toTransitionName } from "@/utils/toTransitionName";
 import EditPost from "./_components/EditPost.astro";
+import PostOutline from "./_components/PostOutline.astro";
 import ShareLinks from "./_components/ShareLinks.astro";
 import BackButton from "./_components/BackButton.astro";
 import BackToTopButton from "./_components/BackToTopButton.astro";
@@ -74,7 +75,7 @@ const {
   hideEditPost,
 } = post.data;
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 
 let ogImageUrl: string | undefined;
 
@@ -115,6 +116,7 @@ const ogImage = ogImageUrl
     data-pagefind-body
   >
     <h1
+      id="post-title"
       style={{ viewTransitionName: toTransitionName(post.id) }}
       class="text-accent inline-block text-2xl font-bold sm:text-3xl"
     >
@@ -135,16 +137,19 @@ const ogImage = ogImageUrl
       <EditPost {hideEditPost} {post} class="max-sm:hidden" />
     </div>
 
-    <article
-      id="article"
-      class:list={[
-        "mt-8 w-full",
-        "app-prose max-w-app",
-        "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)",
-      ]}
-    >
-      <Content />
-    </article>
+    <div class:list={["post-body mt-8", { "has-outline": headings.length > 0 }]}>
+      <PostOutline {headings} {title} />
+      <article
+        id="article"
+        class:list={[
+          "w-full",
+          "app-prose max-w-app",
+          "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)",
+        ]}
+      >
+        <Content />
+      </article>
+    </div>
 
     <hr class="my-8 border-dashed" />
 
@@ -165,6 +170,30 @@ const ogImage = ogImageUrl
   </main>
   <Footer />
 </PostLayout>
+
+<style>
+  #article :global(:is(h1, h2, h3, h4, h5, h6)[id]) {
+    scroll-margin-top: 1rem;
+  }
+
+  @media (width < 80rem) {
+    .post-body:has(post-outline) #article :global(:is(h1, h2, h3, h4, h5, h6)[id]) {
+      scroll-margin-top: 5.25rem;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .post-body.has-outline {
+      display: grid;
+      grid-template-columns: 100% 14rem;
+      column-gap: 2rem;
+    }
+
+    .post-body > article {
+      grid-area: 1 / 1;
+    }
+  }
+</style>
 
 <script is:inline data-astro-rerun>
   function createProgressBar() {
@@ -236,7 +265,7 @@ const ogImage = ogImageUrl
         : "-top-3";
 
       const copyButton = document.createElement("button");
-      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-semibold`;
       copyButton.innerHTML = copyButtonLabel;
       codeBlock.setAttribute("tabindex", "0");
       codeBlock.appendChild(copyButton);

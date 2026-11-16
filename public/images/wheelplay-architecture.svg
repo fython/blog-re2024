@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="790" viewBox="0 0 640 790" role="img" aria-labelledby="title desc">
+  <title id="title">WheelPlay 整体架构</title>
+  <desc id="desc">WheelPlay App 内置 CarPlay、Android Auto、VNC 和 Android 虚拟桌面。同一台 Android 设备上的独立 APK 通过 Binder 和 Surface 接入输入源框架。当前输入源的画面发往车机浏览器，触控回传给当前输入源。</desc>
+  <defs>
+    <marker id="down" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#236854"/></marker>
+    <marker id="back" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#924622"/></marker>
+  </defs>
+  <style>
+    text { font-family: system-ui, sans-serif; fill: #153e34; text-anchor: middle }
+    .label { font-size: 22px; font-weight: 650 }
+    .detail { font-size: 18px }
+    .box { fill: #fff; stroke: #81a99b; stroke-width: 1.5 }
+    .flow { fill: none; stroke: #236854; stroke-width: 2.5; marker-end: url(#down) }
+  </style>
+  <rect width="640" height="790" rx="18" fill="#f8faf7"/>
+  <rect x="14" y="96" width="612" height="580" rx="15" fill="#e7f2eb" stroke="#81a99b"/>
+  <text x="37" y="133" class="label" style="text-anchor:start">Android 设备</text>
+
+  <rect x="32" y="215" width="576" height="442" rx="13" fill="#f6faf6" stroke="#527e70" stroke-width="1.5"/>
+  <text x="288" y="251" class="label">WheelPlay App</text>
+  <rect class="box" x="50" y="273" width="350" height="148" rx="10"/>
+  <text x="225" y="303" class="label">内置输入源</text>
+  <text x="225" y="337" class="detail">CarPlay 接收端</text>
+  <path d="M70 350H380" stroke="#d2e3d9"/>
+  <text x="225" y="376" class="detail">Android Auto、VNC、Android 虚拟桌面</text>
+  <text x="225" y="400" class="detail">（实验性）</text>
+
+  <rect class="box" x="42" y="18" width="154" height="49" rx="10"/>
+  <text x="119" y="50" class="label">iPhone</text>
+  <path class="flow" d="M119 67V85H22V329H147"/>
+  <text x="43" y="319" class="detail" style="text-anchor:start">无线 / USB</text>
+
+  <rect class="box" x="363" y="111" width="240" height="80" rx="10"/>
+  <text x="483" y="144" class="label">独立 APK 插件</text>
+  <text x="483" y="173" class="detail">ICCOA CarLink（规划中）</text>
+  <path class="flow" d="M492 191V485"/>
+  <rect x="416" y="327" width="172" height="36" rx="6" fill="#f6faf6"/>
+  <text x="502" y="352" class="detail">Binder / Surface</text>
+
+  <path class="flow" d="M225 421V485"/>
+  <rect class="box" x="50" y="490" width="540" height="68" rx="10"/>
+  <text x="320" y="520" class="label">WheelPlay 输入源框架</text>
+  <text x="320" y="545" class="detail">一次只启用一个输入源</text>
+  <path class="flow" d="M225 558V583"/>
+  <rect class="box" x="50" y="588" width="350" height="48" rx="10"/>
+  <text x="225" y="620" class="label">浏览器输出</text>
+  <path class="flow" d="M225 636V713"/>
+  <text x="211" y="704" class="detail" style="text-anchor:end">WebRTC 或图片流</text>
+  <rect class="box" x="50" y="718" width="540" height="56" rx="10"/>
+  <text x="320" y="753" class="label">车机浏览器</text>
+  <path d="M492 718V564" fill="none" stroke="#924622" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#back)"/>
+  <text x="504" y="620" class="detail" style="text-anchor:start;fill:#924622">触控回传</text>
+</svg>
