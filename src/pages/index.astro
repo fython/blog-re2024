@@ -34,7 +34,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         featuredPosts.length > 0 && (
           <>
             <section id="featured" class="pt-12 pb-6">
-              <h2 class="text-2xl font-semibold tracking-wide">精选</h2>
+              <h2 class="text-2xl font-bold tracking-wide">精选</h2>
               <ul>
                 {featuredPosts.map(data => (
                   <Card variant="h3" {...data} />
@@ -49,7 +49,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       {
         recentPosts.length > 0 && (
           <section id="recent-posts" class="pt-12 pb-6">
-            <h2 class="text-2xl font-semibold tracking-wide">最近填坑</h2>
+            <h2 class="text-2xl font-bold tracking-wide">最近填坑</h2>
             <ul>
               {recentPosts.map(
                 (data, index) =>

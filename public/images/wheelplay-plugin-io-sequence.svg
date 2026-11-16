@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="884" height="977" viewBox="0 0 884 977" role="img" aria-labelledby="title desc">
+  <title id="title">WheelPlay 的图片流、WebRTC 视频流与触控回传</title>
+  <desc id="desc">图中并列两种输入源的示例。内置 Android Auto 提交 H.264 帧，WheelPlay 可以通过 WebRTC 视频轨发送给浏览器。框架与插件握手并交付 Surface。插件向 Surface 写帧，WheelPlay 离屏编码并通过 WebSocket 发往浏览器。浏览器归一化触点后回传，框架检查当前会话，再调用插件的 touch。</desc>
+  <defs>
+    <marker id="out" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#236854"/></marker>
+    <marker id="in" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#924622"/></marker>
+  </defs>
+  <style>
+    text { font: 16px system-ui, sans-serif; text-anchor: middle; fill: #153e34 }
+    .actor, .phase { font-weight: 650 }
+    .phase { text-anchor: start }
+    .call { paint-order: stroke; stroke: #f8faf7; stroke-width: 6px; stroke-linejoin: round }
+  </style>
+  <rect width="884" height="977" rx="18" fill="#f8faf7"/>
+  <path d="M92 64V957" stroke="#81a99b" stroke-dasharray="4 5"/>
+  <rect x="12" y="16" width="160" height="48" rx="9" fill="white" stroke="#81a99b"/>
+  <text class="actor" x="92" y="46">输入源（插件／内置）</text>
+  <path d="M320 64V957" stroke="#81a99b" stroke-dasharray="4 5"/>
+  <rect x="240" y="16" width="160" height="48" rx="9" fill="white" stroke="#81a99b"/>
+  <text class="actor" x="320" y="46">WheelPlay 输入源框架</text>
+  <path d="M558 64V957" stroke="#81a99b" stroke-dasharray="4 5"/>
+  <rect x="478" y="16" width="160" height="48" rx="9" fill="white" stroke="#81a99b"/>
+  <text class="actor" x="558" y="46">WheelPlay 内部实现</text>
+  <path d="M800 64V957" stroke="#81a99b" stroke-dasharray="4 5"/>
+  <rect x="720" y="16" width="160" height="48" rx="9" fill="white" stroke="#81a99b"/>
+  <text class="actor" x="800" y="46">浏览器</text>
+  <rect x="12" y="82" width="860" height="30" rx="6" fill="#e7f2eb"/><text class="phase" x="26" y="103">插件 API v2 建立会话 · 协商能力并交付 Surface</text>
+  <text class="call" x="206" y="141">connect(token, apiVersion, host)</text>
+  <path d="M320 149H92" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="206" y="184">onInfo(token, info)</text>
+  <path d="M92 192H320" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="439" y="227">outputFactory(width, height)</text>
+  <path d="M320 235H558" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="439" y="270">返回含 Surface 的输出端口</text>
+  <path d="M558 278H320" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="206" y="313">start(token, surface)</text>
+  <path d="M320 321H92" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="206" y="356">onState(token, READY, …)</text>
+  <path d="M92 364H320" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <rect x="12" y="390" width="860" height="30" rx="6" fill="#e7f2eb"/><text class="phase" x="26" y="411">画面路径 A · 插件 Surface → WebSocket 图片流</text>
+  <text class="call" x="325" y="450">SDK 向已交付的 Surface 写入画面</text>
+  <path d="M92 458H558" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="558" y="491">updateTexImage() → encode() → publish()</text>
+  <text class="call" x="679" y="529">WebSocket 发送 JPEG / WebP</text>
+  <path d="M558 537H800" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <rect x="12" y="567" width="860" height="30" rx="6" fill="#e7f2eb"/><text class="phase" x="26" y="588">画面路径 B · 内置 Android Auto → WebRTC 视频轨（已协商 H.264）</text>
+  <text class="call" x="206" y="626">output.frame(revision, frame, pts)</text>
+  <path d="M92 634H320" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="439" y="667">WebVideoSource.frame(…)</text>
+  <path d="M320 675H558" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="679" y="708">RtcVideoStream.frame(…) → RTP</text>
+  <path d="M558 716H800" fill="none" stroke="#236854" stroke-width="2" marker-end="url(#out)"/>
+  <text class="call" x="741" y="750">pc.ontrack → renderer.start(…)</text>
+  <g transform="translate(0 207)">
+  <rect x="12" y="567" width="860" height="30" rx="6" fill="#e7f2eb"/><text class="phase" x="26" y="588">插件示例的触控回传 · 浏览器上报触点，框架路由到当前会话</text>
+  <text class="call" x="763" y="621">mapPoint() 归一化坐标</text>
+  <text class="call" x="679" y="653">send({ type: "touch", contacts })</text>
+  <path d="M800 661H558" fill="none" stroke="#924622" stroke-width="2" marker-end="url(#in)"/>
+  <text class="call" x="439" y="697">touch(target, contacts)</text>
+  <path d="M558 705H320" fill="none" stroke="#924622" stroke-width="2" marker-end="url(#in)"/>
+  <text class="call" x="206" y="740">touch(token, ids, xs, ys, down)</text>
+  <path d="M320 748H92" fill="none" stroke="#924622" stroke-width="2" marker-end="url(#in)"/>
+  </g>
+</svg>
