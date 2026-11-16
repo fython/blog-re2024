@@ -7,8 +7,8 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: "LXGW WenKai TC", serif;
-  --font-mono: "LXGW WenKai Mono TC", monospace;
+  --font-app: "Noto Sans SC", sans-serif;
+  --font-mono: "Noto Sans Mono", "Noto Sans SC", monospace;
 }
 
 code, pre, kbd, samp {
