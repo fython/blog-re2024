@@ -11,6 +11,10 @@
   --font-mono: "Noto Sans Mono", "Noto Sans SC", monospace;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Noto Serif SC", serif;
+}
+
 code, pre, kbd, samp {
   font-family: var(--font-mono);
 }

@@ -87,7 +87,7 @@ const isActive = (path: string) => {
             href={getRelativeLocaleUrl(locale, "posts")}
             class:list={{ "active-nav": isActive("/posts") }}
           >
-            <span class="nav-label">posts</span>
+            <span class="nav-label">posts.</span>
           </a>
         </li>
         <li class="col-span-2">
@@ -95,21 +95,21 @@ const isActive = (path: string) => {
             href={getRelativeLocaleUrl(locale, "about")}
             class:list={{ "active-nav": isActive("/about") }}
           >
-            <span class="nav-label">about</span>
+            <span class="nav-label">about.</span>
           </a>
         </li>
         <li class="col-span-2">
           <a
             href={getRelativeLocaleUrl(locale, "projects")}
             class:list={{ "active-nav": isActive("/projects") }}
-            ><span class="nav-label">works</span></a
+            ><span class="nav-label">works.</span></a
           >
         </li>
         <li class="col-span-2">
           <a
             href={getRelativeLocaleUrl(locale, "friends")}
             class:list={{ "active-nav": isActive("/friends") }}
-            ><span class="nav-label">friends</span></a
+            ><span class="nav-label">friends.</span></a
           >
         </li>
         {
@@ -240,6 +240,10 @@ const isActive = (path: string) => {
 </script>
 
 <style>
+  header {
+    font-family: "Noto Serif SC", serif;
+  }
+
   .nav-label {
     position: relative;
     display: inline-block;
