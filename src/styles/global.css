@@ -7,15 +7,26 @@
 
 @layer base {
   * {
-    @apply border-border outline-accent/75;
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-muted) transparent;
+    @apply border-border outline-accent/80;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
   }
+
+  html {
+    background-color: var(--background);
+    color: var(--foreground);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   a,
   button,
+  summary,
   #main-content {
-    @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+    @apply outline-accent outline-offset-2 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-solid;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
@@ -23,17 +34,113 @@
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-[46rem];
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply max-w-app mx-auto w-full px-5 sm:px-6;
 }
 
 @utility active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+  @apply text-accent font-semibold;
+}
+
+/* Gallery-ready flat banner utility for future landscape photography */
+@utility nordic-media-banner {
+  @apply border-border bg-surface relative block w-full overflow-hidden rounded-sm border;
 }
 
 :target {
-  scroll-margin-block: 1rem;
+  scroll-margin-block: 1.5rem;
+}
+
+/* ===== Nordic 3-Tone Flat Callouts (Overrides Obsidian Multi-Color Theme) ===== */
+.callout {
+  --rc-tone: var(--foreground);
+  --rc-bg: var(--surface);
+  margin: 1.5rem 0;
+  padding: 0.9rem 1.15rem;
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--rc-tone);
+  border-radius: 0.25rem;
+  background-color: var(--rc-bg);
+  color: var(--foreground);
+  mix-blend-mode: normal;
+  line-height: 1.75;
+}
+
+.dark .callout,
+[data-theme="dark"] .callout {
+  mix-blend-mode: normal;
+  background-color: var(--rc-bg);
+}
+
+/* Primary accent group: info / note / todo / summary */
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"] {
+  --rc-tone: var(--accent);
+  --rc-bg: var(--accent-soft);
+}
+
+/* Secondary fjord-teal group: tip / hint / important / success */
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"],
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] {
+  --rc-tone: var(--secondary);
+  --rc-bg: var(--secondary-soft);
+}
+
+/* Neutral charcoal emphasis group: warning / caution / danger / quote / example */
+.callout[data-callout="warning"],
+.callout[data-callout="attention"],
+.callout[data-callout="caution"],
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-callout="failure"],
+.callout[data-callout="missing"],
+.callout[data-callout="fail"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="example"],
+.callout[data-callout="quote"],
+.callout[data-callout="cite"] {
+  --rc-tone: var(--foreground);
+  --rc-bg: var(--surface);
+}
+
+.callout-title,
+.dark .callout-title,
+[data-theme="dark"] .callout-title {
+  color: var(--rc-tone);
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9375rem;
+}
+
+.callout-title-text {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.callout-content {
+  margin-top: 0.5rem;
+  color: var(--foreground);
+  font-size: 0.95rem;
+}
+
+.callout-content > :first-child {
+  margin-top: 0;
+}
+
+.callout-content > :last-child {
+  margin-bottom: 0;
 }

@@ -92,15 +92,15 @@ const rssHref = getRelativeLocaleUrl(
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400..700&display=swap"
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300..700&display=swap"
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400..800&display=swap"
       rel="stylesheet"
     />
 
@@ -133,7 +133,6 @@ const rssHref = getRelativeLocaleUrl(
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.classList.toggle("dark", theme === "dark");
-        // Expose value so theme.ts can skip re-detection.
         window.__theme = { value: theme };
       })();
     </script>
@@ -141,7 +140,7 @@ const rssHref = getRelativeLocaleUrl(
     <ClientRouter />
   </head>
   <body
-    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
+    class="bg-background font-app text-foreground selection:bg-accent-soft selection:text-accent flex min-h-svh flex-col antialiased"
   >
     <slot />
     <script>

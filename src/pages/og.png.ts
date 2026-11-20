@@ -16,115 +16,130 @@ export const GET: APIRoute = async () => {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
+          background: "#f7f8fa",
+          color: "#16191f",
           width: "100%",
           height: "100%",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          flexDirection: "column",
+          padding: "56px",
           fontFamily: "Source Han Serif SC",
         },
-        children: [
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "absolute",
-                top: "-1px",
-                right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
-                opacity: "0.9",
-                borderRadius: "4px",
-                display: "flex",
-                justifyContent: "center",
-                margin: "2.5rem",
-                width: "88%",
-                height: "80%",
-              },
+        children: {
+          type: "div",
+          props: {
+            style: {
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              background: "#f7f8fa",
+              border: "2px solid #dce2ea",
+              borderTop: "6px solid #1d559e",
+              padding: "56px 64px",
             },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
-                borderRadius: "4px",
-                display: "flex",
-                justifyContent: "center",
-                margin: "2rem",
-                width: "88%",
-                height: "80%",
-              },
-              children: {
+            children: [
+              {
                 type: "div",
                 props: {
                   style: {
                     display: "flex",
-                    flexDirection: "column",
+                    alignItems: "center",
                     justifyContent: "space-between",
-                    margin: "20px",
-                    width: "90%",
-                    height: "90%",
+                    fontSize: 22,
+                    color: "#2b6f72",
+                    letterSpacing: "0.14em",
                   },
                   children: [
                     {
-                      type: "div",
+                      type: "span",
                       props: {
-                        style: {
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: "90%",
-                          maxHeight: "90%",
-                          overflow: "hidden",
-                          textAlign: "center",
-                        },
-                        children: [
-                          {
-                            type: "p",
-                            props: {
-                              style: { fontSize: 72, fontWeight: "bold" },
-                              children: config.site.title,
-                            },
-                          },
-                          {
-                            type: "p",
-                            props: {
-                              style: { fontSize: 28 },
-                              children: config.site.description,
-                            },
-                          },
-                        ],
+                        children: "PERSONAL BLOG",
                       },
                     },
                     {
-                      type: "div",
+                      type: "span",
                       props: {
-                        style: {
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          width: "100%",
-                          marginBottom: "8px",
-                          fontSize: 28,
-                        },
-                        children: {
-                          type: "span",
-                          props: {
-                            style: { overflow: "hidden", fontWeight: "bold" },
-                            children: new URL(config.site.url).hostname,
-                          },
-                        },
+                        style: { color: "#5b6370" },
+                        children: new URL(config.site.url).hostname,
                       },
                     },
                   ],
                 },
               },
-            },
+              {
+                type: "div",
+                props: {
+                  style: {
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                  },
+                  children: [
+                    {
+                      type: "p",
+                      props: {
+                        style: {
+                          margin: 0,
+                          fontSize: 78,
+                          fontWeight: "bold",
+                          lineHeight: 1.2,
+                          color: "#16191f",
+                        },
+                        children: config.site.title,
+                      },
+                    },
+                    {
+                      type: "p",
+                      props: {
+                        style: {
+                          margin: 0,
+                          fontSize: 30,
+                          lineHeight: 1.5,
+                          color: "#5b6370",
+                        },
+                        children: config.site.description,
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                type: "div",
+                props: {
+                  style: {
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    borderTop: "2px solid #dce2ea",
+                    paddingTop: "24px",
+                    fontSize: 24,
+                    color: "#5b6370",
+                  },
+                  children: [
+                    {
+                      type: "span",
+                      props: {
+                        children: config.site.author,
+                      },
+                    },
+                    {
+                      type: "span",
+                      props: {
+                        style: {
+                          color: "#1d559e",
+                          fontWeight: "bold",
+                        },
+                        children: config.site.url.replace(/\/$/, ""),
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
           },
-        ],
+        },
       },
     },
     {

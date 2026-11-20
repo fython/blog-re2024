@@ -1,43 +1,81 @@
-/* Register design tokens for Tailwind v4 */
+/* Register Nordic Flat Editorial design tokens for Tailwind v4 */
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-accent-foreground: var(--accent-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: "Noto Sans SC", sans-serif;
-  --font-mono: "Noto Sans Mono", "Noto Sans SC", monospace;
+  --color-border-strong: var(--border-strong);
+
+  --font-app:
+    "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Hiragino Sans GB", sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+  --font-mono:
+    "Noto Sans Mono", ui-monospace, SFMono-Regular, "Noto Sans SC", monospace;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Noto Serif SC", serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
 }
 
-code, pre, kbd, samp {
+code,
+pre,
+kbd,
+samp {
   font-family: var(--font-mono);
 }
 
-/* Light theme values */
+/* Light theme: Nordic Frost Neutral + Horizon Indigo Blue + Fjord Teal */
 :root,
 [data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
+  --background: #f7f8fa;
+  --surface: #eef1f5;
+  --surface-hover: #e4e9f0;
+  --foreground: #16191f;
+  --muted: var(--surface);
+  --muted-foreground: #5b6370;
+  --border: #dce2ea;
+  --border-strong: #c2cbd6;
+
+  --accent: #1d559e;
+  --accent-soft: #e6eef8;
   --accent-foreground: #ffffff;
-  --muted: #e6e6e6;
-  --muted-foreground: #6b7280;
-  --border: #ece9e9;
+
+  --secondary: #2b6f72;
+  --secondary-soft: #e5f1f1;
+  --secondary-foreground: #ffffff;
 }
 
-/* Dark theme values */
+/* Dark theme: Polar Night Neutral + Aurora Sky Blue + Glacial Fjord Teal */
 [data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --accent-foreground: #ffffff;
-  --muted: #343f60bf;
-  --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  --background: #0f1319;
+  --surface: #161c25;
+  --surface-hover: #1e2633;
+  --foreground: #e8ecf2;
+  --muted: var(--surface);
+  --muted-foreground: #8c96a6;
+  --border: #252e3c;
+  --border-strong: #39465a;
+
+  --accent: #6da5f2;
+  --accent-soft: #17273e;
+  --accent-foreground: #0c1118;
+
+  --secondary: #5cb0b4;
+  --secondary-soft: #152b2d;
+  --secondary-foreground: #0c1118;
 }

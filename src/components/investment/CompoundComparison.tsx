@@ -78,14 +78,22 @@ export default function CompoundComparison() {
         return;
       }
       const styles = getComputedStyle(document.documentElement);
+      const background = styles.getPropertyValue("--background").trim();
       const foreground = styles.getPropertyValue("--foreground").trim();
+      const border = styles.getPropertyValue("--border").trim();
       const accent = styles.getPropertyValue("--accent").trim();
+      const secondary = styles.getPropertyValue("--secondary").trim();
       chart.current.setOption(
         {
-          color: [accent, "#c77918"],
+          color: [secondary, accent],
           textStyle: { color: foreground },
           tooltip: {
             trigger: "axis",
+            backgroundColor: background,
+            borderColor: border,
+            borderWidth: 1,
+            textStyle: { color: foreground },
+            extraCssText: "box-shadow: none;",
             valueFormatter: (value: unknown) =>
               `¥${money.format(Number(value))}`,
           },
@@ -102,6 +110,7 @@ export default function CompoundComparison() {
             boundaryGap: false,
             data: Array.from({ length: data.years + 1 }, (_, i) => `${i}年`),
             axisLabel: { color: foreground },
+            axisLine: { lineStyle: { color: border } },
           },
           yAxis: {
             type: "value",
@@ -109,7 +118,7 @@ export default function CompoundComparison() {
               color: foreground,
               formatter: (value: number) => money.format(value),
             },
-            splitLine: { lineStyle: { opacity: 0.2 } },
+            splitLine: { lineStyle: { color: border } },
           },
           series: [
             {
@@ -141,11 +150,13 @@ export default function CompoundComparison() {
 
   return (
     <section
-      className="not-prose border-border bg-background my-8 rounded-lg border p-5"
+      className="not-prose border-border bg-surface/50 my-8 rounded-md border p-5"
       data-pagefind-ignore
     >
-      <h3 className="mb-2 text-lg font-bold">看看波动如何影响复利</h3>
-      <p className="mb-4 text-sm">
+      <h3 className="text-foreground mb-2 font-serif text-lg font-bold">
+        看看波动如何影响复利
+      </h3>
+      <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
         两种路径的平均年收益率相同：稳定增长；或每年交替上涨和下跌。
       </p>
       <InvestmentControls
@@ -161,7 +172,7 @@ export default function CompoundComparison() {
         {fields.map(field => (
           <label className="grid gap-2 text-sm" key={field.key}>
             <span className="flex items-baseline justify-between gap-2">
-              <span>{field.label}</span>
+              <span className="text-foreground">{field.label}</span>
               <span className="text-muted-foreground tabular-nums">
                 {field.key === "principal"
                   ? `¥${money.format(Number(values[field.key]))}`
@@ -201,7 +212,7 @@ export default function CompoundComparison() {
         ))}
       </InvestmentControls>
       <p
-        className="mb-4 text-sm text-amber-700 empty:hidden dark:text-amber-400"
+        className="text-accent mt-3 mb-4 text-sm font-medium empty:hidden"
         role="status"
       >
         {!data &&
@@ -209,34 +220,36 @@ export default function CompoundComparison() {
       </p>
       {data && (
         <div
-          className="my-4 grid grid-cols-3 gap-1.5 sm:gap-3"
+          className="my-5 grid grid-cols-3 gap-2 sm:gap-3"
           aria-live="polite"
         >
-          <div className="bg-muted/50 grid min-w-0 content-start gap-1 rounded-lg p-2 text-xs sm:p-3 sm:text-[0.8rem]">
-            <span className="min-h-8 text-green-700 sm:min-h-0 dark:text-green-400">
+          <div className="border-border bg-background grid min-w-0 content-start gap-1 rounded-sm border p-2.5 text-xs sm:p-3 sm:text-[0.8125rem]">
+            <span className="text-secondary min-h-8 font-medium sm:min-h-0">
               稳定增长<span className="hidden sm:inline"> · </span>
               <span className="block text-[0.625rem] whitespace-nowrap sm:inline sm:text-inherit">
                 每年 {data.rate}%
               </span>
             </span>
-            <strong className="text-sm break-all tabular-nums sm:text-[1.1rem]">
+            <strong className="text-foreground text-sm break-all tabular-nums sm:text-[1.0625rem]">
               ¥{money.format(data.stable[data.years])}
             </strong>
           </div>
-          <div className="bg-muted/50 grid min-w-0 content-start gap-1 rounded-lg p-2 text-xs sm:p-3 sm:text-[0.8rem]">
-            <span className="min-h-8 text-amber-700 sm:min-h-0 dark:text-amber-400">
+          <div className="border-border bg-background grid min-w-0 content-start gap-1 rounded-sm border p-2.5 text-xs sm:p-3 sm:text-[0.8125rem]">
+            <span className="text-accent min-h-8 font-medium sm:min-h-0">
               波动增长<span className="hidden sm:inline"> · </span>
               <span className="block text-[0.625rem] whitespace-nowrap sm:inline sm:text-inherit">
                 交替 {data.rate + data.swing}% / {data.rate - data.swing}%
               </span>
             </span>
-            <strong className="text-sm break-all tabular-nums sm:text-[1.1rem]">
+            <strong className="text-foreground text-sm break-all tabular-nums sm:text-[1.0625rem]">
               ¥{money.format(data.volatile[data.years])}
             </strong>
           </div>
-          <div className="bg-muted/50 grid min-w-0 content-start gap-1 rounded-lg p-2 text-xs sm:p-3 sm:text-[0.8rem]">
-            <span className="min-h-8 sm:min-h-0">期末差额</span>
-            <strong className="text-sm break-all tabular-nums sm:text-[1.1rem]">
+          <div className="border-border bg-background grid min-w-0 content-start gap-1 rounded-sm border p-2.5 text-xs sm:p-3 sm:text-[0.8125rem]">
+            <span className="text-muted-foreground min-h-8 sm:min-h-0">
+              期末差额
+            </span>
+            <strong className="text-foreground text-sm break-all tabular-nums sm:text-[1.0625rem]">
               ¥
               {money.format(
                 data.stable[data.years] - data.volatile[data.years]
@@ -251,7 +264,7 @@ export default function CompoundComparison() {
         role="img"
         aria-label="两种收益路径的资产变化曲线；具体期末金额显示在上方"
       />
-      <p className="text-muted-foreground mt-4 text-sm">
+      <p className="text-muted-foreground mt-4 text-xs leading-relaxed">
         示例假设收益每年再投入，无追加资金、费用或税费。波动路径先涨后跌，年数为偶数，确保两种路径的算术平均年收益率一致；实际收益不会按固定规律变化。
       </p>
     </section>

@@ -17,13 +17,15 @@ export default function InvestmentControls({
     <>
       <button
         type="button"
-        className="border-border flex w-full items-center justify-between rounded-md border px-3 py-2 text-left text-sm font-medium sm:hidden"
+        className="border-border bg-background text-foreground hover:border-accent hover:text-accent flex min-h-10 w-full items-center justify-between rounded-sm border px-3 py-2 text-left text-sm font-medium transition-colors sm:hidden"
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen(current => !current)}
       >
         <span>计算参数</span>
-        <span aria-hidden="true">{open ? "收起 −" : "调整 +"}</span>
+        <span aria-hidden="true" className="text-muted-foreground">
+          {open ? "收起 −" : "调整 +"}
+        </span>
       </button>
       {!open && (
         <dl className="text-muted-foreground mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:hidden">

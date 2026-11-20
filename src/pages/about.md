@@ -1,31 +1,18 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "关于我"
+profileCard: true
 ---
-
-我是 `烧饼`，惯用网名：Siubeng（“烧饼”的粤语拼音写法），各平台英文 ID 常见为 `fython` 。
-
-是一个喜欢 ACG、折腾手机数码、对互联网产品/UI/UX 很感兴趣的全干开发。
-
-最近正在研究量化交易、AI 技术栈，欢迎私信交流 ~
-
-- X/Twitter: [@s1ubeng](https://x.com/s1ubeng)
-- 微博: [@烧饼Core](https://weibo.com/u/1870051034)
-- Telegram: [@fython](https://t.me/fython) （这是一个中转 channel）
 
 ## 装备/Equipment
 
+- **汽车：** 蔚来 et5t 冠军纪念版 (2025 款)
 - **游戏机：** AMD 9800X3D + RTX3080Ti WinPC
 - **显示器：** REDMI 显示器 G Pro 27U
-- **键鼠：** NuPhy Air75 HE & Logitech G Pro X Superlight
-- **主力手机：** Google Pixel 10 Pro & iPhone 15
-- **摄影手机：** 小米 15 Ultra
-- **平板电脑：** iPad Pro (M5)
-- **耳机：** Google Pixel Buds Pro 2
+- **键鼠：** NuPhy Air75 V3 & Logitech G Pro X Superlight
+- **主力手机：** Xiaomi 18 Pro & iPhone 16 Pro
 - **开发机/Homelab：** Mac mini M4 丐版
-- **浏览器：** Google Chrome
 - **笔记软件：** 飞书文档 & Notion
-- **IDE：** Jetbrains 全家桶 & Visual Studio Code & Vim
 
 ## 兴趣/Hobbies
 
@@ -56,7 +43,7 @@ title: "关于我"
 - **服务编排：** Docker/Kubernetes
 - **PaaS：** Tencent Cloud/Cloudflare/Vercel
 - **平面设计：** Adobe Photoshop
-- **视频剪辑：** Adobe Premiere/DaVinci Resolve
+- **视频剪辑：** CapCut (剪映)/Adobe Premiere/DaVinci Resolve
 
 ### 独立开发经历/Indie Works
 

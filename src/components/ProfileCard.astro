@@ -1,0 +1,151 @@
+---
+import { createHash } from "node:crypto";
+import config from "@/config";
+
+const email = "fythonx@gmail.com";
+const gravatarHash = createHash("sha256")
+  .update(email.trim().toLowerCase())
+  .digest("hex");
+const avatarUrl = `https://www.gravatar.com/avatar/${gravatarHash}?s=400&d=mp`;
+
+const tags = [
+  "全干开发",
+  "产品 & UI/UX",
+  "量化交易",
+  "AI 技术栈",
+  "数码 & ACG",
+];
+
+const contacts = [
+  {
+    label: "X / Twitter",
+    value: "@siubeng9",
+    href: "https://x.com/siubeng9",
+  },
+  {
+    label: "微博",
+    value: "@烧饼Core",
+    href: "https://weibo.com/u/1870051034",
+  },
+  {
+    label: "少数派",
+    value: "@烧饼",
+    href: "https://sspai.com/u/siubeng/updates",
+  },
+  {
+    label: "Telegram",
+    value: "@fython",
+    href: "https://t.me/fython",
+  },
+  {
+    label: "GitHub",
+    value: "@fython",
+    href: "https://github.com/fython",
+  },
+  {
+    label: "Email",
+    value: email,
+    href: `mailto:${email}`,
+  },
+];
+---
+
+<section
+  aria-label="个人名片"
+  class="not-prose border-border border-t-accent bg-surface/60 mb-10 overflow-hidden rounded-sm border border-t-[3px]"
+>
+  <div class="relative overflow-hidden p-5 sm:p-7">
+    <img
+      src={avatarUrl}
+      alt="烧饼的头像"
+      width="156"
+      height="156"
+      loading="eager"
+      decoding="async"
+      referrerpolicy="no-referrer"
+      class="border-border bg-background pointer-events-none absolute -end-7 -top-7 size-[8.5rem] rounded-full border object-cover select-none sm:-end-8 sm:-top-8 sm:size-[9.75rem]"
+    />
+
+    <div class="relative z-10 min-w-0 pe-28 sm:pe-36">
+      <div
+        class="text-muted-foreground mb-2 inline-flex items-center gap-2 text-xs"
+      >
+        <span
+          aria-hidden="true"
+          class="bg-secondary inline-block size-1.5 rounded-full"></span>
+        <span>中国</span>
+        <span aria-hidden="true" class="text-border-strong">/</span>
+        <span>广东</span>
+      </div>
+
+      <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <h2
+          class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-[1.75rem]"
+        >
+          烧饼
+        </h2>
+        <span class="text-muted-foreground font-serif text-xl">
+          Siubeng Fung
+        </span>
+      </div>
+
+      <p class="text-secondary mt-1.5 text-sm font-medium">
+        全干开发 @ 鹅厂
+      </p>
+    </div>
+
+    <p
+      class="text-foreground/90 relative z-10 mt-5 text-sm leading-relaxed sm:text-[0.9375rem]"
+    >
+      惯用网名 <code
+        class="border-border bg-background rounded-sm border px-1 py-0.5 font-mono text-xs"
+        >Siubeng</code
+      >（“烧饼”的粤语拼音写法），各平台英文 ID 常见为 <code
+        class="border-border bg-background rounded-sm border px-1 py-0.5 font-mono text-xs"
+        >fython</code
+      >。喜欢 ACG、折腾手机数码、对互联网产品与 UI/UX
+      很感兴趣，最近正在研究量化交易与 AI 技术栈，欢迎私信交流。
+    </p>
+
+    <ul class="relative z-10 mt-4 flex flex-wrap gap-1.5" aria-label="关注领域">
+      {
+        tags.map(tag => (
+          <li class="border-border bg-background text-muted-foreground rounded-sm border px-2.5 py-0.5 text-xs">
+            {tag}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="border-border bg-background border-t px-5 py-3.5 sm:px-7 sm:py-4">
+    <dl
+      class="grid grid-cols-1 gap-x-6 gap-y-2.5 text-xs sm:grid-cols-2 md:grid-cols-3"
+    >
+      {
+        contacts.map(({ label, value, href }) => (
+          <div class="flex items-baseline gap-2">
+            <dt class="text-muted-foreground shrink-0">{label}</dt>
+            <dd class="min-w-0 truncate">
+              <a
+                href={href}
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={
+                  href.startsWith("mailto:") ? undefined : "noopener noreferrer"
+                }
+                class="text-foreground hover:text-accent font-mono transition-colors"
+              >
+                {value}
+                {!href.startsWith("mailto:") && (
+                  <span aria-hidden="true" class="ms-0.5 opacity-60">
+                    ↗
+                  </span>
+                )}
+              </a>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

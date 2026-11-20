@@ -1,34 +1,42 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
-  /* ===== Override default Tailwind Typography styles ===== */
+  /* ===== Nordic Reading-First Prose System ===== */
   .app-prose {
-    @apply prose;
+    @apply prose max-w-none text-[1rem] leading-[1.85] tracking-[0.015em] sm:text-[1.0625rem];
 
     h1,
     h2,
     h3,
     h4,
-    th {
-      @apply text-foreground mb-3;
+    h5,
+    h6 {
+      @apply text-foreground font-serif font-bold tracking-[0.01em] not-italic;
+    }
+
+    h2 {
+      @apply border-border mt-12 mb-5 border-b pb-2.5 text-[1.4rem] leading-snug sm:text-[1.55rem];
     }
 
     h3 {
-      @apply italic;
+      @apply mt-9 mb-3.5 text-[1.1875rem] leading-snug sm:text-[1.275rem];
     }
 
-    p,
-    strong,
+    h4 {
+      @apply mt-7 mb-2.5 text-[1.0625rem] leading-snug;
+    }
+
+    p {
+      @apply text-foreground my-[1.35em];
+    }
+
+    strong {
+      @apply text-foreground font-semibold;
+    }
+
     ol,
-    ul,
-    figcaption,
-    table,
-    code {
-      @apply text-foreground;
-    }
-
-    a {
-      @apply text-foreground hover:text-accent wrap-break-word decoration-dashed underline-offset-4 focus-visible:no-underline;
+    ul {
+      @apply text-foreground my-[1.25em];
     }
 
     ul {
@@ -36,37 +44,51 @@
     }
 
     li {
-      @apply marker:text-accent;
+      @apply marker:text-muted-foreground my-[0.45em];
+    }
+
+    a {
+      @apply text-foreground decoration-border-strong hover:text-accent hover:decoration-accent wrap-break-word underline decoration-1 underline-offset-4 transition-colors focus-visible:no-underline;
     }
 
     hr {
-      @apply border-border;
+      @apply border-border my-10;
     }
 
     img {
-      @apply border-border mx-auto border;
+      @apply border-border bg-surface mx-auto my-6 rounded-sm border;
     }
 
     img[role="button"] {
-      @apply cursor-zoom-in;
+      @apply cursor-zoom-in transition-opacity hover:opacity-95;
 
       &:focus-visible {
-        @apply outline-2 outline-offset-2 outline-dashed;
+        @apply outline-accent outline-2 outline-offset-2 outline-solid;
       }
+    }
+
+    figure {
+      @apply my-8;
     }
 
     figcaption {
-      @apply opacity-75;
+      @apply text-muted-foreground mt-2.5 text-center text-xs leading-relaxed tracking-wide;
     }
 
     table {
+      @apply text-foreground my-7 w-full border-collapse text-sm leading-relaxed sm:text-[0.9375rem];
+
+      thead {
+        @apply border-border bg-surface border-b;
+      }
+
       th,
       td {
-        @apply border-border border p-2;
+        @apply border-border border px-3.5 py-2.5 align-top;
       }
 
       th {
-        @apply py-1.5;
+        @apply text-foreground font-semibold;
       }
 
       th[align="center"],
@@ -86,53 +108,60 @@
     }
 
     code {
-      @apply bg-muted/75 text-foreground rounded p-1 wrap-break-word before:content-none after:content-none;
+      @apply border-border/80 bg-surface text-foreground rounded-sm border px-1.5 py-0.5 text-[0.875em] font-normal wrap-break-word before:content-none after:content-none;
     }
 
     .astro-code code {
-      @apply flex-[1_0_100%] bg-inherit p-0;
+      @apply flex-[1_0_100%] border-0 bg-transparent p-0 text-[0.875rem] leading-relaxed;
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word opacity-80;
+      @apply border-s-accent bg-surface text-foreground my-6 rounded-r-sm border-s-2 px-5 py-3.5 font-normal wrap-break-word not-italic;
+
+      p:first-of-type {
+        @apply mt-0 before:content-none;
+      }
+
+      p:last-of-type {
+        @apply mb-0 after:content-none;
+      }
     }
 
     details:not(.callout) {
-      @apply text-foreground inline-block cursor-pointer select-none [&_p]:hidden [&_ul]:my-0!;
+      @apply border-border bg-surface/60 text-foreground my-5 rounded-sm border px-4 py-3 select-none [&_ul]:my-2!;
     }
 
     summary {
-      @apply focus-visible:outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
+      @apply text-foreground cursor-pointer font-medium;
     }
 
     pre {
-      @apply focus-visible:outline-accent focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-dashed;
+      @apply my-6 rounded-md;
     }
   }
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
-    @apply outline-border flex border bg-(--shiki-light-bg) text-(--shiki-light) [&_span]:text-(--shiki-light);
+    @apply border-border bg-surface! flex border px-4 py-4 text-(--shiki-light) [&_span]:text-(--shiki-light);
   }
 
   html[data-theme="dark"] .astro-code {
-    @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
+    @apply bg-surface! text-(--shiki-dark) [&_span]:text-(--shiki-dark);
   }
 
   /* Styles for Shiki transformers */
-  /* https://shiki.style/packages/transformers */
   .astro-code {
     .line.diff.add {
-      @apply relative inline-block w-full bg-green-400/20 before:absolute before:-left-3 before:text-green-500 before:content-['+'];
+      @apply bg-secondary-soft before:text-secondary relative inline-block w-full before:absolute before:-left-3 before:content-['+'];
     }
     .line.diff.remove {
-      @apply relative inline-block w-full bg-red-500/20 before:absolute before:-left-3 before:text-red-500 before:content-['-'];
+      @apply bg-surface-hover before:text-muted-foreground relative inline-block w-full before:absolute before:-left-3 before:content-['-'];
     }
     .line.highlighted {
-      @apply inline-block w-full bg-slate-400/20;
+      @apply bg-accent-soft/80 inline-block w-full;
     }
     .highlighted-word {
-      @apply border-border rounded-sm border px-0.5 py-px;
+      @apply border-border-strong bg-accent-soft/60 rounded-xs border px-0.5 py-px;
     }
   }
 }

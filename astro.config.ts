@@ -15,7 +15,6 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import config from "./astro-paper.config";
-import paintAssets from "./scripts/prepare-paint.mjs";
 
 export default defineConfig({
   site: config.site.url,
@@ -44,7 +43,7 @@ export default defineConfig({
       rehypePlugins: [rehypeCallouts],
     }),
     shikiConfig: {
-      themes: { light: "min-light", dark: "night-owl" },
+      themes: { light: "github-light-default", dark: "nord" },
       defaultColor: false,
       wrap: false,
       transformers: [
@@ -56,7 +55,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [paintAssets(), tailwindcss()],
+    plugins: [tailwindcss()],
   },
   env: {
     schema: {

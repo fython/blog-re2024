@@ -6,26 +6,49 @@ import Datetime from "./Datetime.astro";
 
 type Props = {
   variant?: "h2" | "h3";
+  featuredBadge?: boolean;
 } & CollectionEntry<"posts">;
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const {
+  variant: Heading = "h2",
+  featuredBadge = false,
+  id,
+  data,
+  filePath,
+} = Astro.props;
 
 const { title, description, ...props } = data;
 ---
 
-<li class="my-6">
-  <a
-    href={getPostUrl(id, filePath, Astro.currentLocale)}
-    class:list={[
-      "text-accent inline-block text-lg font-semibold",
-      "decoration-dashed underline-offset-4 hover:underline",
-      "focus-visible:no-underline focus-visible:underline-offset-0",
-    ]}
-  >
-    <Heading class={'font-bold'} transition:name={toTransitionName(id)}>
-      {title}
-    </Heading>
-  </a>
-  <Datetime {...props} />
-  <p>{description}</p>
+<li class="py-5 sm:py-6">
+  <article class="group">
+    <div class="mb-2 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+      <Datetime {...props} size="sm" />
+      {
+        featuredBadge && (
+          <span class="bg-secondary-soft text-secondary inline-flex items-center rounded-sm px-2 py-0.5 text-[0.7rem] font-medium tracking-wider uppercase">
+            精选
+          </span>
+        )
+      }
+    </div>
+    <a
+      href={getPostUrl(id, filePath, Astro.currentLocale)}
+      class="text-foreground group-hover:text-accent block transition-colors"
+    >
+      <Heading
+        class="font-serif text-lg leading-snug font-bold tracking-[0.01em] sm:text-xl"
+        transition:name={toTransitionName(id)}
+      >
+        {title}
+      </Heading>
+    </a>
+    {
+      description && (
+        <p class="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed sm:text-[0.9375rem]">
+          {description}
+        </p>
+      )
+    }
+  </article>
 </li>

@@ -18,28 +18,40 @@ const t = useTranslations(Astro.currentLocale);
 {
   page.lastPage > 1 && (
     <nav
-      class="mt-auto mb-8 flex justify-center gap-4"
+      class="app-layout mt-auto mb-10 flex items-center justify-center gap-4"
       role="navigation"
       aria-label="Pagination Navigation"
     >
       <LinkButton
         disabled={!page.url.prev}
         href={page.url.prev as string}
-        class:list={["select-none", { "opacity-50": !page.url.prev }]}
+        class:list={[
+          "border-border inline-flex min-h-10 items-center gap-1.5 rounded-sm border px-4 py-2 text-sm font-medium transition-colors select-none",
+          page.url.prev
+            ? "bg-background text-foreground hover:border-accent hover:bg-surface hover:text-accent"
+            : "bg-surface/50 text-muted-foreground/50 cursor-not-allowed",
+        ]}
         aria-label={t.a11y.goToPreviousPage}
       >
-        <IconArrowLeft class="inline-block rtl:rotate-180" />
-        {t.pagination.prev}
+        <IconArrowLeft class="inline-block size-4 rtl:rotate-180" />
+        <span>{t.pagination.prev}</span>
       </LinkButton>
-      {page.currentPage} / {page.lastPage}
+      <span class="text-muted-foreground px-2 text-sm tabular-nums">
+        {page.currentPage} / {page.lastPage}
+      </span>
       <LinkButton
         disabled={!page.url.next}
         href={page.url.next as string}
-        class:list={["select-none", { "opacity-50": !page.url.next }]}
+        class:list={[
+          "border-border inline-flex min-h-10 items-center gap-1.5 rounded-sm border px-4 py-2 text-sm font-medium transition-colors select-none",
+          page.url.next
+            ? "bg-background text-foreground hover:border-accent hover:bg-surface hover:text-accent"
+            : "bg-surface/50 text-muted-foreground/50 cursor-not-allowed",
+        ]}
         aria-label={t.a11y.goToNextPage}
       >
-        {t.pagination.next}
-        <IconArrowRight class="inline-block rtl:rotate-180" />
+        <span>{t.pagination.next}</span>
+        <IconArrowRight class="inline-block size-4 rtl:rotate-180" />
       </LinkButton>
     </nav>
   )

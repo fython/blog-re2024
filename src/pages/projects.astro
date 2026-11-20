@@ -1,0 +1,143 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import ProjectCard, {
+  type Props as ProjectItem,
+} from "@/components/ProjectCard.astro";
+import config from "@/config";
+
+interface ProjectGroup {
+  title: string;
+  items: ProjectItem[];
+}
+
+const projectGroups: ProjectGroup[] = [
+  {
+    title: "Apps",
+    items: [
+      {
+        name: "ShotClean",
+        badge: "闭源",
+        url: "http://shotclean.gwo.app/",
+        description: "智能截图清理工具 Android 应用",
+      },
+      {
+        name: "WheelPlay",
+        url: "https://wheelplay.gwo.app",
+        description:
+          "借助 Android 在任意浏览器上使用 CarPlay & 其它车机互联框架",
+      },
+      {
+        name: "jp-lyrics-app",
+        badge: "未命名",
+        url: "https://cnb.cool/siubeng/jp-lyrics-app",
+        description: "日语歌词学习工具",
+      },
+      {
+        name: "悬浮弹幕 / Danmaqua",
+        badge: "不维护",
+        url: "https://github.com/danmaqua/danmaqua-android",
+        description:
+          "一款在悬浮窗上以字幕的形式显示哔哩哔哩直播间弹幕的 Android 应用",
+      },
+      {
+        name: "水表助手 / Package Tracker",
+        badge: "不维护",
+        url: "https://github.com/fython/PackageTracker",
+        description: "快递追踪 Android 应用",
+      },
+      {
+        name: "夜间屏幕 / Blackbulb",
+        badge: "不维护",
+        url: "https://github.com/fython/Blackbulb",
+      },
+    ],
+  },
+  {
+    title: "Quant & Finance",
+    items: [
+      {
+        name: "fincal",
+        url: "https://github.com/GwoFinTech/fincal",
+        description: "财报日历",
+      },
+      {
+        name: "各种量化交易工具",
+        badge: "不公开",
+      },
+      {
+        name: "聚合多券商股票交易 App",
+        badge: "开发中",
+        badgeTone: "active",
+      },
+    ],
+  },
+  {
+    title: "Productivity & Development Tools",
+    items: [
+      {
+        name: "GwoFinTech/kazusa-home-portal",
+        url: "https://github.com/GwoFinTech/kazusa-home-portal",
+        description: "个人服务门户 + 基于 Google OAuth 的用户/角色权限管理系统",
+      },
+      {
+        name: "Android 云控套件",
+        badge: "待公开",
+        badgeTone: "active",
+      },
+      {
+        name: "vscode-gwo-android-helper",
+        url: "https://github.com/fython/vscode-gwo-android-helper",
+        description: "在 VSCode 上通过 adb 协议浏览/管理 Android 文件",
+      },
+    ],
+  },
+];
+---
+
+<Layout title={`我的项目 | ${config.site.title}`}>
+  <Header />
+  <Breadcrumb />
+  <Main
+    pageTitle="我的项目"
+    pageDesc="仅列出部分项目介绍，未标注「闭源」与「不公开」的项目均为开源项目。"
+  >
+    <p class="text-muted-foreground mb-8 text-sm">
+      更多代码与实验性项目请前往我的 GitHub：
+      <a
+        href="https://github.com/fython"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-foreground decoration-border-strong hover:text-accent hover:decoration-accent font-mono underline underline-offset-4 transition-colors"
+      >
+        github.com/fython ↗
+      </a>
+    </p>
+
+    <div class="space-y-10">
+      {
+        projectGroups.map(group => (
+          <section>
+            <div class="border-border mb-4 flex items-baseline justify-between border-b pb-2.5">
+              <h2 class="text-foreground font-serif text-lg font-bold sm:text-xl">
+                {group.title}
+              </h2>
+              <span class="text-muted-foreground text-xs tabular-nums">
+                {group.items.length} 项
+              </span>
+            </div>
+            <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {group.items.map(item => (
+                <ProjectCard {...item} />
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </Main>
+  <Footer />
+</Layout>

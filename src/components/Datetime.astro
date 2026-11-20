@@ -37,27 +37,22 @@ const date = datetime.format("YYYY年M月D日");
 ---
 
 <div
-  class:list={["text-muted-foreground flex items-center gap-x-2", className]}
+  class:list={[
+    "text-muted-foreground inline-flex items-center gap-1.5 tabular-nums",
+    size === "lg" ? "text-sm" : "text-xs sm:text-[0.8125rem]",
+    className,
+  ]}
 >
   <IconCalendar
     class:list={[
-      "inline-block size-6 min-w-5.5",
-      { "scale-90": size === "sm" },
+      "inline-block shrink-0 stroke-[1.75]",
+      size === "lg" ? "size-4" : "size-3.5",
     ]}
   />
-  {
-    isModified && (
-      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
-        {t.post.updatedAt}:
-      </span>
-    )
-  }
-  <time
-    class:list={["text-sm", { "sm:text-base": size === "lg" }]}
-    datetime={datetime.toISOString()}
-  >
+  {isModified && <span>{t.post.updatedAt}</span>}
+  <time datetime={datetime.toISOString()}>
     {date}
-    <span aria-hidden="true"> | </span>
+    <span aria-hidden="true" class="text-border-strong mx-1">·</span>
     {datetime.format("HH:mm")}
   </time>
 </div>

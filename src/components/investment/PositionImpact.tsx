@@ -98,11 +98,20 @@ export default function PositionImpact() {
   useEffect(() => {
     const render = () => {
       const styles = getComputedStyle(document.documentElement);
+      const background = styles.getPropertyValue("--background").trim();
       const foreground = styles.getPropertyValue("--foreground").trim();
+      const border = styles.getPropertyValue("--border").trim();
+      const accent = styles.getPropertyValue("--accent").trim();
+      const secondary = styles.getPropertyValue("--secondary").trim();
       profitChart.current?.setOption(
         {
           tooltip: {
             trigger: "axis",
+            backgroundColor: background,
+            borderColor: border,
+            borderWidth: 1,
+            textStyle: { color: foreground },
+            extraCssText: "box-shadow: none;",
             valueFormatter: (value: unknown) => signed(Number(value)),
           },
           grid: {
@@ -124,12 +133,13 @@ export default function PositionImpact() {
               color: foreground,
               formatter: (value: number) => money.format(value),
             },
-            splitLine: { lineStyle: { opacity: 0.2 } },
+            splitLine: { lineStyle: { color: border } },
           },
           yAxis: {
             type: "category",
             data: ["持仓 A", "持仓 B", "账户合计"],
             axisLabel: { color: foreground },
+            axisLine: { lineStyle: { color: border } },
           },
           series: [
             {
@@ -137,7 +147,7 @@ export default function PositionImpact() {
               barMaxWidth: 24,
               data: [firstProfit, secondProfit, total].map(value => ({
                 value,
-                itemStyle: { color: value < 0 ? "#d97706" : "#16a34a" },
+                itemStyle: { color: value < 0 ? accent : secondary },
                 label: {
                   show: true,
                   position: value < 0 ? "left" : "right",
@@ -164,12 +174,24 @@ export default function PositionImpact() {
   useEffect(() => {
     const render = () => {
       const styles = getComputedStyle(document.documentElement);
+      const background = styles.getPropertyValue("--background").trim();
       const foreground = styles.getPropertyValue("--foreground").trim();
+      const border = styles.getPropertyValue("--border").trim();
       const muted = styles.getPropertyValue("--muted-foreground").trim();
+      const accent = styles.getPropertyValue("--accent").trim();
+      const secondary = styles.getPropertyValue("--secondary").trim();
       chart.current?.setOption(
         {
-          color: ["#16a34a", "#d97706", muted],
-          tooltip: { trigger: "item", formatter: "{b}: {c}%" },
+          color: [secondary, accent, muted],
+          tooltip: {
+            trigger: "item",
+            formatter: "{b}: {c}%",
+            backgroundColor: background,
+            borderColor: border,
+            borderWidth: 1,
+            textStyle: { color: foreground },
+            extraCssText: "box-shadow: none;",
+          },
           legend: {
             bottom: 0,
             textStyle: { color: foreground },
@@ -203,11 +225,13 @@ export default function PositionImpact() {
 
   return (
     <section
-      className="not-prose border-border bg-background my-8 rounded-lg border p-5"
+      className="not-prose border-border bg-surface/50 my-8 rounded-md border p-5"
       data-pagefind-ignore
     >
-      <h3 className="mb-2 text-lg font-bold">仓位如何影响账户盈亏</h3>
-      <p className="mb-4 text-sm">
+      <h3 className="text-foreground mb-2 font-serif text-lg font-bold">
+        仓位如何影响账户盈亏
+      </h3>
+      <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
         以 10 万元本金为例，调整两只持仓的占比和涨跌幅，看看各自对账户的影响。
       </p>
       <InvestmentControls
@@ -219,7 +243,7 @@ export default function PositionImpact() {
       >
         <div className="min-w-0 text-sm">
           <div className="flex flex-wrap justify-between gap-x-2 gap-y-1">
-            <span>持仓比例</span>
+            <span className="text-foreground">持仓比例</span>
             <span className="text-muted-foreground text-xs tabular-nums">
               A {firstWeight}% · B {secondWeight}% · 现金 {cashWeight}%
             </span>
@@ -227,14 +251,14 @@ export default function PositionImpact() {
           <div className="relative mt-3 h-6">
             <div
               aria-hidden="true"
-              className="bg-muted absolute inset-x-2 top-1/2 flex h-2 -translate-y-1/2 overflow-hidden rounded-full"
+              className="bg-surface-hover absolute inset-x-2 top-1/2 flex h-2 -translate-y-1/2 overflow-hidden rounded-full"
             >
               <span
-                className="bg-green-600"
+                className="bg-secondary"
                 style={{ width: `${firstWeight}%` }}
               />
               <span
-                className="bg-amber-500"
+                className="bg-accent"
                 style={{ width: `${secondWeight}%` }}
               />
             </div>
@@ -293,7 +317,7 @@ export default function PositionImpact() {
               className="grid min-w-0 content-start gap-2 text-sm"
               key={field.key}
             >
-              <span>{field.label}（%）</span>
+              <span className="text-foreground">{field.label}（%）</span>
               <input
                 type="number"
                 min={-100}
@@ -312,7 +336,7 @@ export default function PositionImpact() {
                     [field.key]: event.target.value,
                   }))
                 }
-                className="border-border bg-background text-foreground focus-visible:outline-accent w-full rounded-md border px-3 py-2 tabular-nums focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="border-border bg-background text-foreground focus-visible:outline-accent w-full rounded-sm border px-3 py-2 text-base tabular-nums focus-visible:outline-2 focus-visible:outline-offset-2 sm:text-sm"
               />
               <span className="text-muted-foreground text-xs">
                 −100% 至 200%
@@ -321,10 +345,7 @@ export default function PositionImpact() {
           ))}
       </InvestmentControls>
       {!validReturns && (
-        <p
-          role="alert"
-          className="mt-3 text-sm text-amber-700 dark:text-amber-400"
-        >
+        <p role="alert" className="text-accent mt-3 text-sm font-medium">
           请输入 −100% 至 200% 之间的涨跌幅。
         </p>
       )}
@@ -337,10 +358,10 @@ export default function PositionImpact() {
         role="img"
         aria-label={`持仓 A ${firstWeight}%，持仓 B ${secondWeight}%，现金 ${cashWeight}%`}
       />
-      <p className="mt-4 text-sm font-medium">
+      <p className="text-foreground mt-4 text-sm font-medium">
         盈亏比较{" "}
         <span className="text-muted-foreground text-xs font-normal">
-          （绿色为盈利，橙色为亏损）
+          （青色为盈利，靛蓝为亏损）
         </span>
       </p>
       <div
@@ -350,7 +371,7 @@ export default function PositionImpact() {
         aria-live="polite"
         aria-label={`持仓 A ${signed(firstProfit)}，持仓 B ${signed(secondProfit)}，账户合计 ${signed(total)}`}
       />
-      <p className="text-muted-foreground text-xs">
+      <p className="text-muted-foreground text-xs leading-relaxed">
         账户收益率：
         {validReturns ? ((total / principal) * 100).toFixed(2) : "—"}
         %。示例假设期间没有调仓，不计费用、税费及现金收益。

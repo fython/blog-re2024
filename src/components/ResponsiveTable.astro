@@ -14,14 +14,14 @@ const { class: className, variant } = Astro.props;
 
 const variantClasses = {
   minimal: "[&_td]:border-0 [&_th]:border-0",
-  striped: "[&_tbody_tr]:odd:bg-muted/25",
+  striped: "[&_tbody_tr]:odd:bg-surface/60",
 };
 ---
 
 <div
   data-table-variant={variant}
   class:list={[
-    "overflow-hidden [&_table]:my-0 [&_table]:min-w-xl",
+    "border-border my-6 overflow-hidden rounded-sm border [&_table]:my-0 [&_table]:min-w-xl",
     variant === "minimal" && variantClasses.minimal,
     variant === "striped" && variantClasses.striped,
     variant === "striped-minimal" &&

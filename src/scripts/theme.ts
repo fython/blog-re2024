@@ -12,7 +12,6 @@ function getPreferredTheme(): string {
     : LIGHT;
 }
 
-// Reuse the value already set by the inline FOUC-prevention script if available.
 let themeValue: string =
   (window as unknown as { __theme?: { value: string } }).__theme?.value ??
   getPreferredTheme();
@@ -22,35 +21,45 @@ function persist(): void {
   reflect();
 }
 
+function getThemeButtons(): Element[] {
+  return Array.from(document.querySelectorAll(".theme-toggle-btn, #theme-btn"));
+}
+
 function reflect(): void {
   const root = document.firstElementChild;
   root?.setAttribute("data-theme", themeValue);
   root?.classList.toggle("dark", themeValue === DARK);
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+
+  for (const btn of getThemeButtons()) {
+    btn.setAttribute("aria-label", themeValue);
+  }
 
   // Fill <meta name="theme-color"> with the computed background colour so
-  // Android's browser chrome matches the page background.
+  // mobile browser chrome matches the page background.
   const bg = window.getComputedStyle(document.body).backgroundColor;
   document
     .querySelector("meta[name='theme-color']")
     ?.setAttribute("content", bg);
 }
 
+function handleToggle(): void {
+  themeValue = themeValue === LIGHT ? DARK : LIGHT;
+  persist();
+}
+
 function setup(): void {
   reflect();
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
-    persist();
-  });
+  const buttons = new Set(getThemeButtons());
+  for (const btn of buttons) {
+    btn.removeEventListener("click", handleToggle);
+    btn.addEventListener("click", handleToggle);
+  }
 }
 
 setup();
 
-// Re-run after View Transitions navigation.
 document.addEventListener("astro:after-swap", setup);
 
-// Carry the theme-color value across View Transitions to prevent the
-// Android navigation bar from flashing during page transitions.
 document.addEventListener("astro:before-swap", event => {
   const color = document
     .querySelector("meta[name='theme-color']")
@@ -62,7 +71,6 @@ document.addEventListener("astro:before-swap", event => {
   }
 });
 
-// Sync with OS-level dark/light preference changes.
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", ({ matches }) => {

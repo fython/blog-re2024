@@ -19,11 +19,6 @@
 /src/content/blog/**
 /src/content/friend/**
 /src/pages/about.md
-/src/pages/projects.md
 /public/pagefind/**
 !/astro-paper.config.ts
 !/scripts
-
-/public/vendor/**
-
-!/integrations

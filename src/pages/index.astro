@@ -3,10 +3,9 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import PaintWidget from "@/components/PaintWidget.astro";
+import SidebarVisual from "@/components/SidebarVisual.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
-import Hr from "@/components/Hr.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import config from "@/config";
@@ -22,35 +21,40 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <div class="home-layout">
     <aside class="home-sidebar" aria-label="站点介绍与导航">
       <Header sidebar />
-      <div id="paint-area" class="app-layout pt-8 pb-6">
-        <PaintWidget />
+      <div class="sidebar-visual-slot hidden">
+        <SidebarVisual />
       </div>
     </aside>
+
     <main id="main-content" data-layout="index" class="app-layout home-posts">
       <h1 class="sr-only">{config.site.title}</h1>
-      <div class="home-intro-divider"><Hr /></div>
 
       {
         featuredPosts.length > 0 && (
-          <>
-            <section id="featured" class="pt-12 pb-6">
-              <h2 class="text-2xl font-bold tracking-wide">精选</h2>
-              <ul>
-                {featuredPosts.map(data => (
-                  <Card variant="h3" {...data} />
-                ))}
-              </ul>
-            </section>
-            {recentPosts.length > 0 && <Hr />}
-          </>
+          <section id="featured" class="pt-7 pb-4 sm:pt-9">
+            <div class="border-border mb-2 border-b pb-3">
+              <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
+                精选
+              </h2>
+            </div>
+            <ul class="divide-border divide-y">
+              {featuredPosts.map(data => (
+                <Card variant="h3" featuredBadge {...data} />
+              ))}
+            </ul>
+          </section>
         )
       }
 
       {
         recentPosts.length > 0 && (
-          <section id="recent-posts" class="pt-12 pb-6">
-            <h2 class="text-2xl font-bold tracking-wide">最近填坑</h2>
-            <ul>
+          <section id="recent-posts" class="pt-8 pb-4 sm:pt-10">
+            <div class="border-border mb-2 border-b pb-3">
+              <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
+                最近填坑
+              </h2>
+            </div>
+            <ul class="divide-border divide-y">
               {recentPosts.map(
                 (data, index) =>
                   index < config.posts.perIndex && (
@@ -62,10 +66,13 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         )
       }
 
-      <div class="my-8 text-center">
-        <LinkButton href="/posts/">
-          所有文章
-          <IconArrowRight class="inline-block" />
+      <div class="my-10 flex justify-center sm:justify-start">
+        <LinkButton
+          href="/posts/"
+          class="border-border bg-background text-foreground hover:border-accent hover:bg-surface hover:text-accent inline-flex min-h-10 items-center gap-2 rounded-sm border px-5 py-2 text-sm font-medium transition-colors"
+        >
+          <span>查看所有文章</span>
+          <IconArrowRight class="inline-block size-4" />
         </LinkButton>
       </div>
     </main>
@@ -91,11 +98,11 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   @media (min-width: 66rem) {
     .home-layout {
       display: grid;
-      grid-template-columns: 19rem minmax(0, 46rem);
-      column-gap: 2rem;
+      grid-template-columns: 18.5rem minmax(0, 46rem);
+      column-gap: 2.5rem;
       max-width: 71rem;
       margin-inline: auto;
-      padding: 3rem 2rem 2rem;
+      padding: 3.25rem 2rem 2rem;
       align-items: start;
     }
 
@@ -103,30 +110,27 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       min-width: 0;
     }
 
-    #paint-area {
-      padding: 2rem 0 0;
+    .sidebar-visual-slot {
+      display: block;
+      padding-top: 1.75rem;
       border-top: 1px solid var(--border);
     }
 
     .home-posts {
       min-width: 0;
-      padding: 0 0 0 2rem;
+      padding: 0 0 0 2.5rem;
       border-left: 1px solid var(--border);
     }
 
     .home-posts > section:first-of-type {
       padding-top: 0;
     }
-
-    .home-intro-divider {
-      display: none;
-    }
   }
 
-  @media (min-width: 66rem) and (min-height: 50rem) {
+  @media (min-width: 66rem) and (min-height: 48rem) {
     .home-sidebar {
       position: sticky;
-      top: 2rem;
+      top: 2.5rem;
     }
   }
 </style>

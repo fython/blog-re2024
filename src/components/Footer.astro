@@ -15,17 +15,20 @@ const { noMarginTop = false } = Astro.props;
 <footer class={`app-layout ${noMarginTop ? "" : "mt-auto"}`}>
   <Hr noPadding />
   <div
-    class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"
+    class="flex flex-col items-center justify-between gap-3 py-6 sm:flex-row-reverse sm:py-5"
   >
     <Socials />
     <div
-      class="my-2 flex flex-row items-center text-sm whitespace-nowrap sm:flex-row"
+      class="text-muted-foreground flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-xs leading-relaxed sm:justify-start"
     >
-      <span
-        >Copyright &#169; {currentYear}
-        <span property="cc:attributionName">烧饼</span></span
-      >
-      &nbsp;|&nbsp;内容以&thinsp;<CCLicenses />&thinsp;协议发布
+      <span>
+        Copyright &#169; {currentYear}
+        <span property="cc:attributionName">烧饼</span>
+      </span>
+      <span aria-hidden="true" class="text-border-strong">/</span>
+      <span class="inline-flex items-center gap-1">
+        内容以 <CCLicenses /> 协议发布
+      </span>
     </div>
   </div>
 </footer>

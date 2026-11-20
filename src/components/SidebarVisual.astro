@@ -1,0 +1,481 @@
+---
+interface Props {
+  /** Optional fixed scenic photo path (e.g. "/images/nordic-horizon.jpg"). */
+  src?: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface ScandiPhoto {
+  id: string;
+  alt: string;
+  location: string;
+}
+
+const scandiPhotos: ScandiPhoto[] = [
+  {
+    id: "photo-1738606027750-4d731c8505a9",
+    alt: "丹麦旷野海岸边的北欧极简小屋与浅蓝天空",
+    location: "Denmark",
+  },
+  {
+    id: "photo-1524434870396-0d752e20692f",
+    alt: "挪威罗弗敦群岛迷雾峡湾与岸边红木屋",
+    location: "Lofoten, Norway",
+  },
+  {
+    id: "photo-1484037832928-afe345637f55",
+    alt: "斯德哥尔摩冬日冰封海面与覆雪建筑",
+    location: "Stockholm, Sweden",
+  },
+  {
+    id: "photo-1593291727757-b016fd4f0055",
+    alt: "罗弗敦峡湾晨曦中的雪山与海面微光倒影",
+    location: "Lofoten, Norway",
+  },
+  {
+    id: "photo-1507272931001-fc06c17e4f43",
+    alt: "北欧雪山湖畔上空舒展的绿色极光与倒影",
+    location: "Norway",
+  },
+  {
+    id: "photo-1764330896389-61bf3575e64a",
+    alt: "冰岛冬雪覆盖的黄金瀑布与玄武岩峡谷",
+    location: "Gullfoss, Iceland",
+  },
+  {
+    id: "photo-1753252669931-d16e2bd6612a",
+    alt: "法罗群岛雾气悬崖间的村落与海面彩虹",
+    location: "Gjógv, Faroe Islands",
+  },
+  {
+    id: "photo-1709413400511-34243a6a932e",
+    alt: "挪威冬日松林与雪地间的传统红色木屋",
+    location: "Norway",
+  },
+  {
+    id: "photo-1593378026483-2a1fd46a35bd",
+    alt: "极地雪峰夜空下流动的北极光",
+    location: "Lofoten, Norway",
+  },
+];
+
+const { src, alt = "北欧风景", caption } = Astro.props;
+const unsplashTopicUrl = "https://unsplash.com/s/photos/Scandinavian";
+const hasDrawer = !src || Boolean(caption);
+---
+
+<figure
+  class="sidebar-visual m-0 w-full"
+  data-scandi-photos={src ? undefined : JSON.stringify(scandiPhotos)}
+>
+  <div class:list={["visual-card relative", { "has-drawer": hasDrawer }]}>
+    {hasDrawer && <span aria-hidden="true" class="visual-frame" />}
+
+    <div
+      data-visual-media
+      data-loaded={src ? "true" : "false"}
+      class="visual-media relative z-10 aspect-[4/3] w-full overflow-hidden rounded-xs bg-transparent"
+    >
+      {/* Dense light dot-matrix placeholder on transparent backdrop */}
+      <div aria-hidden="true" class="visual-dots"></div>
+
+      {
+        src ? (
+          <img
+            src={src}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 block size-full object-cover"
+          />
+        ) : (
+          <>
+            <img
+              data-scandi-layer="a"
+              alt={alt}
+              decoding="async"
+              referrerpolicy="no-referrer"
+              class="visual-img is-hidden"
+            />
+            <img
+              data-scandi-layer="b"
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+              referrerpolicy="no-referrer"
+              class="visual-img is-hidden"
+            />
+          </>
+        )
+      }
+    </div>
+
+    {
+      hasDrawer && (
+        <div class="visual-drawer relative z-10">
+          <div class="overflow-hidden">
+            {src ? (
+              <figcaption class="text-muted-foreground pt-2.5 text-xs leading-relaxed tracking-wide">
+                {caption}
+              </figcaption>
+            ) : (
+              <figcaption class="text-muted-foreground flex items-center justify-between gap-2 pt-2.5 text-xs">
+                <span class="min-w-0 truncate">
+                  <span
+                    data-scandi-location
+                    class="inline-block transition-opacity duration-200"
+                  >
+                    Scandinavian
+                  </span>
+                  <span aria-hidden="true" class="text-border-strong mx-1">
+                    ·
+                  </span>
+                  <a
+                    href={unsplashTopicUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-accent transition-colors"
+                  >
+                    Unsplash
+                  </a>
+                </span>
+                <button
+                  type="button"
+                  data-scandi-shuffle
+                  class="text-muted-foreground hover:border-border hover:bg-background hover:text-accent shrink-0 rounded-sm border border-transparent px-1.5 py-0.5 text-[0.7rem] transition-colors disabled:opacity-50"
+                  aria-label="随机切换一张北欧风景图"
+                  title="换一张北欧风景图"
+                >
+                  换一张
+                </button>
+              </figcaption>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </div>
+</figure>
+
+<style>
+  /* Dense light dot-matrix placeholder on transparent backdrop */
+  .visual-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle,
+      var(--border) 3px,
+      transparent 3.4px
+    );
+    background-size: 12px 12px;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(
+      115deg,
+      rgb(0 0 0 / 0.32) 28%,
+      rgb(0 0 0 / 0.95) 50%,
+      rgb(0 0 0 / 0.32) 72%
+    );
+    mask-image: linear-gradient(
+      115deg,
+      rgb(0 0 0 / 0.32) 28%,
+      rgb(0 0 0 / 0.95) 50%,
+      rgb(0 0 0 / 0.32) 72%
+    );
+    -webkit-mask-size: 260% 100%;
+    mask-size: 260% 100%;
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    animation: dot-matrix-sweep 2.6s ease-in-out infinite;
+    transition: opacity 280ms ease-out;
+  }
+
+  .visual-media[data-loaded="true"] .visual-dots {
+    opacity: 0;
+    animation: none;
+  }
+
+  @keyframes dot-matrix-sweep {
+    0% {
+      -webkit-mask-position: 110% 0;
+      mask-position: 110% 0;
+    }
+    100% {
+      -webkit-mask-position: -110% 0;
+      mask-position: -110% 0;
+    }
+  }
+
+  /* Dual-layer crossfade photo styles */
+  .visual-img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: opacity, transform;
+    transition:
+      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .visual-img.is-hidden {
+    z-index: 1;
+    opacity: 0;
+    transform: scale(1.025);
+    pointer-events: none;
+  }
+
+  .visual-img.is-entering {
+    z-index: 3;
+    opacity: 0;
+    transform: scale(1.025);
+    transition: none;
+  }
+
+  .visual-img.is-active {
+    z-index: 2;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .visual-img.is-leaving {
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0.985);
+    pointer-events: none;
+  }
+
+  /* Expanding flat card frame: gentle fade-out on leave, snappy expand on enter */
+  .visual-frame {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    background-color: var(--surface);
+    opacity: 0;
+    transition:
+      opacity 280ms ease-in-out,
+      inset 320ms ease-in-out 40ms,
+      border-radius 280ms ease-in-out;
+  }
+
+  .visual-card.has-drawer:hover .visual-frame,
+  .visual-card.has-drawer:has(:focus-visible) .visual-frame {
+    inset: -0.625rem;
+    border-radius: 0.375rem;
+    opacity: 1;
+    transition:
+      inset 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-radius 240ms ease-out,
+      opacity 200ms ease-out;
+  }
+
+  /* Bottom drawer: fade text out first on leave before collapsing */
+  .visual-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 200ms ease-out,
+      grid-template-rows 280ms ease-in-out 50ms;
+  }
+
+  .visual-card.has-drawer:hover .visual-drawer,
+  .visual-card.has-drawer:has(:focus-visible) .visual-drawer {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    pointer-events: auto;
+    transition:
+      grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 220ms ease-out 50ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .visual-dots {
+      animation: none;
+      -webkit-mask-image: none;
+      mask-image: none;
+      opacity: 0.6;
+    }
+
+    .visual-img,
+    .visual-frame,
+    .visual-drawer,
+    .visual-card.has-drawer:hover .visual-frame,
+    .visual-card.has-drawer:has(:focus-visible) .visual-frame,
+    .visual-card.has-drawer:hover .visual-drawer,
+    .visual-card.has-drawer:has(:focus-visible) .visual-drawer {
+      transition: none;
+    }
+
+    .visual-img.is-hidden,
+    .visual-img.is-entering,
+    .visual-img.is-leaving {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  type ScandiPhoto = {
+    id: string;
+    alt: string;
+    location: string;
+  };
+
+  const STORAGE_KEY = "scandi-photo-index";
+
+  function buildUrl(id: string): string {
+    return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=720&h=540&q=80`;
+  }
+
+  function pickNextIndex(total: number, exclude: number): number {
+    if (total <= 1) return 0;
+    let next = Math.floor(Math.random() * total);
+    if (next === exclude) {
+      next = (next + 1 + Math.floor(Math.random() * (total - 1))) % total;
+    }
+    return next;
+  }
+
+  function preloadImage(url: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const probe = new Image();
+      probe.referrerPolicy = "no-referrer";
+      probe.onload = () => {
+        if (typeof probe.decode === "function") {
+          probe.decode().then(resolve, resolve);
+        } else {
+          resolve();
+        }
+      };
+      probe.onerror = () => reject(new Error("Image load failed"));
+      probe.src = url;
+    });
+  }
+
+  function initSidebarVisual() {
+    const figures = document.querySelectorAll<HTMLElement>(
+      ".sidebar-visual[data-scandi-photos]"
+    );
+
+    for (const figure of figures) {
+      if (figure.dataset.scandiInit === "true") continue;
+      figure.dataset.scandiInit = "true";
+
+      const raw = figure.dataset.scandiPhotos;
+      const media = figure.querySelector<HTMLElement>("[data-visual-media]");
+      const layerA = figure.querySelector<HTMLImageElement>(
+        '[data-scandi-layer="a"]'
+      );
+      const layerB = figure.querySelector<HTMLImageElement>(
+        '[data-scandi-layer="b"]'
+      );
+      const loc = figure.querySelector<HTMLElement>("[data-scandi-location]");
+      const btn = figure.querySelector<HTMLButtonElement>(
+        "[data-scandi-shuffle]"
+      );
+      if (!raw || !media || !layerA || !layerB) continue;
+
+      let photos: ScandiPhoto[] = [];
+      try {
+        photos = JSON.parse(raw) as ScandiPhoto[];
+      } catch {
+        continue;
+      }
+      if (!photos.length) continue;
+
+      let activeLayer: HTMLImageElement | null = null;
+      let standbyLayer: HTMLImageElement = layerA;
+      let requestId = 0;
+
+      const prevStored = Number(sessionStorage.getItem(STORAGE_KEY));
+      let currentIndex = pickNextIndex(
+        photos.length,
+        Number.isInteger(prevStored) ? prevStored : -1
+      );
+
+      const switchToPhoto = async (index: number, isShuffle: boolean) => {
+        const photo = photos[index];
+        if (!photo) return;
+
+        const token = ++requestId;
+        currentIndex = index;
+        sessionStorage.setItem(STORAGE_KEY, String(index));
+
+        if (isShuffle && btn) {
+          btn.disabled = true;
+          btn.textContent = "切换中";
+        }
+
+        const url = buildUrl(photo.id);
+        try {
+          await preloadImage(url);
+        } catch {
+          if (token === requestId && btn) {
+            btn.disabled = false;
+            btn.textContent = "换一张";
+          }
+          return;
+        }
+
+        if (token !== requestId) return;
+
+        const incoming = standbyLayer;
+        const outgoing = activeLayer;
+
+        // Prepare incoming image at pre-enter state without transition
+        incoming.className = "visual-img is-entering";
+        incoming.src = url;
+        incoming.alt = photo.alt;
+        incoming.removeAttribute("aria-hidden");
+
+        // Force style flush so cached images also play the full crossfade
+        void incoming.offsetWidth;
+
+        requestAnimationFrame(() => {
+          if (token !== requestId) return;
+
+          media.dataset.loaded = "true";
+          incoming.className = "visual-img is-active";
+
+          if (outgoing && outgoing !== incoming) {
+            outgoing.className = "visual-img is-leaving";
+            outgoing.setAttribute("aria-hidden", "true");
+          }
+
+          if (loc) {
+            loc.style.opacity = "0";
+            window.setTimeout(() => {
+              if (token !== requestId) return;
+              loc.textContent = photo.location;
+              loc.style.opacity = "1";
+            }, 120);
+          }
+
+          activeLayer = incoming;
+          standbyLayer = incoming === layerA ? layerB : layerA;
+
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = "换一张";
+          }
+        });
+      };
+
+      void switchToPhoto(currentIndex, false);
+
+      btn?.addEventListener("click", () => {
+        void switchToPhoto(pickNextIndex(photos.length, currentIndex), true);
+      });
+    }
+  }
+
+  initSidebarVisual();
+  document.addEventListener("astro:page-load", initSidebarVisual);
+</script>

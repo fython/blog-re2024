@@ -13,8 +13,7 @@
     "astro": "astro",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "lint": "eslint .",
-    "test:paint": "node --test scripts/tests/prepare-paint.test.mjs"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.0",
@@ -41,7 +40,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@fontsource/fusion-pixel-12px-proportional-sc": "5.3.0",
     "@pagefind/default-ui": "^1.5.2",
     "@shikijs/transformers": "^4.3.0",
     "@tailwindcss/typography": "^0.5.20",
@@ -51,7 +49,6 @@
     "@typescript-eslint/parser": "^8.62.0",
     "eslint": "^10.6.0",
     "eslint-plugin-astro": "^2.1.1",
-    "jspaint": "https://codeload.github.com/1j01/jspaint/tar.gz/bd7ae78e33405b1b0632a9c6e6aeb5afc96575fa",
     "pagefind": "^1.5.2",
     "prettier": "3.9.3",
     "prettier-plugin-astro": "0.14.1",
@@ -59,5 +56,5 @@
     "typescript": "^6.0.3",
     "yaml": "^2.8.3"
   },
-  "packageManager": "pnpm@10.6.4+sha512.da3d715bfd22a9a105e6e8088cfc7826699332ded60c423b14ec613a185f1602206702ff0fe4c438cb15c979081ce4cb02568e364b15174503a63c7a8e2a5f6c"
+  "packageManager": "pnpm@12.21.0"
 }

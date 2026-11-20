@@ -16,15 +16,24 @@ const t = useTranslations(locale);
 
   <main
     id="main-content"
-    class="app-layout my-1 flex flex-1 items-center justify-center"
+    class="app-layout my-8 flex flex-1 items-center justify-center"
   >
-    <div class="mb-14 flex flex-col items-center justify-center">
-      <h1 class="text-accent text-9xl font-bold">404</h1>
-      <span aria-hidden="true"> ¯\_(ツ)_/¯ </span>
-      <p class="mt-4 text-2xl sm:text-3xl">{t.notFound.message}</p>
+    <div class="mb-12 flex flex-col items-center justify-center text-center">
+      <span
+        class="text-secondary mb-2 text-xs font-medium tracking-[0.2em] uppercase"
+      >
+        Page Not Found
+      </span>
+      <h1 class="text-foreground font-serif text-7xl font-bold sm:text-8xl">
+        404
+      </h1>
+      <div aria-hidden="true" class="bg-accent my-5 h-[2px] w-12"></div>
+      <p class="text-muted-foreground text-base sm:text-lg">
+        {t.notFound.message}
+      </p>
       <LinkButton
         href={getRelativeLocaleUrl(locale, "")}
-        class="my-6 text-lg underline decoration-dashed underline-offset-8"
+        class="border-border bg-background text-foreground hover:border-accent hover:bg-surface hover:text-accent mt-7 inline-flex min-h-10 items-center rounded-sm border px-5 py-2 text-sm font-medium transition-colors"
       >
         {t.notFound.goHome}
       </LinkButton>
