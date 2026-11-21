@@ -16,13 +16,6 @@ const levels: number[] = [];
   {
     mode === "inline" && (
       <span class="reading-title" aria-hidden="true">
-        <span class="liquid-glass-edge">
-          <span class="glass-blur glass-blur-1" />
-          <span class="glass-blur glass-blur-2" />
-          <span class="glass-blur glass-blur-3" />
-          <span class="glass-blur glass-blur-4" />
-          <span class="glass-veil" />
-        </span>
         <span class="reading-blog-prefix">
           <span class="text-muted-foreground font-normal">
             {config.site.title}
@@ -94,10 +87,6 @@ const levels: number[] = [];
     font-weight: 600;
     border-inline-start: 2px solid var(--accent);
     margin-inline-start: -1px;
-  }
-
-  .liquid-glass-edge {
-    display: none;
   }
 
   /* ===== Mobile & Tablet sticky top bar (< 66rem) ===== */
@@ -205,89 +194,45 @@ const levels: number[] = [];
       width: 100%;
       padding-top: 2.5rem;
       padding-bottom: 1.5rem;
+      background: var(--background);
       color: var(--foreground);
       font-size: 2rem;
       line-height: 1.3;
       font-weight: 700;
       letter-spacing: 0.01em;
       opacity: 0;
+      visibility: hidden;
       translate: 0 -4px;
       transition:
         opacity 180ms ease-out,
-        translate 180ms ease-out;
+        translate 180ms ease-out,
+        visibility 0s linear 180ms;
     }
 
-    /* iOS 26+ Liquid Glass progressive scroll-edge blur + feathered veil */
-    post-outline[data-mode="inline"] .liquid-glass-edge {
-      display: block;
+    /* Single lightweight frosted scroll-edge fade strictly below the opaque header */
+    post-outline[data-mode="inline"] .reading-title::after {
+      content: "";
       position: absolute;
-      inset: 0 -0.5rem -3.25rem;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    post-outline[data-mode="inline"] .glass-blur,
-    post-outline[data-mode="inline"] .glass-veil {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    post-outline[data-mode="inline"] .glass-blur-1 {
-      backdrop-filter: blur(2px);
-      mask-image: linear-gradient(
-        to bottom,
-        #000 0%,
-        #000 78%,
-        transparent 100%
-      );
-    }
-
-    post-outline[data-mode="inline"] .glass-blur-2 {
-      backdrop-filter: blur(5px);
-      mask-image: linear-gradient(
-        to bottom,
-        #000 0%,
-        #000 70%,
-        transparent 92%
-      );
-    }
-
-    post-outline[data-mode="inline"] .glass-blur-3 {
-      backdrop-filter: blur(11px) saturate(140%);
-      mask-image: linear-gradient(
-        to bottom,
-        #000 0%,
-        #000 62%,
-        transparent 82%
-      );
-    }
-
-    post-outline[data-mode="inline"] .glass-blur-4 {
-      backdrop-filter: blur(20px) saturate(160%);
-      mask-image: linear-gradient(
-        to bottom,
-        #000 0%,
-        #000 54%,
-        transparent 72%
-      );
-    }
-
-    post-outline[data-mode="inline"] .glass-veil {
+      inset: 100% 0 auto;
+      height: 2.5rem;
       background: linear-gradient(
         to bottom,
         var(--background) 0%,
-        var(--background) 58%,
-        color-mix(in srgb, var(--background) 88%, transparent) 68%,
-        color-mix(in srgb, var(--background) 48%, transparent) 80%,
-        color-mix(in srgb, var(--background) 14%, transparent) 91%,
+        color-mix(in srgb, var(--background) 62%, transparent) 44%,
+        color-mix(in srgb, var(--background) 16%, transparent) 78%,
         color-mix(in srgb, var(--background) 0%, transparent) 100%
       );
+      backdrop-filter: blur(6px);
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        rgb(0 0 0 / 0.65) 48%,
+        transparent 100%
+      );
+      pointer-events: none;
     }
 
     post-outline[data-mode="inline"] .reading-article-title {
-      position: relative;
-      z-index: 1;
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -296,8 +241,13 @@ const levels: number[] = [];
 
     post-outline[data-mode="inline"][data-reading] .reading-title {
       opacity: 1;
+      visibility: visible;
       translate: none;
       pointer-events: auto;
+      transition:
+        opacity 180ms ease-out,
+        translate 180ms ease-out,
+        visibility 0s;
     }
   }
 
@@ -363,6 +313,12 @@ const levels: number[] = [];
       if (!sections.length) return;
 
       let active = -1;
+      let scrollMarginLine =
+        parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 2;
+      const syncScrollMargin = () => {
+        scrollMarginLine =
+          parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 2;
+      };
       const revealCurrent = () => {
         if (!details.open || active < 0) return;
         const item = sections[active].link.getBoundingClientRect();
@@ -375,8 +331,7 @@ const levels: number[] = [];
       const update = () => {
         this.frame = 0;
         if (details.offsetParent === null) return;
-        const line =
-          parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 2;
+        const line = scrollMarginLine;
         let start = 0;
         let end = sections.length;
         while (start < end) {
@@ -407,7 +362,14 @@ const levels: number[] = [];
       schedule();
 
       window.addEventListener("scroll", schedule, { passive: true, signal });
-      window.addEventListener("resize", schedule, { signal });
+      window.addEventListener(
+        "resize",
+        () => {
+          syncScrollMargin();
+          schedule();
+        },
+        { passive: true, signal }
+      );
       details.addEventListener("toggle", revealCurrent, { signal });
 
       if (!isSidebar) {
