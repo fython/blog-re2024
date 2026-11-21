@@ -21,7 +21,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <div class="home-layout">
     <aside class="home-sidebar" aria-label="站点介绍与导航">
       <Header sidebar />
-      <div class="sidebar-visual-slot hidden">
+      <div class="sidebar-visual-slot app-layout pt-5 pb-1 sm:pt-6">
         <SidebarVisual />
       </div>
     </aside>
@@ -31,7 +31,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
       {
         featuredPosts.length > 0 && (
-          <section id="featured" class="pt-7 pb-4 sm:pt-9">
+          <section id="featured" class="pt-5 pb-4 sm:pt-7">
             <div class="border-border mb-2 border-b pb-3">
               <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
                 精选
@@ -111,8 +111,8 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     }
 
     .sidebar-visual-slot {
-      display: block;
-      padding-top: 1.75rem;
+      max-width: none;
+      padding: 1.75rem 0 0;
       border-top: 1px solid var(--border);
     }
 

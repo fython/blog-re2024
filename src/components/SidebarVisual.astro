@@ -69,13 +69,17 @@ const hasDrawer = !src || Boolean(caption);
   class="sidebar-visual m-0 w-full"
   data-scandi-photos={src ? undefined : JSON.stringify(scandiPhotos)}
 >
-  <div class:list={["visual-card relative", { "has-drawer": hasDrawer }]}>
+  <div
+    data-visual-card
+    data-open="false"
+    class:list={["visual-card relative", { "has-drawer": hasDrawer }]}
+  >
     {hasDrawer && <span aria-hidden="true" class="visual-frame" />}
 
     <div
       data-visual-media
       data-loaded={src ? "true" : "false"}
-      class="visual-media relative z-10 aspect-[4/3] w-full overflow-hidden rounded-xs bg-transparent"
+      class="visual-media relative z-10 w-full overflow-hidden rounded-xs bg-transparent"
     >
       {/* Dense light dot-matrix placeholder on transparent backdrop */}
       <div aria-hidden="true" class="visual-dots"></div>
@@ -143,7 +147,7 @@ const hasDrawer = !src || Boolean(caption);
                 <button
                   type="button"
                   data-scandi-shuffle
-                  class="text-muted-foreground hover:border-border hover:bg-background hover:text-accent shrink-0 rounded-sm border border-transparent px-1.5 py-0.5 text-[0.7rem] transition-colors disabled:opacity-50"
+                  class="text-muted-foreground hover:border-border hover:bg-background hover:text-accent shrink-0 rounded-sm border border-transparent px-2 py-1 text-xs transition-colors disabled:opacity-50 sm:px-1.5 sm:py-0.5 sm:text-[0.7rem]"
                   aria-label="随机切换一张北欧风景图"
                   title="换一张北欧风景图"
                 >
@@ -159,6 +163,27 @@ const hasDrawer = !src || Boolean(caption);
 </figure>
 
 <style>
+  /* Compact wide banner on mobile/tablet; 4:3 editorial frame in desktop sidebar */
+  .visual-media {
+    aspect-ratio: 2 / 1;
+  }
+
+  .visual-card.has-drawer .visual-media {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .visual-card.has-drawer .visual-media {
+      cursor: pointer;
+    }
+  }
+
+  @media (min-width: 66rem) {
+    .visual-media {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
   /* Dense light dot-matrix placeholder on transparent backdrop */
   .visual-dots {
     position: absolute;
@@ -249,6 +274,7 @@ const hasDrawer = !src || Boolean(caption);
 
   /* Expanding flat card frame: gentle fade-out on leave, snappy expand on enter */
   .visual-frame {
+    --frame-expand: -0.5rem;
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -263,15 +289,10 @@ const hasDrawer = !src || Boolean(caption);
       border-radius 280ms ease-in-out;
   }
 
-  .visual-card.has-drawer:hover .visual-frame,
-  .visual-card.has-drawer:has(:focus-visible) .visual-frame {
-    inset: -0.625rem;
-    border-radius: 0.375rem;
-    opacity: 1;
-    transition:
-      inset 240ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-radius 240ms ease-out,
-      opacity 200ms ease-out;
+  @media (min-width: 66rem) {
+    .visual-frame {
+      --frame-expand: -0.625rem;
+    }
   }
 
   /* Bottom drawer: fade text out first on leave before collapsing */
@@ -285,7 +306,19 @@ const hasDrawer = !src || Boolean(caption);
       grid-template-rows 280ms ease-in-out 50ms;
   }
 
-  .visual-card.has-drawer:hover .visual-drawer,
+  /* Tap-open & keyboard focus-visible expansion (works across mobile & desktop) */
+  .visual-card.has-drawer[data-open="true"] .visual-frame,
+  .visual-card.has-drawer:has(:focus-visible) .visual-frame {
+    inset: var(--frame-expand);
+    border-radius: 0.375rem;
+    opacity: 1;
+    transition:
+      inset 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-radius 240ms ease-out,
+      opacity 200ms ease-out;
+  }
+
+  .visual-card.has-drawer[data-open="true"] .visual-drawer,
   .visual-card.has-drawer:has(:focus-visible) .visual-drawer {
     grid-template-rows: 1fr;
     opacity: 1;
@@ -293,6 +326,28 @@ const hasDrawer = !src || Boolean(caption);
     transition:
       grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 220ms ease-out 50ms;
+  }
+
+  /* Mouse hover expansion only on true hover-capable pointers (prevents sticky tap-hover on mobile) */
+  @media (hover: hover) and (pointer: fine) {
+    .visual-card.has-drawer:hover .visual-frame {
+      inset: var(--frame-expand);
+      border-radius: 0.375rem;
+      opacity: 1;
+      transition:
+        inset 240ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-radius 240ms ease-out,
+        opacity 200ms ease-out;
+    }
+
+    .visual-card.has-drawer:hover .visual-drawer {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      pointer-events: auto;
+      transition:
+        grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 220ms ease-out 50ms;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -306,9 +361,9 @@ const hasDrawer = !src || Boolean(caption);
     .visual-img,
     .visual-frame,
     .visual-drawer,
-    .visual-card.has-drawer:hover .visual-frame,
+    .visual-card.has-drawer[data-open="true"] .visual-frame,
     .visual-card.has-drawer:has(:focus-visible) .visual-frame,
-    .visual-card.has-drawer:hover .visual-drawer,
+    .visual-card.has-drawer[data-open="true"] .visual-drawer,
     .visual-card.has-drawer:has(:focus-visible) .visual-drawer {
       transition: none;
     }
@@ -331,7 +386,7 @@ const hasDrawer = !src || Boolean(caption);
   const STORAGE_KEY = "scandi-photo-index";
 
   function buildUrl(id: string): string {
-    return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=720&h=540&q=80`;
+    return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=960&h=640&q=80`;
   }
 
   function pickNextIndex(total: number, exclude: number): number {
@@ -359,7 +414,61 @@ const hasDrawer = !src || Boolean(caption);
     });
   }
 
+  let visualListenersController: AbortController | undefined;
+
   function initSidebarVisual() {
+    visualListenersController?.abort();
+    visualListenersController = new AbortController();
+    const { signal } = visualListenersController;
+
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-visual-card].has-drawer")
+    );
+
+    // Close tap-opened cards when tapping outside or pressing Escape
+    if (cards.length > 0) {
+      document.addEventListener(
+        "click",
+        event => {
+          const target = event.target;
+          if (!(target instanceof Node)) return;
+          for (const card of cards) {
+            if (card.dataset.open === "true" && !card.contains(target)) {
+              card.dataset.open = "false";
+            }
+          }
+        },
+        { signal }
+      );
+
+      document.addEventListener(
+        "keydown",
+        event => {
+          if (event.key !== "Escape") return;
+          for (const card of cards) {
+            if (card.dataset.open === "true") {
+              card.dataset.open = "false";
+            }
+          }
+        },
+        { signal }
+      );
+    }
+
+    const isFineHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    for (const card of cards) {
+      const media = card.querySelector<HTMLElement>("[data-visual-media]");
+      media?.addEventListener(
+        "click",
+        () => {
+          if (isFineHover.matches) return;
+          card.dataset.open = card.dataset.open === "true" ? "false" : "true";
+        },
+        { signal }
+      );
+    }
+
     const figures = document.querySelectorAll<HTMLElement>(
       ".sidebar-visual[data-scandi-photos]"
     );
@@ -429,13 +538,11 @@ const hasDrawer = !src || Boolean(caption);
         const incoming = standbyLayer;
         const outgoing = activeLayer;
 
-        // Prepare incoming image at pre-enter state without transition
         incoming.className = "visual-img is-entering";
         incoming.src = url;
         incoming.alt = photo.alt;
         incoming.removeAttribute("aria-hidden");
 
-        // Force style flush so cached images also play the full crossfade
         void incoming.offsetWidth;
 
         requestAnimationFrame(() => {
@@ -470,9 +577,13 @@ const hasDrawer = !src || Boolean(caption);
 
       void switchToPhoto(currentIndex, false);
 
-      btn?.addEventListener("click", () => {
-        void switchToPhoto(pickNextIndex(photos.length, currentIndex), true);
-      });
+      btn?.addEventListener(
+        "click",
+        () => {
+          void switchToPhoto(pickNextIndex(photos.length, currentIndex), true);
+        },
+        { signal }
+      );
     }
   }
 
