@@ -5,27 +5,36 @@ import config from "@/config";
 interface Props {
   headings: MarkdownHeading[];
   title: string;
+  mode?: "inline" | "sidebar";
 }
 
-const { headings, title } = Astro.props;
+const { headings, title, mode = "inline" } = Astro.props;
 const levels: number[] = [];
 ---
 
-<post-outline data-pagefind-ignore>
-  <span class="reading-title" aria-hidden="true">
-    <span class="text-muted-foreground font-normal">{config.site.title}</span>
-    <span class="text-border-strong mx-1.5">/</span>
-    {title}
-  </span>
+<post-outline data-mode={mode} data-pagefind-ignore>
+  {
+    mode === "inline" && (
+      <span class="reading-title" aria-hidden="true">
+        <span class="text-muted-foreground font-normal">
+          {config.site.title}
+        </span>
+        <span class="text-border-strong mx-1.5">/</span>
+        {title}
+      </span>
+    )
+  }
   {
     headings.length > 0 && (
-      <details>
+      <details open={mode === "sidebar"}>
         <summary class="cursor-pointer py-2 text-sm font-semibold">
-          <span class="shrink-0">目录</span>
-          <span
-            class="current-title text-muted-foreground"
-            aria-hidden="true"
-          />
+          <span class="shrink-0">文章目录</span>
+          {mode === "inline" && (
+            <span
+              class="current-title text-muted-foreground"
+              aria-hidden="true"
+            />
+          )}
         </summary>
         <nav aria-label="文章目录">
           <ul class="border-border border-s">
@@ -55,18 +64,11 @@ const levels: number[] = [];
 <style>
   post-outline {
     display: block;
-    margin-bottom: 1.75rem;
   }
 
   .reading-title,
   summary {
     font-family: var(--font-serif);
-  }
-
-  .reading-title,
-  post-outline:not(:has(details)),
-  .current-title {
-    display: none;
   }
 
   summary::-webkit-details-marker {
@@ -85,128 +87,138 @@ const levels: number[] = [];
     margin-inline-start: -1px;
   }
 
-  @media (width < 80rem) {
-    post-outline {
-      position: sticky;
-      top: 0;
-      z-index: 15;
-      background: var(--background);
-      border-bottom: 1px solid var(--border);
-    }
+  /* ===== Inline / Mobile-Tablet sticky top bar (< 66rem) ===== */
+  post-outline[data-mode="inline"] {
+    position: sticky;
+    top: 0;
+    z-index: 15;
+    margin-bottom: 1.75rem;
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+  }
 
-    post-outline[data-reading] {
-      display: block;
-    }
+  post-outline[data-mode="inline"]:not(:has(details)),
+  post-outline[data-mode="inline"] .reading-title {
+    display: none;
+  }
 
-    post-outline[data-reading] .reading-title {
-      display: block;
-      padding-top: 0.625rem;
-      padding-bottom: 0.25rem;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: 600;
-    }
+  post-outline[data-mode="inline"][data-reading] {
+    display: block;
+  }
 
-    post-outline[data-reading] summary {
-      min-height: 2.25rem;
-      padding-block: 0.25rem 0.5rem;
-    }
+  post-outline[data-mode="inline"][data-reading] .reading-title {
+    display: block;
+    padding-top: 0.625rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+  }
 
-    summary {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      min-height: 2.75rem;
-      white-space: nowrap;
-    }
+  post-outline[data-mode="inline"][data-reading] summary {
+    min-height: 2.25rem;
+    padding-block: 0.25rem 0.5rem;
+  }
 
-    summary::before {
-      content: "▸" / "";
-      color: var(--accent);
-      font-size: 0.75rem;
-    }
+  post-outline[data-mode="inline"] summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    white-space: nowrap;
+  }
 
-    details[open] summary::before {
-      content: "▾" / "";
-    }
+  post-outline[data-mode="inline"] summary::before {
+    content: "▸" / "";
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
 
-    .current-title {
-      display: block;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-family: var(--font-app);
-      font-size: 0.8125rem;
-      font-weight: 400;
-    }
+  post-outline[data-mode="inline"] details[open] summary::before {
+    content: "▾" / "";
+  }
 
-    nav {
-      position: absolute;
-      inset: 100% 0 auto;
-      max-height: 55dvh;
-      padding: 0.625rem 0.75rem;
-      border: 1px solid var(--border);
-      border-top: 0;
-      border-radius: 0 0 0.25rem 0.25rem;
-      background: var(--surface);
-    }
+  post-outline[data-mode="inline"] .current-title {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-app);
+    font-size: 0.8125rem;
+    font-weight: 400;
+  }
 
-    .outline-link {
-      padding-block: 0.5rem;
-      font-size: 0.875rem;
+  post-outline[data-mode="inline"] nav {
+    position: absolute;
+    inset: 100% 0 auto;
+    max-height: 55dvh;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border);
+    border-top: 0;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background: var(--surface);
+  }
+
+  post-outline[data-mode="inline"] .outline-link {
+    padding-block: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 66rem) {
+    post-outline[data-mode="inline"] {
+      display: none;
     }
   }
 
-  @media (min-width: 80rem) {
-    post-outline {
-      grid-area: 1 / 2;
-      position: sticky;
-      top: 1.5rem;
-      align-self: start;
-      margin-bottom: 0;
-    }
+  /* ===== Desktop Left-Rail Sidebar Outline (>= 66rem) ===== */
+  post-outline[data-mode="sidebar"] summary {
+    margin-bottom: 0.5rem;
+    padding-block: 0;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+    list-style: none;
+    pointer-events: none;
+  }
 
-    summary {
-      margin-bottom: 0.5rem;
-      font-size: 0.8125rem;
-      letter-spacing: 0.06em;
-      color: var(--muted-foreground);
-      list-style: none;
-    }
-
-    nav {
-      max-height: calc(100dvh - 6rem);
-    }
+  post-outline[data-mode="sidebar"] nav {
+    max-height: calc(100dvh - 24rem);
+    min-height: 6rem;
+    padding-inline-end: 0.25rem;
   }
 </style>
 
 <script>
   class PostOutline extends HTMLElement {
-    private wide = matchMedia("(min-width: 80rem)");
     private events?: AbortController;
     private observer?: ResizeObserver;
     private frame = 0;
     private titleObserver?: IntersectionObserver;
 
     connectedCallback() {
-      const title = document.getElementById("post-title");
-      if (title) {
-        this.titleObserver = new IntersectionObserver(([entry]) => {
-          this.toggleAttribute(
-            "data-reading",
-            entry.boundingClientRect.bottom <= 0
-          );
-        });
-        this.titleObserver.observe(title);
+      const mode = this.dataset.mode ?? "inline";
+      const isSidebar = mode === "sidebar";
+
+      if (!isSidebar) {
+        const title = document.getElementById("post-title");
+        if (title) {
+          this.titleObserver = new IntersectionObserver(([entry]) => {
+            this.toggleAttribute(
+              "data-reading",
+              entry.boundingClientRect.bottom <= 0
+            );
+          });
+          this.titleObserver.observe(title);
+        }
       }
 
       const details = this.querySelector("details");
       if (!details) return;
       const nav = this.querySelector("nav")!;
-      const label = this.querySelector(".current-title")!;
+      const label = this.querySelector(".current-title");
       const sections = Array.from(nav.querySelectorAll("a")).flatMap(link => {
         const heading = document.getElementById(
           decodeURIComponent(link.hash.slice(1))
@@ -227,6 +239,7 @@ const levels: number[] = [];
 
       const update = () => {
         this.frame = 0;
+        if (this.offsetParent === null) return;
         const line =
           parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 2;
         let start = 0;
@@ -241,61 +254,67 @@ const levels: number[] = [];
         if (next === active) return;
         if (active >= 0) sections[active].link.removeAttribute("aria-current");
         active = next;
-        label.textContent = sections[active]?.link.textContent?.trim() ?? "";
+        if (label) {
+          label.textContent = sections[active]?.link.textContent?.trim() ?? "";
+        }
         if (active >= 0)
           sections[active].link.setAttribute("aria-current", "location");
         revealCurrent();
       };
+
       const schedule = () => {
         if (!this.frame) this.frame = requestAnimationFrame(update);
-      };
-      const setLayout = () => {
-        details.open = this.wide.matches;
-        schedule();
       };
 
       this.events = new AbortController();
       const { signal } = this.events;
-      setLayout();
-      this.wide.addEventListener("change", setLayout, { signal });
+      if (isSidebar) details.open = true;
+      schedule();
+
       window.addEventListener("scroll", schedule, { passive: true, signal });
       window.addEventListener("resize", schedule, { signal });
       details.addEventListener("toggle", revealCurrent, { signal });
-      this.addEventListener(
-        "keydown",
-        event => {
-          if (event.key === "Escape" && details.open && !this.wide.matches) {
+
+      if (!isSidebar) {
+        this.addEventListener(
+          "keydown",
+          event => {
+            if (event.key === "Escape" && details.open) {
+              details.open = false;
+              this.querySelector("summary")!.focus();
+            }
+          },
+          { signal }
+        );
+        nav.addEventListener(
+          "click",
+          event => {
+            if (
+              event.ctrlKey ||
+              event.metaKey ||
+              event.shiftKey ||
+              event.altKey
+            )
+              return;
+            const link =
+              event.target instanceof Element && event.target.closest("a");
+            if (!link) return;
             details.open = false;
-            this.querySelector("summary")!.focus();
-          }
-        },
-        { signal }
-      );
-      nav.addEventListener(
-        "click",
-        event => {
-          if (
-            this.wide.matches ||
-            event.ctrlKey ||
-            event.metaKey ||
-            event.shiftKey ||
-            event.altKey
-          )
-            return;
-          const link =
-            event.target instanceof Element && event.target.closest("a");
-          if (!link) return;
-          details.open = false;
-          const target = document.getElementById(
-            decodeURIComponent(link.hash.slice(1))
-          );
-          target?.setAttribute("tabindex", "-1");
-          target?.focus({ preventScroll: true });
-        },
-        { signal }
-      );
-      this.observer = new ResizeObserver(schedule);
-      this.observer.observe(document.getElementById("article")!);
+            const target = document.getElementById(
+              decodeURIComponent(link.hash.slice(1))
+            );
+            target?.setAttribute("tabindex", "-1");
+            target?.focus({ preventScroll: true });
+          },
+          { signal }
+        );
+      }
+
+      const article = document.getElementById("article");
+      if (article) {
+        this.observer = new ResizeObserver(schedule);
+        this.observer.observe(article);
+      }
     }
 
     disconnectedCallback() {
@@ -307,5 +326,7 @@ const levels: number[] = [];
     }
   }
 
-  customElements.define("post-outline", PostOutline);
+  if (!customElements.get("post-outline")) {
+    customElements.define("post-outline", PostOutline);
+  }
 </script>
