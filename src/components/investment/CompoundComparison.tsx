@@ -2,22 +2,6 @@ import RangeSlider from "./RangeSlider";
 import InvestmentControls from "./InvestmentControls";
 import { useInvestmentChart } from "./useInvestmentChart";
 import { useEffect, useMemo, useState } from "react";
-import * as echarts from "echarts/core";
-import { LineChart } from "echarts/charts";
-import {
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-} from "echarts/components";
-import { CanvasRenderer } from "echarts/renderers";
-
-echarts.use([
-  LineChart,
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-  CanvasRenderer,
-]);
 
 const money = new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 0 });
 const fields = [
@@ -41,7 +25,7 @@ export default function CompoundComparison() {
     rate: "8",
     swing: "30",
   });
-  const { element: chartRef, chart } = useInvestmentChart();
+  const { element: chartRef, chart, ready } = useInvestmentChart();
   const data = useMemo(() => {
     const { principal, years, rate, swing } = Object.fromEntries(
       Object.entries(values).map(([key, value]) => [key, Number(value)])
@@ -71,6 +55,7 @@ export default function CompoundComparison() {
   }, [values]);
 
   useEffect(() => {
+    if (!ready || !chart.current) return;
     const render = () => {
       if (!chart.current) return;
       if (!data) {
@@ -149,7 +134,7 @@ export default function CompoundComparison() {
       attributeFilter: ["data-theme", "class"],
     });
     return () => observer.disconnect();
-  }, [data]);
+  }, [data, ready]);
 
   return (
     <section

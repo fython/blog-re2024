@@ -2,23 +2,6 @@ import RangeSlider from "./RangeSlider";
 import InvestmentControls from "./InvestmentControls";
 import { useInvestmentChart } from "./useInvestmentChart";
 import { useEffect, useState } from "react";
-import * as echarts from "echarts/core";
-import { BarChart, PieChart } from "echarts/charts";
-import {
-  GridComponent,
-  LegendComponent,
-  TooltipComponent,
-} from "echarts/components";
-import { CanvasRenderer } from "echarts/renderers";
-
-echarts.use([
-  BarChart,
-  PieChart,
-  GridComponent,
-  LegendComponent,
-  TooltipComponent,
-  CanvasRenderer,
-]);
 
 const money = new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 0 });
 const signed = (value: number) =>
@@ -68,8 +51,12 @@ const fields: {
 ];
 
 export default function PositionImpact() {
-  const { element: chartRef, chart } = useInvestmentChart();
-  const { element: profitChartRef, chart: profitChart } = useInvestmentChart();
+  const { element: chartRef, chart, ready: chartReady } = useInvestmentChart();
+  const {
+    element: profitChartRef,
+    chart: profitChart,
+    ready: profitReady,
+  } = useInvestmentChart();
   const [values, setValues] = useState<Record<Key, string>>({
     firstWeight: "5",
     firstReturn: "100",
@@ -96,6 +83,7 @@ export default function PositionImpact() {
   const format = (key: Key) => `${values[key]}%`;
 
   useEffect(() => {
+    if (!profitReady || !profitChart.current) return;
     const render = () => {
       const styles = getComputedStyle(document.documentElement);
       const isDark =
@@ -172,9 +160,10 @@ export default function PositionImpact() {
       attributeFilter: ["data-theme", "class"],
     });
     return () => observer.disconnect();
-  }, [firstProfit, secondProfit, total]);
+  }, [firstProfit, secondProfit, total, profitReady]);
 
   useEffect(() => {
+    if (!chartReady || !chart.current) return;
     const render = () => {
       const styles = getComputedStyle(document.documentElement);
       const isDark =
@@ -227,7 +216,7 @@ export default function PositionImpact() {
       attributeFilter: ["data-theme", "class"],
     });
     return () => observer.disconnect();
-  }, [firstWeight, secondWeight, cashWeight]);
+  }, [firstWeight, secondWeight, cashWeight, chartReady]);
 
   return (
     <section

@@ -22,8 +22,8 @@ Siubeng's Blog project based on [astro-paper](https://github.com/satnaing/astro-
   `src/pages/about.md`、`src/pages/projects.md`，不导入上游示例文章。
 - 保留旧文章和标签链接、`public/_redirects`、Giscus 评论配置、社交链接和中文字体。
 - 使用 Node.js 24 和项目指定的 pnpm；首次克隆后先运行 `git lfs pull`，补齐字体和图标。
-- `pnpm install --frozen-lockfile` 后运行 `pnpm lint`、`pnpm format:check`、
-  `pnpm build`；使用 `pnpm preview` 检查搜索及页面交互。
+- `pnpm install --frozen-lockfile` 后运行 `pnpm check`、`pnpm lint`、
+  `pnpm format:check`、`pnpm build`；使用 `pnpm preview` 检查搜索及页面交互。
 
 后续同步先记录当前提交，再在新分支执行 `git fetch upstream` 和
 `git merge --no-commit --no-ff upstream/main`。解决冲突并构建后，可运行

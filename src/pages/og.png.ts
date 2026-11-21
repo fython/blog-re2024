@@ -1,14 +1,11 @@
 import type { APIRoute } from "astro";
 import satori from "satori";
 import sharp from "sharp";
-import { readFile } from "node:fs/promises";
+import { getOgFonts } from "@/utils/ogFonts";
 import config from "@/config";
 
 export const GET: APIRoute = async () => {
-  const [regularData, boldData] = await Promise.all([
-    readFile("./fonts/SourceHanSerifSC-Regular.otf"),
-    readFile("./fonts/SourceHanSerifSC-Bold.otf"),
-  ]);
+  const fonts = await getOgFonts();
 
   const svg = await satori(
     {
@@ -146,20 +143,7 @@ export const GET: APIRoute = async () => {
       width: 1200,
       height: 630,
       embedFont: true,
-      fonts: [
-        {
-          name: "Source Han Serif SC",
-          data: regularData,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Source Han Serif SC",
-          data: boldData,
-          weight: 700,
-          style: "normal",
-        },
-      ],
+      fonts,
     }
   );
 

@@ -1,9 +1,10 @@
+import { createHash } from "node:crypto";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import { readFile } from "node:fs/promises";
 import satori from "satori";
 import sharp from "sharp";
 import { getPostSlug } from "@/utils/getPostPaths";
+import { getOgFonts } from "@/utils/ogFonts";
 import config from "@/config";
 
 export async function getStaticPaths() {
@@ -18,6 +19,17 @@ export async function getStaticPaths() {
   return posts.map(post => ({
     params: { slug: getPostSlug(post.id, post.filePath) },
     props: post,
+    cacheKey: createHash("sha256")
+      .update(
+        JSON.stringify([
+          post.data.title,
+          post.data.author,
+          config.site.title,
+          config.site.url,
+        ])
+      )
+      .digest("hex")
+      .slice(0, 16),
   }));
 }
 
@@ -26,10 +38,7 @@ export const GET: APIRoute = async ({ props }) => {
     return new Response(null, { status: 404, statusText: "Not found" });
   }
 
-  const [regularData, boldData] = await Promise.all([
-    readFile("./fonts/SourceHanSerifSC-Regular.otf"),
-    readFile("./fonts/SourceHanSerifSC-Bold.otf"),
-  ]);
+  const fonts = await getOgFonts();
 
   const svg = await satori(
     {
@@ -144,20 +153,7 @@ export const GET: APIRoute = async ({ props }) => {
       width: 1200,
       height: 630,
       embedFont: true,
-      fonts: [
-        {
-          name: "Source Han Serif SC",
-          data: regularData,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Source Han Serif SC",
-          data: boldData,
-          weight: 700,
-          style: "normal",
-        },
-      ],
+      fonts,
     }
   );
 

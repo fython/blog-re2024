@@ -1,4 +1,5 @@
 ---
+import { createHash } from "node:crypto";
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import Comments from "@/components/Comments.tsx";
 import PostLayout from "@/layouts/PostLayout.astro";
@@ -21,28 +22,48 @@ export async function getStaticPaths() {
   const posts = await getCollection("posts");
   const sortedPosts = getSortedPosts(posts);
 
-  return sortedPosts.map((post, index) => ({
-    params: { slug: getPostSlug(post.id, post.filePath) },
-    props: {
-      post,
-      prevPost:
-        index < sortedPosts.length - 1
-          ? {
-              id: sortedPosts[index + 1].id,
-              title: sortedPosts[index + 1].data.title,
-              filePath: sortedPosts[index + 1].filePath,
-            }
-          : null,
-      nextPost:
-        index > 0
-          ? {
-              id: sortedPosts[index - 1].id,
-              title: sortedPosts[index - 1].data.title,
-              filePath: sortedPosts[index - 1].filePath,
-            }
-          : null,
-    },
-  }));
+  return sortedPosts.map((post, index) => {
+    const prevPost =
+      index < sortedPosts.length - 1
+        ? {
+            id: sortedPosts[index + 1].id,
+            title: sortedPosts[index + 1].data.title,
+            filePath: sortedPosts[index + 1].filePath,
+          }
+        : null;
+    const nextPost =
+      index > 0
+        ? {
+            id: sortedPosts[index - 1].id,
+            title: sortedPosts[index - 1].data.title,
+            filePath: sortedPosts[index - 1].filePath,
+          }
+        : null;
+
+    return {
+      params: { slug: getPostSlug(post.id, post.filePath) },
+      props: {
+        post,
+        prevPost,
+        nextPost,
+      },
+      cacheKey: createHash("sha256")
+        .update(
+          JSON.stringify([
+            post.digest ?? post.id,
+            prevPost,
+            nextPost,
+            config.site.title,
+            config.site.url,
+            config.features.dynamicOgImage,
+            config.features.editPost?.enabled,
+            config.features.showBackButton,
+          ])
+        )
+        .digest("hex")
+        .slice(0, 16),
+    };
+  });
 }
 
 type AdjacentPost = {
