@@ -414,12 +414,12 @@ const hasDrawer = !src || Boolean(caption);
     });
   }
 
-  let visualListenersController: AbortController | undefined;
+  let docListenersController: AbortController | undefined;
 
   function initSidebarVisual() {
-    visualListenersController?.abort();
-    visualListenersController = new AbortController();
-    const { signal } = visualListenersController;
+    docListenersController?.abort();
+    docListenersController = new AbortController();
+    const { signal } = docListenersController;
 
     const cards = Array.from(
       document.querySelectorAll<HTMLElement>("[data-visual-card].has-drawer")
@@ -458,15 +458,14 @@ const hasDrawer = !src || Boolean(caption);
     const isFineHover = window.matchMedia("(hover: hover) and (pointer: fine)");
 
     for (const card of cards) {
+      if (card.dataset.cardInit === "true") continue;
+      card.dataset.cardInit = "true";
+
       const media = card.querySelector<HTMLElement>("[data-visual-media]");
-      media?.addEventListener(
-        "click",
-        () => {
-          if (isFineHover.matches) return;
-          card.dataset.open = card.dataset.open === "true" ? "false" : "true";
-        },
-        { signal }
-      );
+      media?.addEventListener("click", () => {
+        if (isFineHover.matches) return;
+        card.dataset.open = card.dataset.open === "true" ? "false" : "true";
+      });
     }
 
     const figures = document.querySelectorAll<HTMLElement>(
@@ -577,13 +576,9 @@ const hasDrawer = !src || Boolean(caption);
 
       void switchToPhoto(currentIndex, false);
 
-      btn?.addEventListener(
-        "click",
-        () => {
-          void switchToPhoto(pickNextIndex(photos.length, currentIndex), true);
-        },
-        { signal }
-      );
+      btn?.addEventListener("click", () => {
+        void switchToPhoto(pickNextIndex(photos.length, currentIndex), true);
+      });
     }
   }
 
