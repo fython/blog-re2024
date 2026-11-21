@@ -78,14 +78,17 @@ export default function CompoundComparison() {
         return;
       }
       const styles = getComputedStyle(document.documentElement);
+      const isDark =
+        document.documentElement.dataset.theme === "dark" ||
+        document.documentElement.classList.contains("dark");
       const background = styles.getPropertyValue("--background").trim();
       const foreground = styles.getPropertyValue("--foreground").trim();
       const border = styles.getPropertyValue("--border").trim();
-      const accent = styles.getPropertyValue("--accent").trim();
-      const secondary = styles.getPropertyValue("--secondary").trim();
+      const gainColor = isDark ? "#4ade80" : "#16a34a";
+      const lossColor = isDark ? "#f87171" : "#dc2626";
       chart.current.setOption(
         {
-          color: [secondary, accent],
+          color: [gainColor, lossColor],
           textStyle: { color: foreground },
           tooltip: {
             trigger: "axis",
@@ -212,7 +215,7 @@ export default function CompoundComparison() {
         ))}
       </InvestmentControls>
       <p
-        className="text-accent mt-3 mb-4 text-sm font-medium empty:hidden"
+        className="mt-3 mb-4 text-sm font-medium text-red-700 empty:hidden dark:text-red-400"
         role="status"
       >
         {!data &&
@@ -224,7 +227,7 @@ export default function CompoundComparison() {
           aria-live="polite"
         >
           <div className="border-border bg-background grid min-w-0 content-start gap-1 rounded-sm border p-2.5 text-xs sm:p-3 sm:text-[0.8125rem]">
-            <span className="text-secondary min-h-8 font-medium sm:min-h-0">
+            <span className="min-h-8 font-medium text-green-700 sm:min-h-0 dark:text-green-400">
               稳定增长<span className="hidden sm:inline"> · </span>
               <span className="block text-[0.625rem] whitespace-nowrap sm:inline sm:text-inherit">
                 每年 {data.rate}%
@@ -235,7 +238,7 @@ export default function CompoundComparison() {
             </strong>
           </div>
           <div className="border-border bg-background grid min-w-0 content-start gap-1 rounded-sm border p-2.5 text-xs sm:p-3 sm:text-[0.8125rem]">
-            <span className="text-accent min-h-8 font-medium sm:min-h-0">
+            <span className="min-h-8 font-medium text-red-700 sm:min-h-0 dark:text-red-400">
               波动增长<span className="hidden sm:inline"> · </span>
               <span className="block text-[0.625rem] whitespace-nowrap sm:inline sm:text-inherit">
                 交替 {data.rate + data.swing}% / {data.rate - data.swing}%

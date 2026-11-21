@@ -98,11 +98,14 @@ export default function PositionImpact() {
   useEffect(() => {
     const render = () => {
       const styles = getComputedStyle(document.documentElement);
+      const isDark =
+        document.documentElement.dataset.theme === "dark" ||
+        document.documentElement.classList.contains("dark");
       const background = styles.getPropertyValue("--background").trim();
       const foreground = styles.getPropertyValue("--foreground").trim();
       const border = styles.getPropertyValue("--border").trim();
-      const accent = styles.getPropertyValue("--accent").trim();
-      const secondary = styles.getPropertyValue("--secondary").trim();
+      const gainColor = isDark ? "#4ade80" : "#16a34a";
+      const lossColor = isDark ? "#f87171" : "#dc2626";
       profitChart.current?.setOption(
         {
           tooltip: {
@@ -147,7 +150,7 @@ export default function PositionImpact() {
               barMaxWidth: 24,
               data: [firstProfit, secondProfit, total].map(value => ({
                 value,
-                itemStyle: { color: value < 0 ? accent : secondary },
+                itemStyle: { color: value < 0 ? lossColor : gainColor },
                 label: {
                   show: true,
                   position: value < 0 ? "left" : "right",
@@ -174,15 +177,18 @@ export default function PositionImpact() {
   useEffect(() => {
     const render = () => {
       const styles = getComputedStyle(document.documentElement);
+      const isDark =
+        document.documentElement.dataset.theme === "dark" ||
+        document.documentElement.classList.contains("dark");
       const background = styles.getPropertyValue("--background").trim();
       const foreground = styles.getPropertyValue("--foreground").trim();
       const border = styles.getPropertyValue("--border").trim();
       const muted = styles.getPropertyValue("--muted-foreground").trim();
-      const accent = styles.getPropertyValue("--accent").trim();
-      const secondary = styles.getPropertyValue("--secondary").trim();
+      const gainColor = isDark ? "#4ade80" : "#16a34a";
+      const lossColor = isDark ? "#f87171" : "#dc2626";
       chart.current?.setOption(
         {
-          color: [secondary, accent, muted],
+          color: [gainColor, lossColor, muted],
           tooltip: {
             trigger: "item",
             formatter: "{b}: {c}%",
@@ -254,11 +260,11 @@ export default function PositionImpact() {
               className="bg-surface-hover absolute inset-x-2 top-1/2 flex h-2 -translate-y-1/2 overflow-hidden rounded-full"
             >
               <span
-                className="bg-secondary"
+                className="bg-green-600 dark:bg-green-400"
                 style={{ width: `${firstWeight}%` }}
               />
               <span
-                className="bg-accent"
+                className="bg-red-600 dark:bg-red-400"
                 style={{ width: `${secondWeight}%` }}
               />
             </div>
@@ -345,7 +351,10 @@ export default function PositionImpact() {
           ))}
       </InvestmentControls>
       {!validReturns && (
-        <p role="alert" className="text-accent mt-3 text-sm font-medium">
+        <p
+          role="alert"
+          className="mt-3 text-sm font-medium text-red-700 dark:text-red-400"
+        >
           请输入 −100% 至 200% 之间的涨跌幅。
         </p>
       )}
@@ -361,7 +370,7 @@ export default function PositionImpact() {
       <p className="text-foreground mt-4 text-sm font-medium">
         盈亏比较{" "}
         <span className="text-muted-foreground text-xs font-normal">
-          （青色为盈利，靛蓝为亏损）
+          （绿色为盈利，红色为亏损）
         </span>
       </p>
       <div
