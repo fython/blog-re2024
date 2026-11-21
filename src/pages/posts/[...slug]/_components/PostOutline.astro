@@ -16,11 +16,20 @@ const levels: number[] = [];
   {
     mode === "inline" && (
       <span class="reading-title" aria-hidden="true">
-        <span class="text-muted-foreground font-normal">
-          {config.site.title}
+        <span class="liquid-glass-edge">
+          <span class="glass-blur glass-blur-1" />
+          <span class="glass-blur glass-blur-2" />
+          <span class="glass-blur glass-blur-3" />
+          <span class="glass-blur glass-blur-4" />
+          <span class="glass-veil" />
         </span>
-        <span class="text-border-strong mx-1.5">/</span>
-        {title}
+        <span class="reading-blog-prefix">
+          <span class="text-muted-foreground font-normal">
+            {config.site.title}
+          </span>
+          <span class="text-border-strong mx-1.5">/</span>
+        </span>
+        <span class="reading-article-title">{title}</span>
       </span>
     )
   }
@@ -87,89 +96,215 @@ const levels: number[] = [];
     margin-inline-start: -1px;
   }
 
-  /* ===== Inline / Mobile-Tablet sticky top bar (< 66rem) ===== */
-  post-outline[data-mode="inline"] {
-    position: sticky;
-    top: 0;
-    z-index: 15;
-    margin-bottom: 1.75rem;
-    background: var(--background);
-    border-bottom: 1px solid var(--border);
-  }
-
-  post-outline[data-mode="inline"]:not(:has(details)),
-  post-outline[data-mode="inline"] .reading-title {
+  .liquid-glass-edge {
     display: none;
   }
 
-  post-outline[data-mode="inline"][data-reading] {
-    display: block;
+  /* ===== Mobile & Tablet sticky top bar (< 66rem) ===== */
+  @media (width < 66rem) {
+    post-outline[data-mode="inline"] {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      margin-bottom: 1.75rem;
+      background: var(--background);
+      border-bottom: 1px solid var(--border);
+    }
+
+    post-outline[data-mode="inline"]:not(:has(details)),
+    post-outline[data-mode="inline"] .reading-title {
+      display: none;
+    }
+
+    post-outline[data-mode="inline"][data-reading] {
+      display: block;
+    }
+
+    post-outline[data-mode="inline"][data-reading] .reading-title {
+      display: block;
+      padding-top: 0.625rem;
+      padding-bottom: 0.25rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    post-outline[data-mode="inline"][data-reading] summary {
+      min-height: 2.25rem;
+      padding-block: 0.25rem 0.5rem;
+    }
+
+    post-outline[data-mode="inline"] summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 2.75rem;
+      white-space: nowrap;
+    }
+
+    post-outline[data-mode="inline"] summary::before {
+      content: "▸" / "";
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    post-outline[data-mode="inline"] details[open] summary::before {
+      content: "▾" / "";
+    }
+
+    post-outline[data-mode="inline"] .current-title {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: var(--font-app);
+      font-size: 0.8125rem;
+      font-weight: 400;
+    }
+
+    post-outline[data-mode="inline"] nav {
+      position: absolute;
+      inset: 100% 0 auto;
+      max-height: 55dvh;
+      padding: 0.625rem 0.75rem;
+      border: 1px solid var(--border);
+      border-top: 0;
+      border-radius: 0 0 0.25rem 0.25rem;
+      background: var(--surface);
+    }
+
+    post-outline[data-mode="inline"] .outline-link {
+      padding-block: 0.5rem;
+      font-size: 0.875rem;
+    }
   }
 
-  post-outline[data-mode="inline"][data-reading] .reading-title {
-    display: block;
-    padding-top: 0.625rem;
-    padding-bottom: 0.25rem;
-    font-size: 0.875rem;
-    line-height: 1.4;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: 600;
-  }
-
-  post-outline[data-mode="inline"][data-reading] summary {
-    min-height: 2.25rem;
-    padding-block: 0.25rem 0.5rem;
-  }
-
-  post-outline[data-mode="inline"] summary {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: 2.75rem;
-    white-space: nowrap;
-  }
-
-  post-outline[data-mode="inline"] summary::before {
-    content: "▸" / "";
-    color: var(--accent);
-    font-size: 0.75rem;
-  }
-
-  post-outline[data-mode="inline"] details[open] summary::before {
-    content: "▾" / "";
-  }
-
-  post-outline[data-mode="inline"] .current-title {
-    display: block;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: var(--font-app);
-    font-size: 0.8125rem;
-    font-weight: 400;
-  }
-
-  post-outline[data-mode="inline"] nav {
-    position: absolute;
-    inset: 100% 0 auto;
-    max-height: 55dvh;
-    padding: 0.625rem 0.75rem;
-    border: 1px solid var(--border);
-    border-top: 0;
-    border-radius: 0 0 0.25rem 0.25rem;
-    background: var(--surface);
-  }
-
-  post-outline[data-mode="inline"] .outline-link {
-    padding-block: 0.5rem;
-    font-size: 0.875rem;
-  }
-
+  /* ===== Desktop sticky top bar (>= 66rem): article title only, zero layout shift ===== */
   @media (min-width: 66rem) {
     post-outline[data-mode="inline"] {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      height: 0;
+      margin: 0;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    post-outline[data-mode="inline"] details,
+    post-outline[data-mode="inline"] .reading-blog-prefix {
       display: none;
+    }
+
+    post-outline[data-mode="inline"] .reading-title {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding-top: 2.5rem;
+      padding-bottom: 1.5rem;
+      color: var(--foreground);
+      font-size: 2rem;
+      line-height: 1.3;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      translate: 0 -4px;
+      transition:
+        opacity 180ms ease-out,
+        translate 180ms ease-out;
+    }
+
+    /* iOS 26+ Liquid Glass progressive scroll-edge blur + feathered veil */
+    post-outline[data-mode="inline"] .liquid-glass-edge {
+      display: block;
+      position: absolute;
+      inset: 0 -0.5rem -3.25rem;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    post-outline[data-mode="inline"] .glass-blur,
+    post-outline[data-mode="inline"] .glass-veil {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    post-outline[data-mode="inline"] .glass-blur-1 {
+      backdrop-filter: blur(2px);
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 78%,
+        transparent 100%
+      );
+    }
+
+    post-outline[data-mode="inline"] .glass-blur-2 {
+      backdrop-filter: blur(5px);
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 70%,
+        transparent 92%
+      );
+    }
+
+    post-outline[data-mode="inline"] .glass-blur-3 {
+      backdrop-filter: blur(11px) saturate(140%);
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 62%,
+        transparent 82%
+      );
+    }
+
+    post-outline[data-mode="inline"] .glass-blur-4 {
+      backdrop-filter: blur(20px) saturate(160%);
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 54%,
+        transparent 72%
+      );
+    }
+
+    post-outline[data-mode="inline"] .glass-veil {
+      background: linear-gradient(
+        to bottom,
+        var(--background) 0%,
+        var(--background) 58%,
+        color-mix(in srgb, var(--background) 88%, transparent) 68%,
+        color-mix(in srgb, var(--background) 48%, transparent) 80%,
+        color-mix(in srgb, var(--background) 14%, transparent) 91%,
+        color-mix(in srgb, var(--background) 0%, transparent) 100%
+      );
+    }
+
+    post-outline[data-mode="inline"] .reading-article-title {
+      position: relative;
+      z-index: 1;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    post-outline[data-mode="inline"][data-reading] .reading-title {
+      opacity: 1;
+      translate: none;
+      pointer-events: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    post-outline[data-mode="inline"] .reading-title {
+      transition: none;
+      translate: none;
     }
   }
 
@@ -239,7 +374,7 @@ const levels: number[] = [];
 
       const update = () => {
         this.frame = 0;
-        if (this.offsetParent === null) return;
+        if (details.offsetParent === null) return;
         const line =
           parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 2;
         let start = 0;
