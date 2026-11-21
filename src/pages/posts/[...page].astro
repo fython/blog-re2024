@@ -28,7 +28,9 @@ const t = useTranslations(locale);
 
     <Main pageTitle={t.pages.postsTitle} pageDesc={t.pages.postsDesc}>
       <ul class="divide-border divide-y">
-        {page.data.map(data => <Card {...data} />)}
+        {page.data.map(data => (
+          <Card {...data} />
+        ))}
       </ul>
     </Main>
 

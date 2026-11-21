@@ -125,11 +125,9 @@ const ogImage = ogImageUrl
   modDatetime={modDatetime}
 >
   <SidebarShell>
-    {
-      headings.length > 0 && (
-        <PostOutline slot="sidebar" mode="sidebar" {headings} {title} />
-      )
-    }
+    {headings.length > 0 && (
+      <PostOutline slot="sidebar" mode="sidebar" {headings} {title} />
+    )}
 
     <BackButton />
 
@@ -176,7 +174,9 @@ const ogImage = ogImageUrl
       <BackToTopButton />
 
       <ul class="mt-4 mb-8 flex flex-wrap gap-2 sm:my-8">
-        {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
+        {tags.map(tag => (
+          <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
+        ))}
       </ul>
 
       <ShareLinks />
@@ -184,7 +184,9 @@ const ogImage = ogImageUrl
       <hr class="border-border my-10" />
 
       <AdjacentPostNav {prevPost} {nextPost} />
-      <div class="my-10" data-pagefind-ignore><Comments client:load /></div>
+      <div class="my-10" data-pagefind-ignore>
+        <Comments client:load />
+      </div>
     </main>
   </SidebarShell>
 </PostLayout>

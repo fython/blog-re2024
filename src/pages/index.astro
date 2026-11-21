@@ -20,42 +20,36 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     <main id="main-content" data-layout="index" class="app-layout">
       <h1 class="sr-only">{config.site.title}</h1>
 
-      {
-        featuredPosts.length > 0 && (
-          <section id="featured" class="pt-5 pb-4 sm:pt-7">
-            <div class="border-border mb-2 border-b pb-3">
-              <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
-                精选
-              </h2>
-            </div>
-            <ul class="divide-border divide-y">
-              {featuredPosts.map(data => (
-                <Card variant="h3" featuredBadge {...data} />
-              ))}
-            </ul>
-          </section>
-        )
-      }
+      {featuredPosts.length > 0 && (
+        <section id="featured" class="pt-5 pb-4 sm:pt-7">
+          <div class="border-border mb-2 border-b pb-3">
+            <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
+              精选
+            </h2>
+          </div>
+          <ul class="divide-border divide-y">
+            {featuredPosts.map(data => (
+              <Card variant="h3" featuredBadge {...data} />
+            ))}
+          </ul>
+        </section>
+      )}
 
-      {
-        recentPosts.length > 0 && (
-          <section id="recent-posts" class="pt-8 pb-4 sm:pt-10">
-            <div class="border-border mb-2 border-b pb-3">
-              <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
-                最近填坑
-              </h2>
-            </div>
-            <ul class="divide-border divide-y">
-              {recentPosts.map(
-                (data, index) =>
-                  index < config.posts.perIndex && (
-                    <Card variant="h3" {...data} />
-                  )
-              )}
-            </ul>
-          </section>
-        )
-      }
+      {recentPosts.length > 0 && (
+        <section id="recent-posts" class="pt-8 pb-4 sm:pt-10">
+          <div class="border-border mb-2 border-b pb-3">
+            <h2 class="text-foreground font-serif text-xl font-bold tracking-wide sm:text-2xl">
+              最近填坑
+            </h2>
+          </div>
+          <ul class="divide-border divide-y">
+            {recentPosts.map(
+              (data, index) =>
+                index < config.posts.perIndex && <Card variant="h3" {...data} />
+            )}
+          </ul>
+        </section>
+      )}
 
       <div class="my-10 flex justify-center sm:justify-start">
         <LinkButton

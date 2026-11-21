@@ -23,18 +23,16 @@ const items = await Promise.all(
 ---
 
 <div class="flex flex-wrap items-center gap-1">
-  {
-    items.map(({ url, title, Icon }) =>
-      Icon ? (
-        <LinkButton
-          href={url}
-          class="text-muted-foreground hover:border-border hover:bg-surface hover:text-accent inline-flex size-9 items-center justify-center rounded-sm border border-transparent transition-colors"
-          title={title}
-        >
-          <Icon class="inline-block size-5 fill-transparent stroke-current stroke-[1.75]" />
-          <span class="sr-only">{title}</span>
-        </LinkButton>
-      ) : null
-    )
-  }
+  {items.map(({ url, title, Icon }) =>
+    Icon ? (
+      <LinkButton
+        href={url}
+        class="text-muted-foreground hover:border-border hover:bg-surface hover:text-accent inline-flex size-9 items-center justify-center rounded-sm border border-transparent transition-colors"
+        title={title}
+      >
+        <Icon class="inline-block size-5 fill-transparent stroke-current stroke-[1.75]" />
+        <span class="sr-only">{title}</span>
+      </LinkButton>
+    ) : null
+  )}
 </div>

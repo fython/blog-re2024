@@ -9,45 +9,43 @@ const { tags, title } = Astro.props;
 const limit = 20;
 ---
 
-{
-  tags.length > 0 && (
-    <section
-      id="tags"
-      aria-labelledby="archive-tags-title"
-      class="border-border mb-10 scroll-mt-6 border-b pb-8"
-    >
-      <div class="mb-4 flex items-baseline justify-between">
-        <h2
-          id="archive-tags-title"
-          class="text-foreground font-serif text-lg font-bold sm:text-xl"
-        >
-          {title}
-        </h2>
-        <span class="text-muted-foreground text-xs tabular-nums">
-          共 {tags.length} 个
-        </span>
-      </div>
-      <ul class="flex flex-wrap gap-2">
-        {tags.slice(0, limit).map(({ tag, tagName }) => (
-          <Tag {tag} {tagName} size="sm" />
-        ))}
-      </ul>
-      {tags.length > limit && (
-        <details class="mt-4">
-          <summary class="border-border bg-background text-muted-foreground hover:border-accent hover:bg-surface hover:text-accent inline-flex w-fit cursor-pointer list-none items-center rounded-sm border px-3 py-1.5 text-xs font-medium transition-colors">
-            <span class="expand-label">展示全部标签（{tags.length}）</span>
-            <span class="collapse-label">收起标签</span>
-          </summary>
-          <ul class="mt-4 flex flex-wrap gap-2">
-            {tags.slice(limit).map(({ tag, tagName }) => (
-              <Tag {tag} {tagName} size="sm" />
-            ))}
-          </ul>
-        </details>
-      )}
-    </section>
-  )
-}
+{tags.length > 0 && (
+  <section
+    id="tags"
+    aria-labelledby="archive-tags-title"
+    class="border-border mb-10 scroll-mt-6 border-b pb-8"
+  >
+    <div class="mb-4 flex items-baseline justify-between">
+      <h2
+        id="archive-tags-title"
+        class="text-foreground font-serif text-lg font-bold sm:text-xl"
+      >
+        {title}
+      </h2>
+      <span class="text-muted-foreground text-xs tabular-nums">
+        共 {tags.length} 个
+      </span>
+    </div>
+    <ul class="flex flex-wrap gap-2">
+      {tags.slice(0, limit).map(({ tag, tagName }) => (
+        <Tag {tag} {tagName} size="sm" />
+      ))}
+    </ul>
+    {tags.length > limit && (
+      <details class="mt-4">
+        <summary class="border-border bg-background text-muted-foreground hover:border-accent hover:bg-surface hover:text-accent inline-flex w-fit cursor-pointer list-none items-center rounded-sm border px-3 py-1.5 text-xs font-medium transition-colors">
+          <span class="expand-label">展示全部标签（{tags.length}）</span>
+          <span class="collapse-label">收起标签</span>
+        </summary>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {tags.slice(limit).map(({ tag, tagName }) => (
+            <Tag {tag} {tagName} size="sm" />
+          ))}
+        </ul>
+      </details>
+    )}
+  </section>
+)}
 
 <style>
   summary::-webkit-details-marker {

@@ -18,35 +18,27 @@ const { frontmatter } = Astro.props;
 
 <Layout title={`${frontmatter.title} | ${config.site.title}`}>
   <SidebarShell tallSidebar={Boolean(frontmatter.profileCard)}>
-    {
-      frontmatter.profileCard && (
-        <ProfileCard slot="sidebar" variant="sidebar" />
-      )
-    }
+    {frontmatter.profileCard && (
+      <ProfileCard slot="sidebar" variant="sidebar" />
+    )}
 
     <Breadcrumb />
     <main id="main-content" class="app-layout pb-16">
       <header class="border-border mb-8 border-b pb-5">
-        <h1
-          class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-3xl"
-        >
+        <h1 class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-3xl">
           {frontmatter.title}
         </h1>
-        {
-          frontmatter.description && (
-            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
-              {frontmatter.description}
-            </p>
-          )
-        }
+        {frontmatter.description && (
+          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+            {frontmatter.description}
+          </p>
+        )}
       </header>
-      {
-        frontmatter.profileCard && (
-          <div class="about-mobile-profile">
-            <ProfileCard />
-          </div>
-        )
-      }
+      {frontmatter.profileCard && (
+        <div class="about-mobile-profile">
+          <ProfileCard />
+        </div>
+      )}
       <section id="about" class="app-prose max-w-app [&>h2:first-child]:mt-0">
         <slot />
       </section>

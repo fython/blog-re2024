@@ -21,13 +21,11 @@ const {
   class="inline-flex items-center gap-0.5"
 >
   {name}
-  {
-    iconsShown.map(icon => (
-      <img
-        style="height:14px!important"
-        src={`https://mirrors.creativecommons.org/presskit/icons/${icon}.svg`}
-        alt=""
-      />
-    ))
-  }
+  {iconsShown.map(icon => (
+    <img
+      style="height:14px!important"
+      src={`https://mirrors.creativecommons.org/presskit/icons/${icon}.svg`}
+      alt=""
+    />
+  ))}
 </LinkButton>

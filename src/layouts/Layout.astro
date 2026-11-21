@@ -77,7 +77,8 @@ const rssHref = getRelativeLocaleUrl(
       is:inline
       type="text/partytown"
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-TFGFCHK2DQ"></script>
+      src="https://www.googletagmanager.com/gtag/js?id=G-TFGFCHK2DQ"
+    ></script>
     <script is:inline type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -110,14 +111,9 @@ const rssHref = getRelativeLocaleUrl(
     <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
     <slot name="head" />
 
-    {
-      site.googleVerification && (
-        <meta
-          name="google-site-verification"
-          content={site.googleVerification}
-        />
-      )
-    }
+    {site.googleVerification && (
+      <meta name="google-site-verification" content={site.googleVerification} />
+    )}
 
     <!--
       Inline FOUC-prevention script: sets data-theme on <html> before
@@ -139,9 +135,7 @@ const rssHref = getRelativeLocaleUrl(
 
     <ClientRouter />
   </head>
-  <body
-    class="bg-background font-app text-foreground selection:bg-accent-soft selection:text-accent flex min-h-svh flex-col antialiased"
-  >
+  <body class="bg-background font-app text-foreground selection:bg-accent-soft selection:text-accent flex min-h-svh flex-col antialiased">
     <slot />
     <script>
       import "@/scripts/theme";

@@ -27,14 +27,11 @@ const t = useTranslations(Astro.currentLocale);
     <span
       id="progress-indicator"
       aria-hidden="true"
-      class="bg-border absolute inset-0 rounded-full md:hidden"></span>
-    <span
-      class="bg-background text-foreground group-hover:text-accent relative z-10 inline-flex size-full items-center justify-center rounded-full transition-colors md:size-auto md:rounded-none md:bg-transparent"
-    >
+      class="bg-border absolute inset-0 rounded-full md:hidden"
+    ></span>
+    <span class="bg-background text-foreground group-hover:text-accent relative z-10 inline-flex size-full items-center justify-center rounded-full transition-colors md:size-auto md:rounded-none md:bg-transparent">
       <IconArrowLeft class="inline-block size-5 rotate-90 md:hidden" />
-      <span
-        class="sr-only text-xs font-medium md:not-sr-only md:inline-flex md:items-center md:gap-1"
-      >
+      <span class="sr-only text-xs font-medium md:not-sr-only md:inline-flex md:items-center md:gap-1">
         <IconArrowNarrowUp class="inline-block size-4" />
         {t.post.backToTop}
       </span>

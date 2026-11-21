@@ -21,18 +21,14 @@ const { title, description, ...props } = data;
 ---
 
 <li class="py-2 sm:py-2.5">
-  <article
-    class="group hover:bg-surface -mx-3 rounded-sm px-3 py-3.5 transition-colors duration-200 sm:-mx-4 sm:px-4 sm:py-4"
-  >
+  <article class="group hover:bg-surface -mx-3 rounded-sm px-3 py-3.5 transition-colors duration-200 sm:-mx-4 sm:px-4 sm:py-4">
     <div class="mb-2 flex flex-wrap items-center gap-x-2.5 gap-y-1">
       <Datetime {...props} size="sm" />
-      {
-        featuredBadge && (
-          <span class="bg-secondary-soft text-secondary inline-flex items-center rounded-sm px-2 py-0.5 text-[0.7rem] font-medium tracking-wider uppercase">
-            精选
-          </span>
-        )
-      }
+      {featuredBadge && (
+        <span class="bg-secondary-soft text-secondary inline-flex items-center rounded-sm px-2 py-0.5 text-[0.7rem] font-medium tracking-wider uppercase">
+          精选
+        </span>
+      )}
     </div>
     <a
       href={getPostUrl(id, filePath, Astro.currentLocale)}
@@ -45,12 +41,10 @@ const { title, description, ...props } = data;
         {title}
       </Heading>
     </a>
-    {
-      description && (
-        <p class="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed sm:text-[0.9375rem]">
-          {description}
-        </p>
-      )
-    }
+    {description && (
+      <p class="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed sm:text-[0.9375rem]">
+        {description}
+      </p>
+    )}
   </article>
 </li>

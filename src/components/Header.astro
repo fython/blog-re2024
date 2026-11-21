@@ -70,9 +70,7 @@ const navLinks = [
 <header
   class:list={["site-header app-layout", { "home-sidebar-header": sidebar }]}
 >
-  <div
-    class="header-inner border-border bg-background flex w-full flex-col border-b py-3.5 sm:flex-row sm:items-center sm:justify-between sm:py-5"
-  >
+  <div class="header-inner border-border bg-background flex w-full flex-col border-b py-3.5 sm:flex-row sm:items-center sm:justify-between sm:py-5">
     <div class="header-bar flex w-full items-center justify-between sm:w-auto">
       <div class="brand-group min-w-0">
         <a
@@ -81,48 +79,42 @@ const navLinks = [
         >
           {site.title}
         </a>
-        {
-          sidebar && (
-            <p class="brand-desc text-muted-foreground mt-2 hidden text-sm leading-relaxed">
-              {site.description}
-            </p>
-          )
-        }
+        {sidebar && (
+          <p class="brand-desc text-muted-foreground mt-2 hidden text-sm leading-relaxed">
+            {site.description}
+          </p>
+        )}
       </div>
 
       {/* Mobile quick utility icons + menu button */}
       <div class="flex items-center gap-1 sm:hidden">
-        {
-          features.search !== false && (
-            <LinkButton
-              href={getRelativeLocaleUrl(locale, "search")}
-              class:list={[
-                "hover:bg-surface inline-flex size-10 items-center justify-center rounded-sm transition-colors",
-                isActive("/search")
-                  ? "bg-accent-soft text-accent"
-                  : "text-foreground",
-              ]}
-              title={t.nav.search}
-              aria-label={t.nav.search}
-            >
-              <IconSearch class="size-5" />
-            </LinkButton>
-          )
-        }
-        {
-          features.lightAndDarkMode && (
-            <button
-              type="button"
-              class="theme-toggle-btn text-foreground hover:bg-surface hover:text-accent relative inline-flex size-10 items-center justify-center rounded-sm transition-colors"
-              title={t.a11y.toggleTheme}
-              aria-label="auto"
-              aria-live="polite"
-            >
-              <IconMoon class="absolute size-5 scale-100 rotate-0 transition-transform dark:scale-0 dark:-rotate-90" />
-              <IconSunHigh class="absolute size-5 scale-0 rotate-90 transition-transform dark:scale-100 dark:rotate-0" />
-            </button>
-          )
-        }
+        {features.search !== false && (
+          <LinkButton
+            href={getRelativeLocaleUrl(locale, "search")}
+            class:list={[
+              "hover:bg-surface inline-flex size-10 items-center justify-center rounded-sm transition-colors",
+              isActive("/search")
+                ? "bg-accent-soft text-accent"
+                : "text-foreground",
+            ]}
+            title={t.nav.search}
+            aria-label={t.nav.search}
+          >
+            <IconSearch class="size-5" />
+          </LinkButton>
+        )}
+        {features.lightAndDarkMode && (
+          <button
+            type="button"
+            class="theme-toggle-btn text-foreground hover:bg-surface hover:text-accent relative inline-flex size-10 items-center justify-center rounded-sm transition-colors"
+            title={t.a11y.toggleTheme}
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="absolute size-5 scale-100 rotate-0 transition-transform dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute size-5 scale-0 rotate-90 transition-transform dark:scale-100 dark:rotate-0" />
+          </button>
+        )}
         <button
           id="menu-btn"
           type="button"
@@ -148,93 +140,83 @@ const navLinks = [
         id="menu-items"
         class="border-border bg-surface flex flex-col rounded-sm border p-1.5 sm:flex-row sm:items-center sm:gap-5 sm:border-0 sm:bg-transparent sm:p-0"
       >
-        {
-          navLinks.map(({ href, label, path }) => (
-            <li>
-              <a
-                href={href}
-                class:list={[
-                  "nav-link hover:text-accent block rounded-sm px-3 py-2.5 text-sm font-medium transition-colors sm:px-0 sm:py-1 sm:text-[0.9375rem]",
-                  isActive(path)
-                    ? "active-nav bg-accent-soft/70 sm:bg-transparent"
-                    : "text-foreground",
-                ]}
-              >
-                <span class="nav-label">{label}</span>
-              </a>
-            </li>
-          ))
-        }
-        {
-          features.showArchives && (
-            <li class="sm:hidden">
-              <a
-                href={getRelativeLocaleUrl(locale, "archives")}
-                class:list={[
-                  "nav-link hover:text-accent block rounded-sm px-3 py-2.5 text-sm font-medium transition-colors",
-                  isActive("/archives") || isActive("/tags")
-                    ? "active-nav bg-accent-soft/70"
-                    : "text-foreground",
-                ]}
-              >
-                <span class="nav-label">archives.</span>
-              </a>
-            </li>
-          )
-        }
+        {navLinks.map(({ href, label, path }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                "nav-link hover:text-accent block rounded-sm px-3 py-2.5 text-sm font-medium transition-colors sm:px-0 sm:py-1 sm:text-[0.9375rem]",
+                isActive(path)
+                  ? "active-nav bg-accent-soft/70 sm:bg-transparent"
+                  : "text-foreground",
+              ]}
+            >
+              <span class="nav-label">{label}</span>
+            </a>
+          </li>
+        ))}
+        {features.showArchives && (
+          <li class="sm:hidden">
+            <a
+              href={getRelativeLocaleUrl(locale, "archives")}
+              class:list={[
+                "nav-link hover:text-accent block rounded-sm px-3 py-2.5 text-sm font-medium transition-colors",
+                isActive("/archives") || isActive("/tags")
+                  ? "active-nav bg-accent-soft/70"
+                  : "text-foreground",
+              ]}
+            >
+              <span class="nav-label">archives.</span>
+            </a>
+          </li>
+        )}
       </ul>
 
       {/* Desktop utility icons */}
       <div class="nav-utilities hidden items-center gap-1 sm:flex">
-        {
-          features.showArchives && (
-            <LinkButton
-              href={getRelativeLocaleUrl(locale, "archives")}
-              class:list={[
-                "inline-flex size-9 items-center justify-center rounded-sm border transition-colors",
-                isActive("/archives") || isActive("/tags")
-                  ? "border-accent/40 bg-accent-soft text-accent"
-                  : "text-foreground hover:border-border hover:bg-surface hover:text-accent border-transparent",
-              ]}
-              title={t.nav.archives}
-              aria-label={t.nav.archives}
-            >
-              <IconArchive class="size-5" />
-            </LinkButton>
-          )
-        }
-        {
-          features.search !== false && (
-            <LinkButton
-              href={getRelativeLocaleUrl(locale, "search")}
-              class:list={[
-                "inline-flex size-9 items-center justify-center rounded-sm border transition-colors",
-                isActive("/search")
-                  ? "border-accent/40 bg-accent-soft text-accent"
-                  : "text-foreground hover:border-border hover:bg-surface hover:text-accent border-transparent",
-              ]}
-              title={t.nav.search}
-              aria-label={t.nav.search}
-            >
-              <IconSearch class="size-5" />
-            </LinkButton>
-          )
-        }
-        {
-          features.lightAndDarkMode && (
-            <button
-              id="theme-btn"
-              type="button"
-              class="theme-toggle-btn text-foreground hover:border-border hover:bg-surface hover:text-accent relative inline-flex size-9 items-center justify-center rounded-sm border border-transparent transition-colors"
-              title={t.a11y.toggleTheme}
-              aria-label="auto"
-              aria-live="polite"
-            >
-              <IconMoon class="absolute size-5 scale-100 rotate-0 transition-transform dark:scale-0 dark:-rotate-90" />
-              <IconSunHigh class="absolute size-5 scale-0 rotate-90 transition-transform dark:scale-100 dark:rotate-0" />
-            </button>
-          )
-        }
+        {features.showArchives && (
+          <LinkButton
+            href={getRelativeLocaleUrl(locale, "archives")}
+            class:list={[
+              "inline-flex size-9 items-center justify-center rounded-sm border transition-colors",
+              isActive("/archives") || isActive("/tags")
+                ? "border-accent/40 bg-accent-soft text-accent"
+                : "text-foreground hover:border-border hover:bg-surface hover:text-accent border-transparent",
+            ]}
+            title={t.nav.archives}
+            aria-label={t.nav.archives}
+          >
+            <IconArchive class="size-5" />
+          </LinkButton>
+        )}
+        {features.search !== false && (
+          <LinkButton
+            href={getRelativeLocaleUrl(locale, "search")}
+            class:list={[
+              "inline-flex size-9 items-center justify-center rounded-sm border transition-colors",
+              isActive("/search")
+                ? "border-accent/40 bg-accent-soft text-accent"
+                : "text-foreground hover:border-border hover:bg-surface hover:text-accent border-transparent",
+            ]}
+            title={t.nav.search}
+            aria-label={t.nav.search}
+          >
+            <IconSearch class="size-5" />
+          </LinkButton>
+        )}
+        {features.lightAndDarkMode && (
+          <button
+            id="theme-btn"
+            type="button"
+            class="theme-toggle-btn text-foreground hover:border-border hover:bg-surface hover:text-accent relative inline-flex size-9 items-center justify-center rounded-sm border border-transparent transition-colors"
+            title={t.a11y.toggleTheme}
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="absolute size-5 scale-100 rotate-0 transition-transform dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute size-5 scale-0 rotate-90 transition-transform dark:scale-100 dark:rotate-0" />
+          </button>
+        )}
       </div>
     </nav>
   </div>

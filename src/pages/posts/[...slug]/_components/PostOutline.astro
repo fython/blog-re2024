@@ -13,54 +13,50 @@ const levels: number[] = [];
 ---
 
 <post-outline data-mode={mode} data-pagefind-ignore>
-  {
-    mode === "inline" && (
-      <span class="reading-title" aria-hidden="true">
-        <span class="reading-blog-prefix">
-          <span class="text-muted-foreground font-normal">
-            {config.site.title}
-          </span>
-          <span class="text-border-strong mx-1.5">/</span>
+  {mode === "inline" && (
+    <span class="reading-title" aria-hidden="true">
+      <span class="reading-blog-prefix">
+        <span class="text-muted-foreground font-normal">
+          {config.site.title}
         </span>
-        <span class="reading-article-title">{title}</span>
+        <span class="text-border-strong mx-1.5">/</span>
       </span>
-    )
-  }
-  {
-    headings.length > 0 && (
-      <details open={mode === "sidebar"}>
-        <summary class="cursor-pointer py-2 text-sm font-semibold">
-          <span class="shrink-0">文章目录</span>
-          {mode === "inline" && (
-            <span
-              class="current-title text-muted-foreground"
-              aria-hidden="true"
-            />
-          )}
-        </summary>
-        <nav aria-label="文章目录">
-          <ul class="border-border border-s">
-            {headings.map(({ depth, slug, text }) => {
-              while (levels.length && levels[levels.length - 1] >= depth)
-                levels.pop();
-              const indent = levels.length;
-              levels.push(depth);
-              return (
-                <li style={{ paddingInlineStart: `${indent * 0.75}rem` }}>
-                  <a
-                    class="outline-link text-muted-foreground hover:text-accent block py-1.5 ps-3 text-[0.8125rem] leading-5 wrap-anywhere transition-colors"
-                    href={`#${encodeURIComponent(slug)}`}
-                  >
-                    {text}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </details>
-    )
-  }
+      <span class="reading-article-title">{title}</span>
+    </span>
+  )}
+  {headings.length > 0 && (
+    <details open={mode === "sidebar"}>
+      <summary class="cursor-pointer py-2 text-sm font-semibold">
+        <span class="shrink-0">文章目录</span>
+        {mode === "inline" && (
+          <span
+            class="current-title text-muted-foreground"
+            aria-hidden="true"
+          />
+        )}
+      </summary>
+      <nav aria-label="文章目录">
+        <ul class="border-border border-s">
+          {headings.map(({ depth, slug, text }) => {
+            while (levels.length && levels[levels.length - 1] >= depth)
+              levels.pop();
+            const indent = levels.length;
+            levels.push(depth);
+            return (
+              <li style={{ paddingInlineStart: `${indent * 0.75}rem` }}>
+                <a
+                  class="outline-link text-muted-foreground hover:text-accent block py-1.5 ps-3 text-[0.8125rem] leading-5 wrap-anywhere transition-colors"
+                  href={`#${encodeURIComponent(slug)}`}
+                >
+                  {text}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </details>
+  )}
 </post-outline>
 
 <style>

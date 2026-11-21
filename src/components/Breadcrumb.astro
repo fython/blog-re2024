@@ -52,9 +52,7 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
 ---
 
 <nav class="app-layout mt-7 mb-2" aria-label="breadcrumb">
-  <ul
-    class="text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs"
-  >
+  <ul class="text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs">
     <li class="flex items-center gap-x-1.5">
       <a
         href={getRelativeLocaleUrl(locale, "")}
@@ -62,37 +60,37 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
       >
         {t.nav.home}
       </a>
-      <span aria-hidden="true" class="text-border-strong">/</span>
+      <span aria-hidden="true" class="text-border-strong">
+        /
+      </span>
     </li>
-    {
-      breadcrumbList.map((breadcrumb, index) =>
-        index + 1 === breadcrumbList.length ? (
-          <li>
-            <span
-              class:list={["text-foreground/80", { lowercase: index > 0 }]}
-              aria-current="page"
-            >
-              {navLabels[breadcrumb] ?? decodeSegment(breadcrumb)}
-            </span>
-          </li>
-        ) : (
-          <li class="flex items-center gap-x-1.5">
-            <a
-              href={
-                breadcrumb === "tags"
-                  ? `${getRelativeLocaleUrl(locale, "archives")}#tags`
-                  : getRelativeLocaleUrl(locale, breadcrumb)
-              }
-              class="hover:text-accent transition-colors"
-            >
-              {navLabels[breadcrumb] ?? decodeSegment(breadcrumb)}
-            </a>
-            <span aria-hidden="true" class="text-border-strong">
-              /
-            </span>
-          </li>
-        )
+    {breadcrumbList.map((breadcrumb, index) =>
+      index + 1 === breadcrumbList.length ? (
+        <li>
+          <span
+            class:list={["text-foreground/80", { lowercase: index > 0 }]}
+            aria-current="page"
+          >
+            {navLabels[breadcrumb] ?? decodeSegment(breadcrumb)}
+          </span>
+        </li>
+      ) : (
+        <li class="flex items-center gap-x-1.5">
+          <a
+            href={
+              breadcrumb === "tags"
+                ? `${getRelativeLocaleUrl(locale, "archives")}#tags`
+                : getRelativeLocaleUrl(locale, breadcrumb)
+            }
+            class="hover:text-accent transition-colors"
+          >
+            {navLabels[breadcrumb] ?? decodeSegment(breadcrumb)}
+          </a>
+          <span aria-hidden="true" class="text-border-strong">
+            /
+          </span>
+        </li>
       )
-    }
+    )}
   </ul>
 </nav>

@@ -84,81 +84,77 @@ const hasDrawer = !src || Boolean(caption);
       {/* Dense light dot-matrix placeholder on transparent backdrop */}
       <div aria-hidden="true" class="visual-dots"></div>
 
-      {
-        src ? (
+      {src ? (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 block size-full object-cover"
+        />
+      ) : (
+        <>
           <img
-            src={src}
+            data-scandi-layer="a"
             alt={alt}
-            loading="lazy"
             decoding="async"
-            class="absolute inset-0 block size-full object-cover"
+            referrerpolicy="no-referrer"
+            class="visual-img is-hidden"
           />
-        ) : (
-          <>
-            <img
-              data-scandi-layer="a"
-              alt={alt}
-              decoding="async"
-              referrerpolicy="no-referrer"
-              class="visual-img is-hidden"
-            />
-            <img
-              data-scandi-layer="b"
-              alt=""
-              aria-hidden="true"
-              decoding="async"
-              referrerpolicy="no-referrer"
-              class="visual-img is-hidden"
-            />
-          </>
-        )
-      }
+          <img
+            data-scandi-layer="b"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            class="visual-img is-hidden"
+          />
+        </>
+      )}
     </div>
 
-    {
-      hasDrawer && (
-        <div class="visual-drawer relative z-10">
-          <div class="overflow-hidden">
-            {src ? (
-              <figcaption class="text-muted-foreground pt-2.5 text-xs leading-relaxed tracking-wide">
-                {caption}
-              </figcaption>
-            ) : (
-              <figcaption class="text-muted-foreground flex items-center justify-between gap-2 pt-2.5 text-xs">
-                <span class="min-w-0 truncate">
-                  <span
-                    data-scandi-location
-                    class="inline-block transition-opacity duration-200"
-                  >
-                    Scandinavian
-                  </span>
-                  <span aria-hidden="true" class="text-border-strong mx-1">
-                    ·
-                  </span>
-                  <a
-                    href={unsplashTopicUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-accent transition-colors"
-                  >
-                    Unsplash
-                  </a>
-                </span>
-                <button
-                  type="button"
-                  data-scandi-shuffle
-                  class="text-muted-foreground hover:border-border hover:bg-background hover:text-accent shrink-0 rounded-sm border border-transparent px-2 py-1 text-xs transition-colors disabled:opacity-50 sm:px-1.5 sm:py-0.5 sm:text-[0.7rem]"
-                  aria-label="随机切换一张北欧风景图"
-                  title="换一张北欧风景图"
+    {hasDrawer && (
+      <div class="visual-drawer relative z-10">
+        <div class="overflow-hidden">
+          {src ? (
+            <figcaption class="text-muted-foreground pt-2.5 text-xs leading-relaxed tracking-wide">
+              {caption}
+            </figcaption>
+          ) : (
+            <figcaption class="text-muted-foreground flex items-center justify-between gap-2 pt-2.5 text-xs">
+              <span class="min-w-0 truncate">
+                <span
+                  data-scandi-location
+                  class="inline-block transition-opacity duration-200"
                 >
-                  换一张
-                </button>
-              </figcaption>
-            )}
-          </div>
+                  Scandinavian
+                </span>
+                <span aria-hidden="true" class="text-border-strong mx-1">
+                  ·
+                </span>
+                <a
+                  href={unsplashTopicUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-accent transition-colors"
+                >
+                  Unsplash
+                </a>
+              </span>
+              <button
+                type="button"
+                data-scandi-shuffle
+                class="text-muted-foreground hover:border-border hover:bg-background hover:text-accent shrink-0 rounded-sm border border-transparent px-2 py-1 text-xs transition-colors disabled:opacity-50 sm:px-1.5 sm:py-0.5 sm:text-[0.7rem]"
+                aria-label="随机切换一张北欧风景图"
+                title="换一张北欧风景图"
+              >
+                换一张
+              </button>
+            </figcaption>
+          )}
         </div>
-      )
-    }
+      </div>
+    )}
   </div>
 </figure>
 

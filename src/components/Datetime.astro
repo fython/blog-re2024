@@ -52,7 +52,9 @@ const date = datetime.format("YYYY年M月D日");
   {isModified && <span>{t.post.updatedAt}</span>}
   <time datetime={datetime.toISOString()}>
     {date}
-    <span aria-hidden="true" class="text-border-strong mx-1">·</span>
+    <span aria-hidden="true" class="text-border-strong mx-1">
+      ·
+    </span>
     {datetime.format("HH:mm")}
   </time>
 </div>

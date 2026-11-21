@@ -18,11 +18,9 @@ const friends = await getCollection("friend");
       pageDesc="这里是一些熟悉的朋友们的博客站点，未完全收录，排名不分先后，欢迎互相交换。"
     >
       <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {
-          friends.map(({ data }) => (
-            <FriendLink name={data.name} blog={data.blog} />
-          ))
-        }
+        {friends.map(({ data }) => (
+          <FriendLink name={data.name} blog={data.blog} />
+        ))}
       </ul>
     </Main>
   </SidebarShell>

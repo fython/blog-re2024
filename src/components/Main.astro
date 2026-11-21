@@ -22,18 +22,14 @@ const backUrl = config.features.showBackButton
   class:list={["app-layout pb-10", className]}
 >
   <header class="border-border mb-6 border-b pb-5">
-    <h1
-      class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-3xl"
-    >
+    <h1 class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-3xl">
       {pageTitle}
     </h1>
-    {
-      pageDesc && (
-        <p class="text-muted-foreground mt-2 text-sm leading-relaxed sm:text-[0.9375rem]">
-          {pageDesc}
-        </p>
-      )
-    }
+    {pageDesc && (
+      <p class="text-muted-foreground mt-2 text-sm leading-relaxed sm:text-[0.9375rem]">
+        {pageDesc}
+      </p>
+    )}
   </header>
   <slot />
 </main>
