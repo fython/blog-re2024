@@ -2,11 +2,30 @@
 export interface Props {
   noPadding?: boolean;
   ariaHidden?: boolean;
+  wide?: boolean;
 }
 
-const { noPadding = false, ariaHidden = true } = Astro.props;
+const { noPadding = false, ariaHidden = true, wide = false } = Astro.props;
 ---
 
-<div class={`max-w-app mx-auto w-full ${noPadding ? "px-0" : "px-5 sm:px-6"}`}>
+<div
+  class:list={[
+    "mx-auto w-full",
+    wide ? "shell-wide-container" : "max-w-app",
+    noPadding ? "px-0" : "px-5 sm:px-6",
+  ]}
+>
   <hr class="border-border" aria-hidden={ariaHidden} />
 </div>
+
+<style>
+  .shell-wide-container {
+    max-width: 46rem;
+  }
+
+  @media (min-width: 66rem) {
+    .shell-wide-container {
+      max-width: 71rem;
+    }
+  }
+</style>

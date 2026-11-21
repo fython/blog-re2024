@@ -1,30 +1,29 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import Main from "@/components/Main.astro";
-import Header from "@/components/Header.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import FriendLink from "@/components/FriendLink.astro";
-import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
 const friends = await getCollection("friend");
 ---
 
 <Layout title={`友情链接 | ${config.site.title}`}>
-  <Header />
-  <Breadcrumb />
-  <Main
-    pageTitle="友情链接"
-    pageDesc="这里是一些熟悉的朋友们的博客站点，未完全收录，排名不分先后，欢迎互相交换。"
-  >
-    <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-      {
-        friends.map(({ data }) => (
-          <FriendLink name={data.name} blog={data.blog} />
-        ))
-      }
-    </ul>
-  </Main>
-  <Footer />
+  <SidebarShell>
+    <Breadcrumb />
+    <Main
+      pageTitle="友情链接"
+      pageDesc="这里是一些熟悉的朋友们的博客站点，未完全收录，排名不分先后，欢迎互相交换。"
+    >
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {
+          friends.map(({ data }) => (
+            <FriendLink name={data.name} blog={data.blog} />
+          ))
+        }
+      </ul>
+    </Main>
+  </SidebarShell>
 </Layout>

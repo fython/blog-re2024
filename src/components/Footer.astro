@@ -7,13 +7,19 @@ const currentYear = new Date().getFullYear();
 
 export interface Props {
   noMarginTop?: boolean;
+  wide?: boolean;
 }
 
-const { noMarginTop = false } = Astro.props;
+const { noMarginTop = false, wide = false } = Astro.props;
 ---
 
-<footer class={`app-layout ${noMarginTop ? "" : "mt-auto"}`}>
-  <Hr noPadding />
+<footer
+  class:list={[
+    wide ? "shell-footer mx-auto w-full px-5 sm:px-6" : "app-layout",
+    { "mt-auto": !noMarginTop },
+  ]}
+>
+  <Hr noPadding {wide} />
   <div
     class="flex flex-col items-center justify-between gap-3 py-6 sm:flex-row-reverse sm:py-5"
   >
@@ -32,3 +38,16 @@ const { noMarginTop = false } = Astro.props;
     </div>
   </div>
 </footer>
+
+<style>
+  .shell-footer {
+    max-width: 46rem;
+  }
+
+  @media (min-width: 66rem) {
+    .shell-footer {
+      max-width: 71rem;
+      padding-inline: 2rem;
+    }
+  }
+</style>

@@ -2,10 +2,9 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import "@pagefind/default-ui/css/ui.css";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
 import { getAssetPath } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -27,21 +26,19 @@ const t = useTranslations(locale);
 ---
 
 <Layout title={`${t.pages.searchTitle} | ${config.site.title}`}>
-  <Header />
+  <SidebarShell>
+    <Breadcrumb />
 
-  <Breadcrumb />
-
-  <Main pageTitle={t.pages.searchTitle} pageDesc={t.pages.searchDesc}>
-    <div
-      id="pagefind-search"
-      transition:persist
-      data-backurl={backUrl}
-      data-bundle-path={pagefindBundlePath}
-    >
-    </div>
-  </Main>
-
-  <Footer />
+    <Main pageTitle={t.pages.searchTitle} pageDesc={t.pages.searchDesc}>
+      <div
+        id="pagefind-search"
+        transition:persist
+        data-backurl={backUrl}
+        data-bundle-path={pagefindBundlePath}
+      >
+      </div>
+    </Main>
+  </SidebarShell>
 </Layout>
 
 <script>

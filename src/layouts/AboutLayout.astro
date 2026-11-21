@@ -1,6 +1,5 @@
 ---
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import ProfileCard from "@/components/ProfileCard.astro";
 import Layout from "./Layout.astro";
@@ -18,27 +17,47 @@ const { frontmatter } = Astro.props;
 ---
 
 <Layout title={`${frontmatter.title} | ${config.site.title}`}>
-  <Header />
-  <Breadcrumb />
-  <main id="main-content" class="app-layout pb-16">
-    <header class="border-border mb-8 border-b pb-5">
-      <h1
-        class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-3xl"
-      >
-        {frontmatter.title}
-      </h1>
+  <SidebarShell tallSidebar={Boolean(frontmatter.profileCard)}>
+    {
+      frontmatter.profileCard && (
+        <ProfileCard slot="sidebar" variant="sidebar" />
+      )
+    }
+
+    <Breadcrumb />
+    <main id="main-content" class="app-layout pb-16">
+      <header class="border-border mb-8 border-b pb-5">
+        <h1
+          class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-3xl"
+        >
+          {frontmatter.title}
+        </h1>
+        {
+          frontmatter.description && (
+            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {frontmatter.description}
+            </p>
+          )
+        }
+      </header>
       {
-        frontmatter.description && (
-          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
-            {frontmatter.description}
-          </p>
+        frontmatter.profileCard && (
+          <div class="about-mobile-profile">
+            <ProfileCard />
+          </div>
         )
       }
-    </header>
-    {frontmatter.profileCard && <ProfileCard />}
-    <section id="about" class="app-prose max-w-app [&>h2:first-child]:mt-0">
-      <slot />
-    </section>
-  </main>
-  <Footer />
+      <section id="about" class="app-prose max-w-app [&>h2:first-child]:mt-0">
+        <slot />
+      </section>
+    </main>
+  </SidebarShell>
 </Layout>
+
+<style>
+  @media (min-width: 66rem) {
+    .about-mobile-profile {
+      display: none;
+    }
+  }
+</style>

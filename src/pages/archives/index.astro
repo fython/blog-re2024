@@ -2,10 +2,9 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
 import ArchiveTags from "@/components/ArchiveTags.astro";
 import { getUniqueTags } from "@/utils/getUniqueTags";
 import Card from "@/components/Card.astro";
@@ -30,73 +29,73 @@ const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
 ---
 
 <Layout title={`${t.pages.archivesTitle} | ${config.site.title}`}>
-  <Header />
+  <SidebarShell>
+    <Breadcrumb />
 
-  <Breadcrumb />
-
-  <Main pageTitle={t.pages.archivesTitle} pageDesc={t.pages.archivesDesc}>
-    <ArchiveTags {tags} title={t.pages.tagsTitle} />
-    <div class="space-y-10">
-      {
-        Object.entries(
-          getPostsByGroupCondition(filteredPosts, post =>
-            post.data.pubDatetime.getFullYear()
+    <Main pageTitle={t.pages.archivesTitle} pageDesc={t.pages.archivesDesc}>
+      <ArchiveTags {tags} title={t.pages.tagsTitle} />
+      <div class="space-y-10">
+        {
+          Object.entries(
+            getPostsByGroupCondition(filteredPosts, post =>
+              post.data.pubDatetime.getFullYear()
+            )
           )
-        )
-          .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-          .map(([year, yearGroup]) => (
-            <section>
-              <div class="border-border mb-2 flex items-baseline gap-2 border-b pb-2.5">
-                <h2 class="text-foreground font-serif text-xl font-bold tabular-nums sm:text-2xl">
-                  {year}
-                </h2>
-                <span class="bg-surface text-muted-foreground rounded-sm px-2 py-0.5 text-xs tabular-nums">
-                  {yearGroup.length} 篇
-                </span>
-              </div>
-              <div class="divide-border divide-y">
-                {Object.entries(
-                  getPostsByGroupCondition(
-                    yearGroup,
-                    post => post.data.pubDatetime.getMonth() + 1
+            .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
+            .map(([year, yearGroup]) => (
+              <section>
+                <div class="border-border mb-2 flex items-baseline gap-2 border-b pb-2.5">
+                  <h2 class="text-foreground font-serif text-xl font-bold tabular-nums sm:text-2xl">
+                    {year}
+                  </h2>
+                  <span class="bg-surface text-muted-foreground rounded-sm px-2 py-0.5 text-xs tabular-nums">
+                    {yearGroup.length} 篇
+                  </span>
+                </div>
+                <div class="divide-border divide-y">
+                  {Object.entries(
+                    getPostsByGroupCondition(
+                      yearGroup,
+                      post => post.data.pubDatetime.getMonth() + 1
+                    )
                   )
-                )
-                  .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
-                  .map(([month, monthGroup]) => (
-                    <div class="flex flex-col py-2 sm:flex-row sm:gap-6">
-                      <div class="text-muted-foreground flex shrink-0 items-baseline gap-1.5 pt-4 text-sm sm:w-24 sm:pt-5">
-                        <span class="text-foreground font-serif font-semibold">
-                          {monthFormatter.format(
-                            new Date(2000, Number(month) - 1, 1)
-                          )}
-                        </span>
-                        <span class="text-xs tabular-nums">
-                          ({monthGroup.length})
-                        </span>
+                    .sort(
+                      ([monthA], [monthB]) => Number(monthB) - Number(monthA)
+                    )
+                    .map(([month, monthGroup]) => (
+                      <div class="flex flex-col py-2 sm:flex-row sm:gap-6">
+                        <div class="text-muted-foreground flex shrink-0 items-baseline gap-1.5 pt-4 text-sm sm:w-24 sm:pt-5">
+                          <span class="text-foreground font-serif font-semibold">
+                            {monthFormatter.format(
+                              new Date(2000, Number(month) - 1, 1)
+                            )}
+                          </span>
+                          <span class="text-xs tabular-nums">
+                            ({monthGroup.length})
+                          </span>
+                        </div>
+                        <ul class="divide-border min-w-0 flex-1 divide-y">
+                          {monthGroup
+                            .sort(
+                              (a, b) =>
+                                Math.floor(
+                                  new Date(b.data.pubDatetime).getTime() / 1000
+                                ) -
+                                Math.floor(
+                                  new Date(a.data.pubDatetime).getTime() / 1000
+                                )
+                            )
+                            .map(data => (
+                              <Card variant="h3" {...data} />
+                            ))}
+                        </ul>
                       </div>
-                      <ul class="divide-border min-w-0 flex-1 divide-y">
-                        {monthGroup
-                          .sort(
-                            (a, b) =>
-                              Math.floor(
-                                new Date(b.data.pubDatetime).getTime() / 1000
-                              ) -
-                              Math.floor(
-                                new Date(a.data.pubDatetime).getTime() / 1000
-                              )
-                          )
-                          .map(data => (
-                            <Card variant="h3" {...data} />
-                          ))}
-                      </ul>
-                    </div>
-                  ))}
-              </div>
-            </section>
-          ))
-      }
-    </div>
-  </Main>
-
-  <Footer />
+                    ))}
+                </div>
+              </section>
+            ))
+        }
+      </div>
+    </Main>
+  </SidebarShell>
 </Layout>

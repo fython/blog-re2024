@@ -1,9 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import SidebarVisual from "@/components/SidebarVisual.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
@@ -18,15 +16,8 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
 <Layout>
-  <div class="home-layout">
-    <aside class="home-sidebar" aria-label="站点介绍与导航">
-      <Header sidebar />
-      <div class="sidebar-visual-slot app-layout pt-5 pb-1 sm:pt-6">
-        <SidebarVisual />
-      </div>
-    </aside>
-
-    <main id="main-content" data-layout="index" class="app-layout home-posts">
+  <SidebarShell showVisualOnMobile>
+    <main id="main-content" data-layout="index" class="app-layout">
       <h1 class="sr-only">{config.site.title}</h1>
 
       {
@@ -76,8 +67,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         </LinkButton>
       </div>
     </main>
-  </div>
-  <Footer />
+  </SidebarShell>
 </Layout>
 
 <script>
@@ -89,48 +79,3 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     }
   });
 </script>
-
-<style>
-  .home-layout {
-    width: 100%;
-  }
-
-  @media (min-width: 66rem) {
-    .home-layout {
-      display: grid;
-      grid-template-columns: 18.5rem minmax(0, 46rem);
-      column-gap: 2.5rem;
-      max-width: 71rem;
-      margin-inline: auto;
-      padding: 3.25rem 2rem 2rem;
-      align-items: start;
-    }
-
-    .home-sidebar {
-      min-width: 0;
-    }
-
-    .sidebar-visual-slot {
-      max-width: none;
-      padding: 1.75rem 0 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .home-posts {
-      min-width: 0;
-      padding: 0 0 0 2.5rem;
-      border-left: 1px solid var(--border);
-    }
-
-    .home-posts > section:first-of-type {
-      padding-top: 0;
-    }
-  }
-
-  @media (min-width: 66rem) and (min-height: 48rem) {
-    .home-sidebar {
-      position: sticky;
-      top: 2.5rem;
-    }
-  }
-</style>

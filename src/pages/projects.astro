@@ -1,9 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
 import ProjectCard, {
   type Props as ProjectItem,
 } from "@/components/ProjectCard.astro";
@@ -27,14 +26,11 @@ const projectGroups: ProjectGroup[] = [
       {
         name: "WheelPlay",
         url: "https://wheelplay.gwo.app",
-        description:
-          "借助 Android 在任意浏览器上使用 CarPlay & 其它车机互联框架",
       },
       {
-        name: "jp-lyrics-app",
+        name: "日语歌词学习工具",
         badge: "未命名",
         url: "https://cnb.cool/siubeng/jp-lyrics-app",
-        description: "日语歌词学习工具",
       },
       {
         name: "悬浮弹幕 / Danmaqua",
@@ -99,45 +95,45 @@ const projectGroups: ProjectGroup[] = [
 ---
 
 <Layout title={`我的项目 | ${config.site.title}`}>
-  <Header />
-  <Breadcrumb />
-  <Main
-    pageTitle="我的项目"
-    pageDesc="仅列出部分项目介绍，未标注「闭源」与「不公开」的项目均为开源项目。"
-  >
-    <p class="text-muted-foreground mb-8 text-sm">
-      更多代码与实验性项目请前往我的 GitHub：
-      <a
-        href="https://github.com/fython"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-foreground decoration-border-strong hover:text-accent hover:decoration-accent font-mono underline underline-offset-4 transition-colors"
-      >
-        github.com/fython ↗
-      </a>
-    </p>
+  <SidebarShell>
+    <Breadcrumb />
+    <Main
+      pageTitle="我的项目"
+      pageDesc="仅列出部分项目介绍，未标注「闭源」与「不公开」的项目均为开源项目。"
+    >
+      <p class="text-muted-foreground mb-8 text-sm">
+        更多代码与实验性项目请前往我的 GitHub：
+        <a
+          href="https://github.com/fython"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-foreground decoration-border-strong hover:text-accent hover:decoration-accent font-mono underline underline-offset-4 transition-colors"
+        >
+          github.com/fython ↗
+        </a>
+      </p>
 
-    <div class="space-y-10">
-      {
-        projectGroups.map(group => (
-          <section>
-            <div class="border-border mb-4 flex items-baseline justify-between border-b pb-2.5">
-              <h2 class="text-foreground font-serif text-lg font-bold sm:text-xl">
-                {group.title}
-              </h2>
-              <span class="text-muted-foreground text-xs tabular-nums">
-                {group.items.length} 项
-              </span>
-            </div>
-            <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {group.items.map(item => (
-                <ProjectCard {...item} />
-              ))}
-            </ul>
-          </section>
-        ))
-      }
-    </div>
-  </Main>
-  <Footer />
+      <div class="space-y-10">
+        {
+          projectGroups.map(group => (
+            <section>
+              <div class="border-border mb-4 flex items-baseline justify-between border-b pb-2.5">
+                <h2 class="text-foreground font-serif text-lg font-bold sm:text-xl">
+                  {group.title}
+                </h2>
+                <span class="text-muted-foreground text-xs tabular-nums">
+                  {group.items.length} 项
+                </span>
+              </div>
+              <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {group.items.map(item => (
+                  <ProjectCard {...item} />
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </Main>
+  </SidebarShell>
 </Layout>

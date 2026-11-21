@@ -1,0 +1,114 @@
+---
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import SidebarVisual from "@/components/SidebarVisual.astro";
+
+interface Props {
+  /** Show the sidebar visual slot above content on mobile/tablet (< 66rem). */
+  showVisualOnMobile?: boolean;
+  /** Use a higher viewport height threshold before making a taller sidebar sticky. */
+  tallSidebar?: boolean;
+  /** Pass through to Footer when pagination controls already push footer down. */
+  footerNoMarginTop?: boolean;
+}
+
+const {
+  showVisualOnMobile = false,
+  tallSidebar = false,
+  footerNoMarginTop = false,
+} = Astro.props;
+---
+
+<div class="sidebar-shell flex-1">
+  <aside
+    class:list={["shell-sidebar", { "is-tall": tallSidebar }]}
+    aria-label="站点介绍与导航"
+  >
+    <Header sidebar />
+    <div
+      class:list={[
+        "shell-sidebar-extra",
+        showVisualOnMobile ? "show-on-mobile app-layout pt-5 pb-1 sm:pt-6" : "",
+      ]}
+    >
+      <slot name="sidebar">
+        <div transition:persist="scandi-sidebar-visual">
+          <SidebarVisual />
+        </div>
+      </slot>
+    </div>
+  </aside>
+
+  <div class="shell-content">
+    <slot />
+  </div>
+</div>
+
+<Footer wide noMarginTop={footerNoMarginTop} />
+
+<style>
+  .sidebar-shell {
+    width: 100%;
+  }
+
+  .shell-sidebar-extra:not(.show-on-mobile) {
+    display: none;
+  }
+
+  @media (min-width: 66rem) {
+    .sidebar-shell {
+      display: grid;
+      grid-template-columns: 18.5rem minmax(0, 46rem);
+      column-gap: 2.5rem;
+      max-width: 71rem;
+      margin-inline: auto;
+      padding: 3.25rem 2rem 2rem;
+      align-items: start;
+    }
+
+    .shell-sidebar {
+      min-width: 0;
+    }
+
+    .shell-sidebar-extra,
+    .shell-sidebar-extra:not(.show-on-mobile) {
+      display: block;
+      max-width: none;
+      padding: 1.75rem 0 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .shell-content {
+      min-width: 0;
+      padding: 0 0 0 2.5rem;
+      border-left: 1px solid var(--border);
+    }
+
+    .shell-content :global(.app-layout) {
+      max-width: none;
+      padding-inline: 0;
+    }
+
+    .shell-content > :global(nav[aria-label="breadcrumb"]) {
+      margin-top: 0;
+    }
+
+    .shell-content > :global(main > section:first-of-type) {
+      padding-top: 0;
+    }
+  }
+
+  @media (min-width: 66rem) and (min-height: 48rem) {
+    .shell-sidebar:not(.is-tall) {
+      position: sticky;
+      top: 2.5rem;
+    }
+  }
+
+  @media (min-width: 66rem) and (min-height: 54rem) {
+    .shell-sidebar.is-tall {
+      position: sticky;
+      top: 2.5rem;
+    }
+  }
+</style>

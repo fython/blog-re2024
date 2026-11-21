@@ -1,6 +1,12 @@
 ---
 import { createHash } from "node:crypto";
-import config from "@/config";
+
+interface Props {
+  variant?: "default" | "sidebar";
+}
+
+const { variant = "default" } = Astro.props;
+const isSidebar = variant === "sidebar";
 
 const email = "fythonx@gmail.com";
 const gravatarHash = createHash("sha256")
@@ -52,21 +58,36 @@ const contacts = [
 
 <section
   aria-label="个人名片"
-  class="not-prose border-border border-t-accent bg-surface/60 mb-10 overflow-hidden rounded-sm border border-t-[3px]"
+  class:list={[
+    "not-prose border-border border-t-accent bg-surface/60 overflow-hidden rounded-sm border border-t-[3px]",
+    isSidebar ? "mb-0" : "mb-10",
+  ]}
 >
-  <div class="relative overflow-hidden p-5 sm:p-7">
+  <div
+    class:list={["relative overflow-hidden", isSidebar ? "p-4" : "p-5 sm:p-7"]}
+  >
     <img
       src={avatarUrl}
       alt="烧饼的头像"
-      width="156"
-      height="156"
+      width={isSidebar ? "112" : "156"}
+      height={isSidebar ? "112" : "156"}
       loading="eager"
       decoding="async"
       referrerpolicy="no-referrer"
-      class="border-border bg-background pointer-events-none absolute -end-7 -top-7 size-[8.5rem] rounded-full border object-cover select-none sm:-end-8 sm:-top-8 sm:size-[9.75rem]"
+      class:list={[
+        "border-border bg-background pointer-events-none absolute rounded-full border object-cover select-none",
+        isSidebar
+          ? "-end-5 -top-5 size-[6.75rem]"
+          : "-end-7 -top-7 size-[8.5rem] sm:-end-8 sm:-top-8 sm:size-[9.75rem]",
+      ]}
     />
 
-    <div class="relative z-10 min-w-0 pe-28 sm:pe-36">
+    <div
+      class:list={[
+        "relative z-10 min-w-0",
+        isSidebar ? "pe-20" : "pe-28 sm:pe-36",
+      ]}
+    >
       <div
         class="text-muted-foreground mb-2 inline-flex items-center gap-2 text-xs"
       >
@@ -78,37 +99,66 @@ const contacts = [
         <span>广东</span>
       </div>
 
-      <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
         <h2
-          class="text-foreground font-serif text-2xl font-bold tracking-wide sm:text-[1.75rem]"
+          class:list={[
+            "text-foreground font-serif font-bold tracking-wide",
+            isSidebar ? "text-xl" : "text-2xl sm:text-[1.75rem]",
+          ]}
         >
           烧饼
         </h2>
-        <span class="text-muted-foreground font-serif text-xl">
+        <span
+          class:list={[
+            "text-muted-foreground font-serif",
+            isSidebar ? "text-base" : "text-xl",
+          ]}
+        >
           Siubeng Fung
         </span>
       </div>
 
-      <p class="text-secondary mt-1.5 text-sm font-medium">全干开发 @ 鹅厂</p>
+      <p
+        class:list={[
+          "text-secondary mt-1.5 font-medium",
+          isSidebar ? "text-xs" : "text-sm",
+        ]}
+      >
+        全干开发 @ 鹅厂
+      </p>
     </div>
 
     <p
-      class="text-foreground/90 relative z-10 mt-5 text-sm leading-relaxed sm:text-[0.9375rem]"
+      class:list={[
+        "text-foreground/90 relative z-10 leading-relaxed",
+        isSidebar ? "mt-4 text-xs" : "mt-5 text-sm sm:text-[0.9375rem]",
+      ]}
     >
       惯用网名 <code
-        class="border-border bg-background rounded-sm border px-1 py-0.5 font-mono text-xs"
+        class="border-border bg-background rounded-sm border px-1 py-0.5 font-mono text-[0.7rem]"
         >Siubeng</code
       >（“烧饼”的粤语拼音写法），各平台英文 ID 常见为 <code
-        class="border-border bg-background rounded-sm border px-1 py-0.5 font-mono text-xs"
+        class="border-border bg-background rounded-sm border px-1 py-0.5 font-mono text-[0.7rem]"
         >fython</code
       >。喜欢 ACG、折腾手机数码、对互联网产品与 UI/UX
       很感兴趣，最近正在研究量化交易与 AI 技术栈，欢迎私信交流。
     </p>
 
-    <ul class="relative z-10 mt-4 flex flex-wrap gap-1.5" aria-label="关注领域">
+    <ul
+      class:list={[
+        "relative z-10 flex flex-wrap gap-1.5",
+        isSidebar ? "mt-3.5" : "mt-4",
+      ]}
+      aria-label="关注领域"
+    >
       {
         tags.map(tag => (
-          <li class="border-border bg-background text-muted-foreground rounded-sm border px-2.5 py-0.5 text-xs">
+          <li
+            class:list={[
+              "border-border bg-background text-muted-foreground rounded-sm border",
+              isSidebar ? "px-2 py-0.5 text-[0.7rem]" : "px-2.5 py-0.5 text-xs",
+            ]}
+          >
             {tag}
           </li>
         ))
@@ -116,13 +166,28 @@ const contacts = [
     </ul>
   </div>
 
-  <div class="border-border bg-background border-t px-5 py-3.5 sm:px-7 sm:py-4">
+  <div
+    class:list={[
+      "border-border bg-background border-t",
+      isSidebar ? "px-4 py-3" : "px-5 py-3.5 sm:px-7 sm:py-4",
+    ]}
+  >
     <dl
-      class="grid grid-cols-1 gap-x-6 gap-y-2.5 text-xs sm:grid-cols-2 md:grid-cols-3"
+      class:list={[
+        "grid text-xs",
+        isSidebar
+          ? "grid-cols-1 gap-y-2"
+          : "grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2 md:grid-cols-3",
+      ]}
     >
       {
         contacts.map(({ label, value, href }) => (
-          <div class="flex items-baseline gap-2">
+          <div
+            class:list={[
+              "flex items-baseline gap-2",
+              { "justify-between": isSidebar },
+            ]}
+          >
             <dt class="text-muted-foreground shrink-0">{label}</dt>
             <dd class="min-w-0 truncate">
               <a

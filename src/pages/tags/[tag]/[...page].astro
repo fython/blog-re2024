@@ -2,11 +2,10 @@
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
+import SidebarShell from "@/components/SidebarShell.astro";
 import Main from "@/components/Main.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Card from "@/components/Card.astro";
-import Footer from "@/components/Footer.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getUniqueTags } from "@/utils/getUniqueTags";
 import { getSortedPosts } from "@/utils/getSortedPosts";
@@ -38,20 +37,18 @@ const t = useTranslations(locale);
 ---
 
 <Layout title={`${t.pages.tagTitle}: ${tagName} | ${config.site.title}`}>
-  <Header />
+  <SidebarShell footerNoMarginTop={page.lastPage > 1}>
+    <Breadcrumb />
 
-  <Breadcrumb />
+    <Main
+      pageTitle={`${t.pages.tagTitle} · ${tagName}`}
+      pageDesc={`${t.pages.tagDesc}「${tagName}」`}
+    >
+      <ul class="divide-border divide-y">
+        {page.data.map(data => <Card {...data} />)}
+      </ul>
+    </Main>
 
-  <Main
-    pageTitle={`${t.pages.tagTitle} · ${tagName}`}
-    pageDesc={`${t.pages.tagDesc}「${tagName}」`}
-  >
-    <ul class="divide-border divide-y">
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
-  </Main>
-
-  <Pagination {page} />
-
-  <Footer noMarginTop={page.lastPage > 1} />
+    <Pagination {page} />
+  </SidebarShell>
 </Layout>
