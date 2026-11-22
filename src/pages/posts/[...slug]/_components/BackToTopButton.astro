@@ -39,32 +39,54 @@ const t = useTranslations(Astro.currentLocale);
   </button>
 </div>
 
-<script is:inline data-astro-rerun>
-  function backToTop() {
+<script>
+  let bttController: AbortController | null = null;
+
+  function backToTop(): void {
+    bttController?.abort();
     const rootElement = document.documentElement;
-    const btnContainer = document.querySelector("#btt-btn-container");
-    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
-    const progressIndicator = document.querySelector("#progress-indicator");
+    const btnContainer =
+      document.querySelector<HTMLElement>("#btt-btn-container");
+    const backToTopBtn = document.querySelector<HTMLButtonElement>(
+      "[data-button='back-to-top']"
+    );
+    const progressIndicator = document.querySelector<HTMLElement>(
+      "#progress-indicator"
+    );
 
-    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator) {
+      bttController = null;
       return;
+    }
 
-    backToTopBtn.addEventListener("click", () => {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    });
+    bttController = new AbortController();
+    const { signal } = bttController;
 
-    let lastVisible = null;
-    function handleScroll() {
+    backToTopBtn.addEventListener(
+      "click",
+      () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      },
+      { signal }
+    );
+
+    let lastVisible: boolean | null = null;
+    let lastPercent = -1;
+    function handleScroll(): void {
+      if (!btnContainer || !progressIndicator) return;
       const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
       const scrollTop = rootElement.scrollTop;
       const scrollPercent =
         scrollTotal > 0 ? Math.floor((scrollTop / scrollTotal) * 100) : 0;
 
-      progressIndicator.style.setProperty(
-        "background-image",
-        `conic-gradient(var(--accent) ${scrollPercent}%, var(--border) ${scrollPercent}%)`
-      );
+      if (scrollPercent !== lastPercent) {
+        lastPercent = scrollPercent;
+        progressIndicator.style.setProperty(
+          "background-image",
+          `conic-gradient(var(--accent) ${scrollPercent}%, var(--border) ${scrollPercent}%)`
+        );
+      }
 
       const isVisible = scrollTotal > 0 && scrollTop / scrollTotal > 0.3;
 
@@ -78,15 +100,27 @@ const t = useTranslations(Astro.currentLocale);
     }
 
     let ticking = false;
-    document.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
+    document.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true, signal }
+    );
+
+    handleScroll();
   }
+
   backToTop();
+  document.addEventListener("astro:page-load", backToTop);
+  document.addEventListener("astro:before-swap", () => {
+    bttController?.abort();
+    bttController = null;
+  });
 </script>

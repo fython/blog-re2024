@@ -1,7 +1,6 @@
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
-import partytown from "@astrojs/partytown";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { satteri } from "@astrojs/markdown-satteri";
@@ -16,10 +15,10 @@ import config from "./astro-paper.config";
 
 export default defineConfig({
   site: config.site.url,
+  prefetch: false,
   integrations: [
     mdx(),
     react(),
-    partytown({ config: { forward: ["dataLayer.push"] } }),
     sitemap({
       filter: page =>
         config.features?.showArchives !== false || !page.endsWith("/archives/"),
@@ -50,6 +49,9 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      cssCodeSplit: false,
+    },
     ssr: {
       external: ["@iconify-json/tabler"],
     },

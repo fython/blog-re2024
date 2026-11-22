@@ -54,6 +54,50 @@
   scroll-margin-block: 1.5rem;
 }
 
+/* Snappy View Transitions & Instant Navigation Feedback */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 90ms;
+}
+
+html[data-nav-loading="true"] #main-content {
+  opacity: 0.32;
+  pointer-events: none;
+  transition: opacity 90ms ease-out;
+}
+
+a[data-nav-clicked="true"] {
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.astro-nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 150ms ease-out;
+}
+
+.astro-nav-progress[data-state="loading"] {
+  opacity: 1;
+  transform: scaleX(0.75);
+}
+
+.astro-nav-progress[data-state="done"] {
+  opacity: 0;
+  transform: scaleX(1);
+}
+
 /* ===== Nordic 3-Tone Flat Callouts (Overrides Obsidian Multi-Color Theme) ===== */
 .callout {
   --rc-tone: var(--foreground);

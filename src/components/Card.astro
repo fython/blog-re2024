@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getPostUrl } from "@/utils/getPostPaths";
-import { toTransitionName } from "@/utils/toTransitionName";
 import Datetime from "./Datetime.astro";
 
 type Props = {
@@ -34,10 +33,7 @@ const { title, description, ...props } = data;
       href={getPostUrl(id, filePath, Astro.currentLocale)}
       class="text-foreground group-hover:text-accent block transition-colors"
     >
-      <Heading
-        class="font-serif text-lg leading-snug font-bold tracking-[0.01em] sm:text-xl"
-        transition:name={toTransitionName(id)}
-      >
+      <Heading class="font-serif text-lg leading-snug font-bold tracking-[0.01em] sm:text-xl">
         {title}
       </Heading>
     </a>

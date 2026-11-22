@@ -33,11 +33,28 @@ const rssHref = getRelativeLocaleUrl(
 <html
   dir={site.dir ?? "ltr"}
   lang={Astro.currentLocale ?? site.lang}
-  class="overflow-y-scroll scroll-smooth"
+  class="overflow-y-scroll"
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Inline FOUC-prevention script: sets data-theme on <html> before
+      the browser paints. Runs synchronously before external links.
+    -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const root = document.firstElementChild;
+        root?.setAttribute("data-theme", theme);
+        root?.classList.toggle("dark", theme === "dark");
+        window.__theme = { value: theme };
+      })();
+    </script>
     <link rel="icon" type="image/png" href={getAssetPath("favicon.png")} />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
@@ -75,35 +92,36 @@ const rssHref = getRelativeLocaleUrl(
     <!-- Google tag (gtag.js) -->
     <script
       is:inline
-      type="text/partytown"
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-TFGFCHK2DQ"
     ></script>
-    <script is:inline type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        window.dataLayer.push(arguments);
+    <script is:inline>
+      if (!window.__gtagInit) {
+        window.__gtagInit = true;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", "G-TFGFCHK2DQ");
       }
-      gtag("js", new Date());
-
-      gtag("config", "G-TFGFCHK2DQ");
     </script>
 
-    <!-- Google Font -->
+    <!-- Google Font (non-render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.setAttribute('media', 'all')"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300..700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400..800&display=swap"
-      rel="stylesheet"
-    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
@@ -115,30 +133,13 @@ const rssHref = getRelativeLocaleUrl(
       <meta name="google-site-verification" content={site.googleVerification} />
     )}
 
-    <!--
-      Inline FOUC-prevention script: sets data-theme on <html> before
-      the browser paints. Runs synchronously, no defer/async.
-    -->
-    <script is:inline>
-      (function () {
-        const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        const theme = stored ?? (prefersDark ? "dark" : "light");
-        const root = document.firstElementChild;
-        root?.setAttribute("data-theme", theme);
-        root?.classList.toggle("dark", theme === "dark");
-        window.__theme = { value: theme };
-      })();
-    </script>
-
     <ClientRouter />
   </head>
   <body class="bg-background font-app text-foreground selection:bg-accent-soft selection:text-accent flex min-h-svh flex-col antialiased">
     <slot />
     <script>
       import "@/scripts/theme";
+      import "@/scripts/navigation";
     </script>
   </body>
 </html>

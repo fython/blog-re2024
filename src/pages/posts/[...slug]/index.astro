@@ -9,7 +9,6 @@ import Tag from "@/components/Tag.astro";
 import { getPostSlug, getPostUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
-import { toTransitionName } from "@/utils/toTransitionName";
 import EditPost from "./_components/EditPost.astro";
 import PostOutline from "./_components/PostOutline.astro";
 import ShareLinks from "./_components/ShareLinks.astro";
@@ -139,7 +138,6 @@ const ogImage = ogImageUrl
       <header class="border-border border-b pb-6">
         <h1
           id="post-title"
-          style={{ viewTransitionName: toTransitionName(post.id) }}
           class="text-foreground font-serif text-2xl leading-tight font-bold tracking-[0.01em] sm:text-[2rem] sm:leading-[1.3]"
         >
           {title}
@@ -185,7 +183,7 @@ const ogImage = ogImageUrl
 
       <AdjacentPostNav {prevPost} {nextPost} />
       <div class="my-10" data-pagefind-ignore>
-        <Comments client:load />
+        <Comments client:visible={{ rootMargin: "400px" }} />
       </div>
     </main>
   </SidebarShell>
@@ -205,8 +203,12 @@ const ogImage = ogImageUrl
   }
 </style>
 
-<script is:inline data-astro-rerun>
-  function createProgressBar() {
+<script>
+  let progressController: AbortController | null = null;
+  let closeLightboxFn: (() => void) | null = null;
+  let swapCleanupBound = false;
+
+  function createProgressBar(): void {
     document.querySelector(".progress-container")?.remove();
     const progressContainer = document.createElement("div");
     progressContainer.className =
@@ -220,13 +222,13 @@ const ogImage = ogImageUrl
     progressContainer.appendChild(progressBar);
     document.body.appendChild(progressContainer);
   }
-  createProgressBar();
 
-  function updateScrollProgress() {
-    window.__progressScrollController?.abort();
+  function updateScrollProgress(): void {
+    progressController?.abort();
     const controller = new AbortController();
-    window.__progressScrollController = controller;
+    progressController = controller;
     let rafId = 0;
+
     const render = () => {
       rafId = 0;
       const myBar = document.getElementById("myBar");
@@ -240,25 +242,25 @@ const ogImage = ogImageUrl
         height > 0 ? Math.min(1, Math.max(0, winScroll / height)) : 0;
       myBar.style.transform = `scaleX(${ratio})`;
     };
+
     const schedule = () => {
       if (!rafId) rafId = requestAnimationFrame(render);
     };
+
     document.addEventListener("scroll", schedule, {
       passive: true,
       signal: controller.signal,
     });
     render();
   }
-  updateScrollProgress();
 
-  function addHeadingLinks() {
-    const headings = Array.from(
-      document.querySelectorAll(
-        "#article h2, #article h3, #article h4, #article h5, #article h6"
-      )
-    );
+  function addHeadingLinks(article: HTMLElement): void {
+    const headings =
+      article.querySelectorAll<HTMLElement>("h2, h3, h4, h5, h6");
     for (const heading of headings) {
-      if (!heading.id) continue;
+      if (!heading.id || heading.querySelector(":scope > .heading-link")) {
+        continue;
+      }
       heading.classList.add("group");
       const link = document.createElement("a");
       link.className =
@@ -272,19 +274,25 @@ const ogImage = ogImageUrl
       heading.appendChild(link);
     }
   }
-  addHeadingLinks();
 
-  function attachCopyButtons() {
+  function attachCopyButtons(article: HTMLElement): void {
     const copyButtonLabel = "复制";
-    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+    const codeBlocks = article.querySelectorAll<HTMLPreElement>("pre");
 
     for (const codeBlock of codeBlocks) {
+      if (
+        codeBlock.dataset.copyAttached === "true" ||
+        codeBlock.querySelector(":scope > .copy-code")
+      ) {
+        continue;
+      }
+      codeBlock.dataset.copyAttached = "true";
+
       const wrapper = document.createElement("div");
       wrapper.style.position = "relative";
 
-      const computedStyle = getComputedStyle(codeBlock);
       const hasFileNameOffset =
-        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+        codeBlock.style.getPropertyValue("--file-name-offset").trim() !== "";
 
       const topClass = hasFileNameOffset
         ? "top-(--file-name-offset)"
@@ -293,46 +301,38 @@ const ogImage = ogImageUrl
       const copyButton = document.createElement("button");
       copyButton.type = "button";
       copyButton.className = `copy-code absolute end-2.5 ${topClass} rounded-sm bg-background border border-border px-2 py-1 text-xs leading-4 text-muted-foreground hover:border-accent hover:text-accent transition-colors font-medium`;
-      copyButton.innerHTML = copyButtonLabel;
+      copyButton.textContent = copyButtonLabel;
       codeBlock.setAttribute("tabindex", "0");
       codeBlock.appendChild(copyButton);
 
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
       wrapper.appendChild(codeBlock);
 
       copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
+        const code = codeBlock.querySelector("code");
+        const text = code?.innerText;
+        await navigator.clipboard.writeText(text ?? "");
+        copyButton.textContent = "已复制";
+        window.setTimeout(() => {
+          copyButton.textContent = copyButtonLabel;
+        }, 900);
       });
     }
-
-    async function copyCode(block, button) {
-      const code = block.querySelector("code");
-      const text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      button.innerText = "已复制";
-
-      setTimeout(() => {
-        button.innerText = copyButtonLabel;
-      }, 900);
-    }
   }
-  attachCopyButtons();
 
   /** Accessible image lightbox for article images. */
-  function initLightbox() {
-    const article = document.getElementById("article");
-    if (!article) return;
+  function initLightbox(article: HTMLElement): void {
+    if (article.dataset.lightboxInit === "true") return;
+    article.dataset.lightboxInit = "true";
 
     const prefersReducedMotion = () =>
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let overlay = null;
-    let lastFocused = null;
+    let overlay: HTMLDivElement | null = null;
+    let lastFocused: HTMLElement | null = null;
 
     requestAnimationFrame(() => {
-      const images = Array.from(article.querySelectorAll("img"));
+      const images = article.querySelectorAll("img");
       for (const image of images) {
         if (image.closest("a")) continue;
         image.setAttribute("role", "button");
@@ -345,18 +345,21 @@ const ogImage = ogImageUrl
       }
     });
 
-    function open(src, alt, trigger) {
+    function open(src: string, alt: string, trigger?: Element): void {
       if (overlay) return;
-      lastFocused = trigger ?? document.activeElement;
+      lastFocused =
+        trigger instanceof HTMLElement
+          ? trigger
+          : document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
 
-      overlay = document.createElement("div");
-      overlay.setAttribute("role", "dialog");
-      overlay.setAttribute("aria-modal", "true");
-      overlay.setAttribute(
-        "aria-label",
-        alt ? `图片预览： ${alt}` : "图片预览"
-      );
-      overlay.className =
+      const modal = document.createElement("div");
+      overlay = modal;
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
+      modal.setAttribute("aria-label", alt ? `图片预览： ${alt}` : "图片预览");
+      modal.className =
         "fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-[#0f1319]/92 opacity-0 transition-opacity duration-200 motion-reduce:transition-none";
 
       const closeButton = document.createElement("button");
@@ -373,9 +376,9 @@ const ogImage = ogImageUrl
       image.className =
         "max-h-[90dvh] max-w-[90dvw] cursor-default rounded-sm border border-white/15 object-contain";
 
-      overlay.append(closeButton, image);
-      overlay.addEventListener("click", e => {
-        if (e.target === overlay && currentScale <= 1) close();
+      modal.append(closeButton, image);
+      modal.addEventListener("click", e => {
+        if (e.target === modal && currentScale <= 1) close();
       });
 
       let currentScale = 1;
@@ -389,18 +392,18 @@ const ogImage = ogImageUrl
       let panStartTranslateY = 0;
       let lastTapTime = 0;
 
-      function applyTransform() {
+      function applyTransform(): void {
         image.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
       }
 
-      function resetTransform() {
+      function resetTransform(): void {
         currentScale = 1;
         translateX = 0;
         translateY = 0;
         image.style.transform = "";
       }
 
-      overlay.addEventListener(
+      modal.addEventListener(
         "touchstart",
         e => {
           const t = e.touches;
@@ -441,7 +444,7 @@ const ogImage = ogImageUrl
         { passive: false }
       );
 
-      overlay.addEventListener(
+      modal.addEventListener(
         "touchmove",
         e => {
           const t = e.touches;
@@ -465,11 +468,11 @@ const ogImage = ogImageUrl
                 panStartTranslateY + (t[0].clientY - panStartY) / currentScale;
               const maxX = Math.max(
                 0,
-                (image.clientWidth - overlay.clientWidth / currentScale) / 2
+                (image.clientWidth - modal.clientWidth / currentScale) / 2
               );
               const maxY = Math.max(
                 0,
-                (image.clientHeight - overlay.clientHeight / currentScale) / 2
+                (image.clientHeight - modal.clientHeight / currentScale) / 2
               );
               translateX = Math.min(maxX, Math.max(-maxX, translateX));
               translateY = Math.min(maxY, Math.max(-maxY, translateY));
@@ -482,32 +485,32 @@ const ogImage = ogImageUrl
         { passive: false }
       );
 
-      overlay.addEventListener("touchend", e => {
+      modal.addEventListener("touchend", e => {
         if (e.touches.length === 0 && currentScale <= 1.05) {
           resetTransform();
         }
       });
 
-      overlay.addEventListener("touchcancel", e => {
+      modal.addEventListener("touchcancel", e => {
         if (e.touches.length === 0 && currentScale <= 1.05) {
           resetTransform();
         }
       });
 
-      document.body.appendChild(overlay);
+      document.body.appendChild(modal);
       document.body.style.overflow = "hidden";
       document.addEventListener("keydown", onKeyDown);
-      window.__closeLightbox = close;
+      closeLightboxFn = close;
 
       requestAnimationFrame(() => overlay?.classList.add("opacity-100"));
       closeButton.focus();
     }
 
-    function close() {
+    function close(): void {
       if (!overlay) return;
       const el = overlay;
       overlay = null;
-      window.__closeLightbox = null;
+      closeLightboxFn = null;
 
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
@@ -520,11 +523,11 @@ const ogImage = ogImageUrl
       }
       const remove = () => el.remove();
       el.addEventListener("transitionend", remove, { once: true });
-      setTimeout(remove, 250);
+      window.setTimeout(remove, 250);
       el.classList.remove("opacity-100");
     }
 
-    function onKeyDown(e) {
+    function onKeyDown(e: KeyboardEvent): void {
       if (e.key === "Escape") {
         close();
       } else if (e.key === "Tab") {
@@ -532,9 +535,9 @@ const ogImage = ogImageUrl
       }
     }
 
-    function trapFocus(e) {
+    function trapFocus(e: KeyboardEvent): void {
       if (!overlay) return;
-      const focusables = overlay.querySelectorAll(
+      const focusables = overlay.querySelectorAll<HTMLElement>(
         'a[href], button, [tabindex]:not([tabindex="-1"])'
       );
       if (focusables.length === 0) return;
@@ -549,13 +552,15 @@ const ogImage = ogImageUrl
       }
     }
 
-    function triggerFromEvent(e) {
-      const image = e.target.closest("img");
+    function triggerFromEvent(e: Event): HTMLImageElement | null {
+      const target = e.target;
+      if (!(target instanceof Element)) return null;
+      const image = target.closest("img");
       if (!image || !article.contains(image) || image.closest("a")) return null;
       return image;
     }
 
-    function activate(image) {
+    function activate(image: HTMLImageElement): void {
       open(image.currentSrc || image.src, image.alt, image);
     }
 
@@ -574,18 +579,28 @@ const ogImage = ogImageUrl
       activate(image);
     });
   }
-  initLightbox();
 
-  if (!window.__lightboxSwapBound) {
-    window.__lightboxSwapBound = true;
+  function initPostPage(): void {
+    const article = document.getElementById("article");
+    if (!article) return;
+
+    createProgressBar();
+    updateScrollProgress();
+    addHeadingLinks(article);
+    attachCopyButtons(article);
+    initLightbox(article);
+  }
+
+  if (!swapCleanupBound) {
+    swapCleanupBound = true;
     document.addEventListener("astro:before-swap", () => {
-      window.__closeLightbox?.();
-      window.__progressScrollController?.abort();
+      closeLightboxFn?.();
+      progressController?.abort();
+      progressController = null;
       document.querySelector(".progress-container")?.remove();
     });
   }
 
-  document.addEventListener("astro:after-swap", () =>
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
-  );
+  initPostPage();
+  document.addEventListener("astro:page-load", initPostPage);
 </script>
