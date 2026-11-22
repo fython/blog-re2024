@@ -1,5 +1,5 @@
 ---
-import { createHash } from "node:crypto";
+import { getGravatarAvatar } from "@/utils/getGravatarAvatar";
 
 interface Props {
   variant?: "default" | "sidebar";
@@ -9,17 +9,9 @@ const { variant = "default" } = Astro.props;
 const isSidebar = variant === "sidebar";
 
 const email = "fythonx@gmail.com";
-const gravatarHash = createHash("sha256")
-  .update(email.trim().toLowerCase())
-  .digest("hex");
-const avatarUrl = `https://www.gravatar.com/avatar/${gravatarHash}?s=400&d=mp`;
+const { url: avatarUrl } = await getGravatarAvatar(email);
 
-const tags = [
-  "全干开发",
-  "产品体验",
-  "AI 应用",
-  "数码",
-];
+const tags = ["全干开发", "产品体验", "AI 应用", "数码"];
 
 const contacts = [
   {
@@ -65,21 +57,25 @@ const contacts = [
   <div
     class:list={["relative overflow-hidden", isSidebar ? "p-4" : "p-5 sm:p-7"]}
   >
-    <img
-      src={avatarUrl}
-      alt="烧饼的头像"
-      width={isSidebar ? "112" : "156"}
-      height={isSidebar ? "112" : "156"}
-      loading="eager"
-      decoding="async"
-      referrerpolicy="no-referrer"
+    <div
       class:list={[
-        "border-border bg-background pointer-events-none absolute rounded-full border object-cover select-none",
+        "border-border bg-background pointer-events-none absolute overflow-hidden rounded-full border select-none",
         isSidebar
           ? "-end-5 -top-5 size-[6.75rem]"
           : "-end-7 -top-7 size-[8.5rem] sm:-end-8 sm:-top-8 sm:size-[9.75rem]",
       ]}
-    />
+    >
+      <img
+        data-profile-avatar
+        src={avatarUrl}
+        alt="烧饼的头像"
+        width={isSidebar ? "112" : "156"}
+        height={isSidebar ? "112" : "156"}
+        loading="eager"
+        decoding="async"
+        class="size-full object-cover opacity-0 transition-opacity duration-500 ease-out motion-reduce:transition-none data-[loaded=true]:opacity-100"
+      />
+    </div>
 
     <div
       class:list={[
@@ -192,3 +188,32 @@ const contacts = [
     </dl>
   </div>
 </section>
+
+<script>
+  function initProfileAvatars(): void {
+    const avatars = document.querySelectorAll<HTMLImageElement>(
+      "img[data-profile-avatar]"
+    );
+
+    for (const img of avatars) {
+      if (img.dataset.avatarBound === "true") continue;
+      img.dataset.avatarBound = "true";
+
+      const reveal = () => {
+        void img.offsetWidth;
+        requestAnimationFrame(() => {
+          img.dataset.loaded = "true";
+        });
+      };
+
+      if (img.complete && img.naturalWidth > 0) {
+        reveal();
+      } else {
+        img.addEventListener("load", reveal, { once: true });
+      }
+    }
+  }
+
+  initProfileAvatars();
+  document.addEventListener("astro:page-load", initProfileAvatars);
+</script>
