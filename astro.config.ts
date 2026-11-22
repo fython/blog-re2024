@@ -1,4 +1,4 @@
-import { defineConfig, envField, svgoOptimizer } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import partytown from "@astrojs/partytown";
@@ -61,7 +61,6 @@ export default defineConfig({
     },
   },
   experimental: {
-    svgOptimizer: svgoOptimizer(),
     incrementalBuild: true,
   },
 });

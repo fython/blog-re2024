@@ -6,6 +6,7 @@
 !/public
 !/.github
 !tsconfig.json
+!tsconfig.config.json
 !astro.config.ts
 !package.json
 !.prettierrc
@@ -18,7 +19,7 @@
 # Preserve authored content verbatim during theme maintenance.
 /src/content/blog/**
 /src/content/friend/**
-/src/pages/about.md
+/src/content/pages/**
 /public/pagefind/**
 !/astro-paper.config.ts
 !/scripts

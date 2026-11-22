@@ -16,7 +16,6 @@ const paths = git(
   "src/content",
   "public",
   "fonts",
-  "src/pages/about.md",
   "src/pages/projects.md"
 )
   .toString()

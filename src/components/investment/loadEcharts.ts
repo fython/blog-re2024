@@ -6,31 +6,8 @@ let loader: Promise<EChartsCore> | undefined;
  * Lazily loads ECharts modules on the client so SSR avoids importing ECharts.
  */
 export function loadEcharts(): Promise<EChartsCore> {
-  loader ??= Promise.all([
-    import("echarts/core"),
-    import("echarts/charts"),
-    import("echarts/components"),
-    import("echarts/renderers"),
-  ])
-    .then(
-      ([
-        echarts,
-        { BarChart, LineChart, PieChart },
-        { GridComponent, LegendComponent, TooltipComponent },
-        { CanvasRenderer },
-      ]) => {
-        echarts.use([
-          BarChart,
-          LineChart,
-          PieChart,
-          GridComponent,
-          LegendComponent,
-          TooltipComponent,
-          CanvasRenderer,
-        ]);
-        return echarts;
-      }
-    )
+  loader ??= import("./echartsClient")
+    .then(({ echarts }) => echarts)
     .catch(error => {
       loader = undefined;
       throw error;

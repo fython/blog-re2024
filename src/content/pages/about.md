@@ -1,5 +1,4 @@
 ---
-layout: ../layouts/AboutLayout.astro
 title: "关于我"
 profileCard: true
 ---

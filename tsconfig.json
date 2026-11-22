@@ -6,6 +6,7 @@
     "public",
     "scripts",
     "eslint.config.js",
+    "astro.config.ts",
     "integrations/jspaint"
   ],
   "compilerOptions": {

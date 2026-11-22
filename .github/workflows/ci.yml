@@ -13,8 +13,42 @@ on:
   workflow_call:
 
 jobs:
+  quality:
+    name: Lint, format & type-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        node-version: [24]
+
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "📦 Install pnpm"
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: "📦 Install dependencies"
+        run: pnpm install --frozen-lockfile
+
+      - name: "🔎 Lint code"
+        run: pnpm run lint
+
+      - name: "📝 Checking code format"
+        run: pnpm run format:check
+
+      - name: "🔍 Type-check Astro"
+        run: pnpm run check
+
   build:
-    name: Code standards & build
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -40,14 +74,15 @@ jobs:
       - name: "📦 Install dependencies"
         run: pnpm install --frozen-lockfile
 
-      - name: "🔎 Lint code"
-        run: pnpm run lint
-
-      - name: "📝 Checking code format"
-        run: pnpm run format:check
-
-      - name: "🔍 Type-check Astro"
-        run: pnpm run check
+      - name: "⚡ Cache Astro build"
+        uses: actions/cache@v4
+        with:
+          path: |
+            .astro
+            node_modules/.astro
+          key: ${{ runner.os }}-astro-${{ hashFiles('pnpm-lock.yaml', 'astro.config.ts') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-astro-${{ hashFiles('pnpm-lock.yaml', 'astro.config.ts') }}-
 
       - name: "🚀 Build the project"
         run: pnpm run build

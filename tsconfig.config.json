@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "astro.config.ts",
+    "astro-paper.config.ts",
+    "src/types/config.ts"
+  ],
+  "exclude": ["dist", "public"]
+}

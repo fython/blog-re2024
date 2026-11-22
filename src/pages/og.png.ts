@@ -1,10 +1,49 @@
+import { createHash } from "node:crypto";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import type { APIRoute } from "astro";
 import satori from "satori";
 import sharp from "sharp";
 import { getOgFonts } from "@/utils/ogFonts";
 import config from "@/config";
 
+const OG_CACHE_DIR = "node_modules/.astro/og-cache";
+const TEMPLATE_VERSION = "v1";
+const REGULAR_FONT_PATH = "./fonts/SourceHanSerifSC-Regular.otf";
+const BOLD_FONT_PATH = "./fonts/SourceHanSerifSC-Bold.otf";
+
 export const GET: APIRoute = async () => {
+  const [regularStat, boldStat] = await Promise.all([
+    stat(REGULAR_FONT_PATH),
+    stat(BOLD_FONT_PATH),
+  ]);
+  const cacheKey = createHash("sha256")
+    .update(
+      JSON.stringify([
+        TEMPLATE_VERSION,
+        config.site.title,
+        config.site.description,
+        config.site.author,
+        config.site.url,
+        regularStat.size,
+        regularStat.mtimeMs,
+        boldStat.size,
+        boldStat.mtimeMs,
+      ])
+    )
+    .digest("hex")
+    .slice(0, 16);
+  const cachePath = join(OG_CACHE_DIR, `site-${cacheKey}.png`);
+
+  try {
+    const cached = await readFile(cachePath);
+    return new Response(new Uint8Array(cached), {
+      headers: { "Content-Type": "image/png" },
+    });
+  } catch {
+    // Cache miss: render and persist below.
+  }
+
   const fonts = await getOgFonts();
 
   const svg = await satori(
@@ -148,6 +187,13 @@ export const GET: APIRoute = async () => {
   );
 
   const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+
+  try {
+    await mkdir(OG_CACHE_DIR, { recursive: true });
+    await writeFile(cachePath, pngBuffer);
+  } catch {
+    // Ignore cache write errors on read-only filesystems.
+  }
 
   return new Response(new Uint8Array(pngBuffer), {
     headers: { "Content-Type": "image/png" },
