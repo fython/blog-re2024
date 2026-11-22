@@ -50,6 +50,9 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      external: ["@iconify-json/tabler"],
+    },
   },
   env: {
     schema: {

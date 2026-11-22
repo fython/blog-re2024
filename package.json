@@ -25,6 +25,7 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.6",
     "@giscus/react": "^3.1.0",
+    "@iconify-json/tabler": "^1.2.46",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.13",
     "dayjs": "^1.11.21",

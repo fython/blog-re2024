@@ -1,0 +1,47 @@
+---
+import { icons as tabler } from "@iconify-json/tabler";
+
+export interface Props {
+  title: string;
+  summary?: string;
+  icon: string;
+}
+
+const { title, summary, icon } = Astro.props;
+const iconData = tabler.icons[icon];
+
+if (!iconData) {
+  throw new Error(`Unknown Tabler icon: ${icon}`);
+}
+
+const width = iconData.width ?? tabler.width ?? 24;
+const height = iconData.height ?? tabler.height ?? 24;
+const svgBody = iconData.body.replaceAll(
+  'stroke-width="2"',
+  'stroke-width="1.5"'
+);
+---
+
+<li class="group border-border bg-surface/50 hover:border-border-strong hover:bg-surface relative m-0 flex items-center justify-between gap-3 overflow-hidden rounded-sm border px-3.5 py-2.5 transition-colors">
+  <div class="flex min-w-0 flex-1 flex-col justify-center">
+    <h3 class="text-foreground m-0 font-serif text-[0.9375rem] leading-snug font-bold">
+      {title}
+    </h3>
+    {summary && (
+      <p class="text-muted-foreground mt-0.5 mb-0 text-xs leading-snug sm:text-[0.8125rem]">
+        {summary}
+      </p>
+    )}
+  </div>
+
+  <div
+    aria-hidden="true"
+    class="text-muted-foreground/45 group-hover:text-accent/80 flex shrink-0 items-center justify-center transition-colors"
+  >
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      class="block size-8 sm:size-9"
+      set:html={svgBody}
+    />
+  </div>
+</li>
