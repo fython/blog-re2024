@@ -33,7 +33,23 @@ export default defineConfig({
   },
   markdown: {
     processor: satteri({
-      hastPlugins: [satteriCallouts()],
+      hastPlugins: [
+        satteriCallouts(),
+        {
+          name: "lazy-images",
+          element: {
+            filter: ["img"],
+            visit(node, ctx) {
+              if (!node.properties?.loading) {
+                ctx.setProperty(node, "loading", "lazy");
+              }
+              if (!node.properties?.decoding) {
+                ctx.setProperty(node, "decoding", "async");
+              }
+            },
+          },
+        },
+      ],
     }),
     shikiConfig: {
       themes: { light: "github-light-default", dark: "nord" },
