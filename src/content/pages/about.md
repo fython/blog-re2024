@@ -3,6 +3,27 @@ title: "关于我"
 profileCard: true
 ---
 
+aka. **Siubeng** & **fython**
+
+喜欢 ACG、折腾手机数码，对互联网产品与 UI/UX 感兴趣。近期因接触股票市场，对金融分析、商业知识比较感兴趣，
+业余实际折腾量化交易与 AI 应用。
+
+喜欢茶、咖啡，到处觅食，旅游以巡游城市为主，偶尔去一趟日本玩，有车但是自驾游不多，有喜欢的乐队演唱会、音乐节会冲。
+
+以前看动漫比较多，但是消遣为主深度不高，觉得听别人讲解就很有趣，以前比较喜欢的作品有偶像大师系列、悠哉日常大王，
+最近看“木柜子乐队”多~ 可能是因为上班后时间渐少，喜欢听音乐多。
+
+音乐比较杂食，70-80 年代华语金曲、90 后粤语流行曲、动漫流行曲、东方同人曲、电子音乐、R&B、Blues、Jazz/Swing、摇滚、数摇等等。
+电子音乐细分下，主要听 House/Future Bass/UK Garage/Speed Garage/Happy Hardcore/Electron Swing，
+音游玩得比较多的时间也会听硬核一点的曲风：Hardstyle/Rawstyle/Hardcore/Trance。
+
+游戏主玩 FPS 和 MOBA，射击游戏从 CS 1.5 玩到 CS2，吃鸡类 PUBG/Apex/The Finals/三角洲行动/COD 都有玩过，战地/COD 玩得不多，对守望先锋 Overwatch 也挺喜欢的，可惜沙比暴雪。MOBA 只会玩 LOL，其祖先 RTS 小时候玩过 War3 和各种自定义地图包括 DOTA/澄海3C 但没学会。
+
+音游从 osu!、节奏大师 入坑，玩了很长时间的偶像大师灰姑娘手游，依田芳乃推。大学开始接触街机音游，主玩 BEMANI（jubeat/SDVX/IIDX），maimai 和 CHUNITHM 会一点，太鼓不会玩 qwq。
+
+Steam 上也有玩很多独立游戏，以前有时间的时候很喜欢玩沙盒建造/工厂游戏，可能因为我很喜欢搭积木、建流水线，所以现在正职也是一个工程师。
+有机会的话，希望自己筹划制作一个自己喜欢的游戏。
+
 ## 装备/Equipment
 
 - **汽车：** 蔚来 et5t 冠军纪念版 (2025 款)
@@ -13,29 +34,16 @@ profileCard: true
 - **开发机/Homelab：** Mac mini M4 丐版
 - **笔记软件：** 飞书文档 & Notion
 
-## 兴趣/Hobbies
-
-- 📺 **二次元：** 偶像大师系列/日常番/宅番，玩一点二游，以前去过漫展，现在半脱坑了，音乐节、Live 偶尔去去
-- 🎼 **音乐：** 受 SDVX/jubeat 等节奏音游影响居多，喜好 Future Bass/Hardcore/Speed Garage/Artcore 等曲风，
-  对现代爵士、Funk 音乐比较感兴趣。乐理知识约为零；
-- 🎮 **游戏：** FPS(CSGO/CS2/Apex/OW/PUBG)/MOBA(LOL)/Roguelike，音游（osu! 入坑，大学玩 CGSS/BEMANI 系），玩玩云顶之奕，各种独立游戏/沙盒工厂/RPG 都有玩，
-  手游肝不动很少玩，玩过 明日方舟：终末地/CGSS/弹射世界/碧蓝档案；
-- 📱 **数码：** 万年小屏党，Google 老粉，入过很多一加/Nexus/Pixel 设备，常备 iPhone 做电子钱包。PC 硬件略有所知，能满足自己的基本维护但不太折腾；
-- 🍘 **美食：** 到每一个地方旅游都会先研究有哪些不容错过的美食，常驻广州每个月都会打卡一些店，
-  大部分东西都会不太在乎他人负面评价去亲身体验，自己平时不怎么下厨，但是让我做饭还是 ok 的
-
 ## 职业/Profession
 
 ### 当前技能点/Skills
 
 - AI Vibe Coding :P
-- 语言/框架 (Languages/Frameworks)：
-  - **后端/运维：** Go/Python/Rust/Node.js/Bash
-  - **Android：** Java/Kotlin
-  - **Web：** TypeScript/jQuery/Vue.js/Astro (这个博客正在使用 Astro)
-  - **标记语言：** HTML/XML/Markdown/CSS/LESS
-  - **RPC：** HTTP/WebSocket/gRPC/GraphQL
-  - **构建系统：** Gradle/Makefile/Vite/Webpack
+- **后端/运维：** Go/Python/Rust/Node.js/Bash
+- **Android：** Java/Kotlin
+- **Web：** TypeScript/jQuery/Vue.js/Astro (这个博客正在使用 Astro)
+- **RPC：** HTTP/WebSocket/gRPC/GraphQL
+- **构建系统：** Gradle/Makefile/Vite/Webpack
 - **数据库 (Database)：** MySQL/SQLite/Redis
 - **网关/负载均衡 (Gateway/LB)：** Apache/NGINX/OpenResty/APISIX
 - **CI/CD：** Git/SVN/GitHub Actions & 其它 CIs
@@ -45,6 +53,8 @@ profileCard: true
 - **视频剪辑：** CapCut (剪映)/Adobe Premiere/DaVinci Resolve
 
 ### 独立开发经历/Indie Works
+
+可以看看我的展示页： [works.](https://feng.moe/projects/)
 
 近期：
 
